@@ -60,7 +60,7 @@
                                 <span>></span>
                             </a>
                             <hr>
-                            <a href="{{route('home')}}">Log Out</a>
+                            <a href="{{route('logout')}}">Log Out</a>
                         </div>
                     </div>
                 </div>
