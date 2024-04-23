@@ -131,7 +131,7 @@ header .sub-menu-wrap{
 }
 
 header .sub-menu-wrap.open-menu{
-    max-height: 400px; /*Set this to 400px to open up/show the dropdown menu through js */
+    max-height: 450px; /*Set this to 400px to open up/show the dropdown menu through js */
 }
 
 .sub-menu-wrap .sub-menu{
