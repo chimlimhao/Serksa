@@ -60,14 +60,15 @@ class CatalogController extends Controller
             // Retrieve the course and chapter details using the IDs
             $course = Course::findOrFail($courseId);
             $chapter = Chapter::findOrFail($chapterId);
-
+            
             // Check if $chapter is not null before using it
             if ($chapter) {
                 // Retrieve the Markdown content from the Chapter model
                 $markdownContent = $chapter->chapter_doc;
+                $doc_path = "app/markdown/course/". $course->title. "/" . $markdownContent;
 
                 // Parse the Markdown content using MarkdownService
-                $parsedContent = File::get(storage_path("app/markdown/course/html/chapter1_builtin.html"));
+                $parsedContent = File::get(storage_path($doc_path));
                 // $parsedContent = Str::of($markdownContent)->markdown();
 
 

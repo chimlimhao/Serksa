@@ -886,7 +886,7 @@ p{
 .main-doc .code-line {
     margin-bottom: 16px;
 }
-.main-doc code-line code {
+/* .main-doc code {
     font-family: 'SF Mono', Monaco, Consolas, 'Ubuntu Mono', monospace;
     color: #D6D6D6;
     background-color: #333;
@@ -896,7 +896,7 @@ p{
     line-height: 1.357em;
     display: inline-block;
     tab-size: 4;
-}
+} */
 .main-doc h1, h2 {
     border-bottom: 1px solid var(--highlight);
     font-weight: 600;
@@ -972,7 +972,10 @@ p{
     -webkit-text-stroke-width: 0px;
 }
 
-
+.main-doc pre p {
+    display: inline;
+    font-family: monospace;
+}
 
 /* Catelog Content */
 .catalog-wrap {

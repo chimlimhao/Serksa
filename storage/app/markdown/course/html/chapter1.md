@@ -5,7 +5,7 @@
 <img src="" alt="">
 ```
 Insert your **image-path** to the src attribute.🥹🖕   
-Here is the source [`code`]().
+Here is the source [code]().
 
 ## Chapter 1
 `HTML` is a hypertext markdown language that is mostly used in web development career. `For example`, what you see visually on the website are being written using `HTML`.  

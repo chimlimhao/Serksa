@@ -14,7 +14,7 @@ class ChapterSeeder extends Seeder
      */
     public function run()
     {
-        $htmlIntroduction = File::get(storage_path("/app/markdown/course/html/chapter1.md"));
+        // $htmlIntroduction = File::get(storage_path("/app/markdown/course/html/chapter1.md"));
         
         // Example data for chapters
         $chapters = [
@@ -24,7 +24,7 @@ class ChapterSeeder extends Seeder
                 'chapter_title' => 'Introduction to HTML',
                 'chapter_desc' => 'Learn the basics of HTML.',
                 'chapter_video' => 'https://example.com/html-intro-video',
-                'chapter_doc' => $htmlIntroduction,
+                'chapter_doc' => 'chapter1.html',
                 'chapter_order' => 1,
             ],
             [
