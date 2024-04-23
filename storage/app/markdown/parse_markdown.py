@@ -1,15 +1,105 @@
 import json
 import os
 import re
+from typing import Type
 
-colors = {}
+DEFAULT_PATH = "storage/app/markdown/course/"
+LANGUAGES: dict[str, list[str]] = {
+    "HTML": ["html"],
+    "CSS": ["css"],
+    "JavaScript": ["javascript", "js"],
+    "PHP": ["php"],
+    "C": ["c"],
+    "C++": ["c++", "cpp"],
+    "C#": ["c#", "cs"],
+    "SQL": ["sql"],
+    "Ruby": ["ruby"],
+    "Python": ["python", "py"],
+    "Java": ["java"],
+}
 
 
-def load_colors():
-    global colors
+class LanguageNotFoundError(Exception):
+    pass
 
-    with open("storage/app/markdown/syntax.json", "r") as f:
-        colors = json.load(f)
+
+class classproperty:
+    """Property classmethod"""
+
+    def __init__(self, f):
+        self.getter = f
+
+    def __get__(self, obj, cls=None):
+        return self.getter(cls)
+
+
+class Color:
+    """Class for default colors"""
+
+    RED = "#ff0000"
+    GREEN = "#60a642"
+    BLUE = "#44b3f1"
+    PURPLE = "#baa0f8"
+    GRAY = "#8b9798"
+
+    PRIMARY = RED
+    SECONDARY = GREEN
+    ACCENT = BLUE
+
+    @classproperty
+    def red(self) -> str:
+        """Red ...duh"""
+        return self.RED
+
+    @classproperty
+    def green(self) -> str:
+        """Green ...duh"""
+        return self.GREEN
+
+    @classproperty
+    def blue(self) -> str:
+        """Blue ...duh"""
+        return self.BLUE
+
+    @classproperty
+    def purple(self) -> str:
+        """Purple ...duh"""
+        return self.PURPLE
+
+    @classproperty
+    def gray(self) -> str:
+        """Gray ...duh"""
+        return self.GRAY
+
+    @classproperty
+    def grey(self) -> str:
+        """Gray"""
+        return self.GRAY
+
+    @classproperty
+    def primary(self) -> str:
+        """Red"""
+        return self.RED
+
+    @classproperty
+    def secondary(self) -> str:
+        """Green"""
+        return self.GREEN
+
+    @classproperty
+    def accent(self) -> str:
+        """Blue"""
+        return self.BLUE
+
+    @classproperty
+    def class_color(self) -> str:
+        """Blue"""
+        return self.BLUE
+
+    @classproperty
+    def function_color(self) -> str:
+        """Green"""
+        return self.GREEN
 
 
 class File:
@@ -26,44 +116,50 @@ class File:
     def file_name(self) -> str:
         return self.file_name
 
-    @property
-    def path(self) -> str:
-        return f"storage/app/markdown/course/{self._fn}"
-
     @content.setter
-    def content(self, data: str):
+    def content(self, data: str) -> None:
         self._content = data
 
-    def __init__(self, fn: str, data: str):
+    def __init__(self, fn: str, data: str, language: str) -> None:
         self._fn = fn
         self._content = data
+        self._language = language
 
-        lang = re.search(r'(.*?)/', data).group(1)
-        print(lang)
-        self._language = lang
+    def path(self, directory="unknown") -> str:
+        return f"{DEFAULT_PATH}{self.language}/{directory}/{self._fn}"
 
     def save(self) -> None:
         with open(self.path, "w") as f:
+            f.write(self._content)
+
+    def save_as_highlighted(self) -> None:
+        path = self.path("finished_html")
+        with open(path, "w") as f:
             f.write(self._content)
 
     def save_as_md(self) -> None:
         if ".md" in self._fn:
             self.save()
         else:
+            # fmt: off
             fn = f"storage/app/markdown/course/{self._fn.replace('.html', '.md')}"
             with open(fn, "w") as f:
                 f.write(self._content)
 
+    def save_as_html(self) -> None:
+        if ".html" in self._fn:
+            self.save()
+        else:
+            fn = f"storage/app/markdown/course/{self._fn.replace('.md', '.html')}"
+            with open(fn, "w") as f:
+                f.write(self._content)
+            # fmt: on
 
-def get_color(language) -> dict:
-    return colors[language]['colors']
 
-
-def color_html_code(content):
-    color = get_color('HTML')
-    primary = color['primary']
-    secondary = color['secondary']
-    accent = color['accent']
+def color_html_code(content) -> str:
+    primary = Color.primary
+    secondary = Color.secondary
+    accent = Color.accent
 
     code_block_match = re.search(
         r'<code class="language-html">(.*?)</code>', content, re.DOTALL)
@@ -79,16 +175,17 @@ def color_html_code(content):
         elif option == 1:
             pass
 
+    # fmt: off
     highlighted_code = re.sub(r'&lt;(/?\w+)',
                               fr'&lt;<p style="color: {primary};">\1</p>',
                               code_block
                               )
-    highlighted_code = re.sub(r'(\w+)(&quot;)',
-                              fr'<p style="color: {accent};">\1</p>\2',
+    highlighted_code = re.sub(r'(\s*\w+)=&quot;',
+                              fr'<p style="color: {accent};">\1</p>=&quot;',
                               highlighted_code
                               )
-    highlighted_code = re.sub(r'(&quot;.*?&quot;)',
-                              fr'<p style="color: {secondary};">\1</p>',
+    highlighted_code = re.sub(r'&quot;(.*?)&quot;',
+                              fr'&quot;<p style="color: {secondary};">\1</p>&quot;',
                               highlighted_code
                               )
     return re.sub(r'(<code class="language-html">).*?(</code>)',
@@ -96,6 +193,7 @@ def color_html_code(content):
                   content,
                   flags=re.DOTALL
                   )
+    # fmt: on
 
 
 def markdown_to_html(markdown):
@@ -142,16 +240,39 @@ def markdown_to_html(markdown):
     return '\n'.join(html_lines)
 
 
-def open_file() -> File:
+def open_unhighlighted_file() -> File:
+    """
+    Opens unhighlighted files with auto-fill.
+    """
+    while True:
+        lang = input(
+            f"Enter the language: ")
+        try:
+            lang = lang.lower()
+            for language, alias in LANGUAGES.items():
+                if lang in alias:
+                    break
+            else:
+                raise LanguageNotFoundError(f"Invalid language: {lang}")
+            break
+        except LanguageNotFoundError as e:
+            print(e.args[0])
+            continue
+
     while True:
         fn = input(
-            "Enter the path to the file: storage/app/markdown/course/")
+            f"Enter the file name: {DEFAULT_PATH}{language}/unhighlighted_html/")
+        if ".html" not in fn:
+            fn += ".html"
         try:
-            path = f"storage/app/markdown/course/{fn}"
+            path = f"{DEFAULT_PATH}{lang}/unhighlighted_html/{fn}"
             with open(path, "r") as f:
                 content = f.read()
 
-            file = File(fn, content)
+            file = File(fn, content, language)
+        except LanguageNotFoundError as e:
+            print(e)
+            continue
         except FileNotFoundError:
             print("File not found.")
             continue
@@ -159,21 +280,19 @@ def open_file() -> File:
 
 
 def parse_html_file():
-    file = open_file()
+    file = open_unhighlighted_file()
 
     html = color_html_code(file.content)
     file.content = html
-    file.save()
+    file.save_as_highlighted()
 
 
 def parse_file():
-    content = open_file()
-
-    html = markdown_to_html(content)
+    # TODO
+    ...
 
 
 def main():
-    load_colors()
     # with open("storage/app/markdown/course/html/chapter1.html", "r") as f:
     #     content = f.read()
 
@@ -183,16 +302,25 @@ def main():
 
         print("1. Parse a markdown file.")
         print("2. Parse a markdown directory.")
-        print("3. Hightlight a parsed file with a code block.")
+        print("3. Hightlight code blocks in a parsed file.")
+        print("4. Hightlight code blocks in a parsed directory.")
+        print("5. Hightlight all code blocks in the unhighlighted directories.")
         print("0. Exit.")
         option = int(input("Enter an option: "))
 
         if option == 1:
             parse_file()
         elif option == 2:
+            # TODO
             pass
         elif option == 3:
             parse_html_file()
+        elif option == 4:
+            # TODO
+            pass
+        elif option == 5:
+            # TODO
+            pass
         elif option == 0:
             break
 
