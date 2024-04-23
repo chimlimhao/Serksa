@@ -42,7 +42,7 @@ class CatalogController extends Controller
 
             // Check if $chapter is not null before using it
             if ($chapter) {
-                return view("auth.catalog.course", compact('user', 'course', 'chapter'));
+                return view("auth.course.home", compact('user', 'course', 'chapter'));
             } else {
                 // Handle the case where $chapter is null, such as redirecting or showing an error message
                 return redirect()->back()->with('error', 'Chapter not found');
@@ -73,7 +73,7 @@ class CatalogController extends Controller
 
 
                 // Pass the parsed content to the view
-                return view("auth.catalog.doc", compact('user', 'course', 'chapter', 'parsedContent'));
+                return view("auth.course.doc", compact('user', 'course', 'chapter', 'parsedContent'));
             } else {
                 // Handle the case where $chapter is null, such as redirecting or showing an error message
                 return redirect()->route('catalog')->with('error', 'Chapter not found');

@@ -897,20 +897,22 @@ p{
     display: inline-block;
     tab-size: 4;
 } */
-.main-doc h1, h2 {
-    border-bottom: 1px solid var(--highlight);
+.main-doc h1, .main-doc h2 {
+    /* border-bottom: 1px solid var(--highlight); */
     font-weight: 600;
-    margin-bottom: 16px;
+    /* margin-bottom: 16px; */
     line-height: 1.25;
-    padding-bottom: 0.3em;
+    margin: 10px 0;
     /* border-bottom: 1px solid rgba(255, 255, 255, 0.18); */
 }
 
 .main-doc hr {
     border-width: 0px 0px 1px;
+    /* width: 100%; */
     height: 1px;
     border-bottom-style: solid;
     color: var(--highlight);
+    margin: 10px 0;
 }
 
 .main-doc ul {
