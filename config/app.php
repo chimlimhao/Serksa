@@ -1,5 +1,10 @@
 <?php
 
+use App\Providers\AppServiceProvider;
+use Illuminate\Support\ServiceProvider;
+use App\Providers\MarkdownServiceProvider;
+use Parsedown\Providers\ParsedownServiceProvider;
+
 return [
 
     /*
@@ -123,4 +128,20 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+        /*
+    |--------------------------------------------------------------------------
+    | Markdown Provider To use the markdown() directive
+    |--------------------------------------------------------------------------
+    |
+    | This value is the name of your application, which will be used when the
+    | framework needs to place the application's name in a notification or
+    | other UI elements where an application name needs to be displayed.
+    |
+    */
+
+    'providers' => ServiceProvider::defaultProviders()->merge([
+        AppServiceProvider::class,
+        MarkdownServiceProvider::class,
+        ParsedownServiceProvider::class,
+    ])->toArray(),
 ];
