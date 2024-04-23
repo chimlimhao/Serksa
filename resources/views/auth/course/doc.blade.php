@@ -5,7 +5,7 @@
 @endsection
 
 @section('sidebar')
-    @include('auth.catalog.sidebar.html-sidebar')
+    @include('auth.course.sidebar.sidebar')
 @endsection
 
 @section('content')
