@@ -181,7 +181,7 @@ def color_html_code(content) -> str:
                               fr'&lt;<p style="color: {primary};">\1</p>',
                               code_block
                               )
-    highlighted_code = re.sub(r'(\s*\w+)=&quot;',
+    highlighted_code = re.sub(r'(\s+\w+)=&quot;',
                               fr'<p style="color: {accent};">\1</p>=&quot;',
                               highlighted_code
                               )
