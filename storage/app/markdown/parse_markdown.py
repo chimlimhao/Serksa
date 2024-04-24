@@ -1,6 +1,7 @@
 import json
-import os
 import re
+from os import listdir
+from os.path import isfile, join
 from typing import Type
 
 DEFAULT_PATH = "storage/app/markdown/course/"
@@ -292,6 +293,11 @@ def parse_file():
     ...
 
 
+def highlight_all():
+    unfinished_files = []
+    for finished_file in listdir("storage/app/markdown/course/finished_html"):
+        print(finished_file)
+
 def main():
     # with open("storage/app/markdown/course/html/chapter1.html", "r") as f:
     #     content = f.read()
@@ -304,7 +310,7 @@ def main():
         print("2. Parse a markdown directory.")
         print("3. Hightlight code blocks in a parsed file.")
         print("4. Hightlight code blocks in a parsed directory.")
-        print("5. Hightlight all code blocks in the unhighlighted directories.")
+        print("5. Hightlight all unhighlighted code blocks.")
         print("0. Exit.")
         option = int(input("Enter an option: "))
 
@@ -319,11 +325,12 @@ def main():
             # TODO
             pass
         elif option == 5:
-            # TODO
+            highlight_all()
             pass
         elif option == 0:
             break
 
 
 if __name__ == "__main__":
-    main()
+    # main()
+    highlight_all()
