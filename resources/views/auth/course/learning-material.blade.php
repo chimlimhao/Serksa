@@ -43,9 +43,14 @@
                 </div>
                 <div class="main-material">
                     <div class="video">
-                        <iframe width="560" height="315" src="https://www.youtube.com/embed/aDXSe87QUBo?si=6IC35srulFDVwOFX" 
-                            title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+                        <iframe width="560" 
+                        height="315" 
+                        src="{{$chapter->chapter_video}}"     
+                        title="YouTube video player" 
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                        referrerpolicy="strict-origin-when-cross-origin" 
+                        allowfullscreen>
                         </iframe>
                     </div>
                     <div class="video-desc">

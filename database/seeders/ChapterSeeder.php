@@ -23,7 +23,7 @@ class ChapterSeeder extends Seeder
                 'course_id' => 1,
                 'chapter_title' => 'Introduction to HTML',
                 'chapter_desc' => 'Learn the basics of HTML.',
-                'chapter_video' => 'https://example.com/html-intro-video',
+                'chapter_video' => 'https://www.youtube.com/embed/aDXSe87QUBo?si=6IC35srulFDVwOFX',
                 'chapter_doc' => 'chapter1',
                 'chapter_order' => 1,
             ],

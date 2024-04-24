@@ -54,62 +54,79 @@ class CatalogController extends Controller
         }
     }
 
-    public function courseLearningMaterial($courseId, $chapterId){
+    public function courseLearningMaterial($courseId, $chapterId)
+    {
+        // Check if the user is authenticated
         if (Auth::check()) {
             $user = Auth::user();
             // Retrieve the course and chapter details using the IDs
             $course = Course::findOrFail($courseId);
             $chapter = Chapter::findOrFail($chapterId);
 
+
             // Check if $chapter is not null before using it
             if ($chapter) {
+                // Define the base directory path for the course
+                $baseDir = storage_path("app/markdown/course/{$course->title}/");
 
-                // Defined the path for both folders
-                $finished_dir = storage_path("app/markdown/course/HTML/finished_html/"); // dir path for finished html
-                $unfinished_dir = storage_path("app/markdown/course/HTML/unhighlighted_html/"); //dir path for unfinished html
-                $chapter_number = $chapter->chapter_order;
-                $file_name = "chapter{$chapter_number}";
-                $full_unfinished_path = $unfinished_dir.$file_name.".html" ; //Full file path for unfinished html file
-                $full_finished_path = $finished_dir.$file_name.".html"; // Full file path for finished html file
+                // Check if the course directory exists
+                if (is_dir($baseDir)) {
+                    // Define the paths for finished and unfinished HTML files
+                    $finished_dir = $baseDir . "finished_html/";
+                    $unfinished_dir = $baseDir . "unhighlighted_html/";
+                    $markdown_dir = $baseDir . "markdown/";
+                    // make dynamic chapter number
+                    $chapter_number = $chapter->chapter_order;
+                    $file_name = "chapter{$chapter_number}";
+                    $chapter_markdown = "chapter($chapter_number}.md";
+                    $default_markdown = "default.md";
 
-                if (file_exists($full_finished_path)) {
-                    try {
-                        $parsedContent = File::get($full_finished_path);
-                        // dd($parsedContent); // Debugging check
+                    $full_unfinished_path = $unfinished_dir . $file_name . ".html";
+                    $full_finished_path = $finished_dir . $file_name . ".html";
+                    $full_chapter_markdown_path = $markdown_dir . $chapter_markdown;
+                    $full_default_markdown_path = $markdown_dir . $default_markdown;
+
+                    if (file_exists($full_finished_path)) {
+                        try {
+                            $parsedContent = File::get($full_finished_path);
+                            return view("auth.course.learning-material", compact("user", "course", "chapter", "parsedContent"));
+                        } catch (Exception $e) {
+                            // Handle file retrieval error
+                            dd($e->getMessage()); // Debugging error message
+                        }
+                    } elseif (file_exists($full_unfinished_path)) {
+                        $parsedContent = File::get($full_unfinished_path);
+                        // Run Python script to highlight HTML content
+                        $output = shell_exec('python path_to_parse_markdown.py');
                         return view("auth.course.learning-material", compact("user", "course", "chapter", "parsedContent"));
-                    } catch (Exception $e) {
-                        // Handle file retrieval error
-                        dd($e->getMessage()); // Debugging error message
+                    } else if (file_exists($full_chapter_markdown_path)) {
+                        $markdownContent = File::get($full_chapter_markdown_path);
+
+                        $full_file_path = $markdown_dir . $chapter_markdown;
+                        $file_path = fopen($full_file_path, "w");
+                        if ($file_path) {
+                            $parsedContent = Str::of($markdownContent)->markdown();
+                            $writeToFile = fwrite($file_path, $parsedContent);
+                            fclose($file_path);
+                        }
+                        return view("auth.course.learning-material", compact("user", "course", "chapter", "parsedContent"));
+                    } else if (file_exists($full_default_markdown_path)) {
+                        $markdownContent = File::get($full_default_markdown_path);
+
+                        $full_file_path = $markdown_dir . $default_markdown;
+                        $file_path = fopen($full_file_path, "w");
+                        if ($file_path) {
+                            $parsedContent = Str::of($markdownContent)->markdown();
+                            $writeToFile = fwrite($file_path, $parsedContent);
+                            fclose($file_path);
+                        }
+                        return view("auth.course.learning-material", compact("user", "course", "chapter", "parsedContent"));
                     }
+
+                } else {
+                    // Handle the case where course directory doesn't exist
+                    return redirect()->route('catalog')->with('error', 'Course directory not found');
                 }
-                else if (file_exists($full_unfinished_path)){
-                    $parsedContent = File::get($full_unfinished_path);
-                    // dd($parsedContent);
-
-                    // Get the python script to run and highlight the freshly rendered HTML file and write it into the finished folder's file
-                    // $output = shell_exec('python app/markdown/parse_markdown.py');
-                    // dd($output);
-
-                    return view("auth.course.learning-material", compact("user","course","chapter","parsedContent"));
-                }
-
-                $doc_path = "app/markdown/course/". $course->title. "/" . "markdown/" . $file_name . ".md";
-                $markdownContent = File::get(storage_path($doc_path));
-
-                // Create a file in a specific folder path
-                $full_file_path = $unfinished_dir.$file_name . ".html";
-                $unfinishedFile = fopen($full_file_path,"w");
-
-                //Check if the folder is open, write content into it if opened then close
-                if($unfinishedFile){
-                    // Render md content into html
-                    $parsedContent = Str::of($markdownContent)->markdown();
-                    $unfinishHtml = fwrite($unfinishedFile , $parsedContent);
-                    fclose($unfinishedFile);
-                }
-
-                // Pass the parsed content to the view
-                return view("auth.course.learning-material", compact('user', 'course', 'chapter', 'parsedContent'));
             } else {
                 // Handle the case where $chapter is null, such as redirecting or showing an error message
                 return redirect()->route('catalog')->with('error', 'Chapter not found');
@@ -119,7 +136,6 @@ class CatalogController extends Controller
             return redirect(route("login"));
         }
     }
-
     public function courseDoc($courseId, $chapterId)
     {
         // Check if the user is authenticated
@@ -131,54 +147,67 @@ class CatalogController extends Controller
 
             // Check if $chapter is not null before using it
             if ($chapter) {
+                // Define the base directory path for the course
+                $baseDir = storage_path("app/markdown/course/{$course->title}/");
 
-                // Defined the path for both folders
-                $finished_dir = storage_path("app/markdown/course/HTML/finished_html/"); // dir path for finished html
-                $unfinished_dir = storage_path("app/markdown/course/HTML/unhighlighted_html/"); //dir path for unfinished html
-                $chapter_number = $chapter->chapter_order;
-                $file_name = "chapter{$chapter_number}";
-                $full_unfinished_path = $unfinished_dir.$file_name.".html" ; //Full file path for unfinished html file
-                $full_finished_path = $finished_dir.$file_name.".html"; // Full file path for finished html file
+                // Check if the course directory exists
+                if (is_dir($baseDir)) {
+                    // Define the paths for finished and unfinished HTML files
+                    $finished_dir = $baseDir . "finished_html/";
+                    $unfinished_dir = $baseDir . "unhighlighted_html/";
+                    $markdown_dir = $baseDir . "markdown/";
+                    // make dynamic chapter number
+                    $chapter_number = $chapter->chapter_order;
+                    $file_name = "chapter{$chapter_number}";
+                    $chapter_markdown = "chapter($chapter_number}.md";
+                    $default_markdown = "default.md";
 
-                if (file_exists($full_finished_path)) {
-                    try {
-                        $parsedContent = File::get($full_finished_path);
-                        // dd($parsedContent); // Debugging check
+                    $full_unfinished_path = $unfinished_dir . $file_name . ".html";
+                    $full_finished_path = $finished_dir . $file_name . ".html";
+                    $full_chapter_markdown_path = $markdown_dir . $chapter_markdown;
+                    $full_default_markdown_path = $markdown_dir . $default_markdown;
+
+                    if (file_exists($full_finished_path)) {
+                        try {
+                            $parsedContent = File::get($full_finished_path);
+                            return view("auth.course.doc", compact("user", "course", "chapter", "parsedContent"));
+                        } catch (Exception $e) {
+                            // Handle file retrieval error
+                            dd($e->getMessage()); // Debugging error message
+                        }
+                    } elseif (file_exists($full_unfinished_path)) {
+                        $parsedContent = File::get($full_unfinished_path);
+                        // Run Python script to highlight HTML content
+                        $output = shell_exec('python path_to_parse_markdown.py');
                         return view("auth.course.doc", compact("user", "course", "chapter", "parsedContent"));
-                    } catch (Exception $e) {
-                        // Handle file retrieval error
-                        dd($e->getMessage()); // Debugging error message
+                    } else if (file_exists($full_chapter_markdown_path)) {
+                        $markdownContent = File::get($full_chapter_markdown_path);
+
+                        $full_file_path = $markdown_dir . $chapter_markdown;
+                        $file_path = fopen($full_file_path, "w");
+                        if ($file_path) {
+                            $parsedContent = Str::of($markdownContent)->markdown();
+                            $writeToFile = fwrite($file_path, $parsedContent);
+                            fclose($file_path);
+                        }
+                        return view("auth.course.doc", compact("user", "course", "chapter", "parsedContent"));
+                    } else if (file_exists($full_default_markdown_path)) {
+                        $markdownContent = File::get($full_default_markdown_path);
+
+                        $full_file_path = $markdown_dir . $default_markdown;
+                        $file_path = fopen($full_file_path, "w");
+                        if ($file_path) {
+                            $parsedContent = Str::of($markdownContent)->markdown();
+                            $writeToFile = fwrite($file_path, $parsedContent);
+                            fclose($file_path);
+                        }
+                        return view("auth.course.doc", compact("user", "course", "chapter", "parsedContent"));
                     }
+
+                } else {
+                    // Handle the case where course directory doesn't exist
+                    return redirect()->route('catalog')->with('error', 'Course directory not found');
                 }
-                else if (file_exists($full_unfinished_path)){
-                    $parsedContent = File::get($full_unfinished_path);
-                    // dd($parsedContent);
-
-                    // Get the python script to run and highlight the freshly rendered HTML file and write it into the finished folder's file
-                    $output = shell_exec('python C:\Users\Manut\Documents\VS Code\Projects\EduWeb\storage\app\markdown\parse_markdown.py');
-                    // dd($output);
-
-                    return view("auth.course.doc", compact("user","course","chapter","parsedContent"));
-                }
-
-                $doc_path = "app/markdown/course/". $course->title. "/" . "markdown/" . $file_name . ".md";
-                $markdownContent = File::get(storage_path($doc_path));
-
-
-                // Create a file in a specific folder path
-                $full_file_path = $unfinished_dir.$file_name . ".html";
-                $unfinishedFile = fopen($full_file_path,"w");
-
-                //Check if the folder is open, write content into it if opened then close
-                if($unfinishedFile){
-                    // Render md content into html
-                    $parsedContent = Str::of($markdownContent)->markdown();
-                    $unfinishHtml = fwrite($unfinishedFile , $parsedContent);
-                    fclose($unfinishedFile);
-                }
-
-                // Pass the parsed content to the view
-                return view("auth.course.doc", compact('user', 'course', 'chapter', 'parsedContent'));
             } else {
                 // Handle the case where $chapter is null, such as redirecting or showing an error message
                 return redirect()->route('catalog')->with('error', 'Chapter not found');
@@ -188,6 +217,7 @@ class CatalogController extends Controller
             return redirect(route("login"));
         }
     }
+
 
 
 
