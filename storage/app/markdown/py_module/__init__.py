@@ -1,4 +1,8 @@
 from .classes import Color, File, LanguageNotFoundError
+from .classes import (
+    HTML,
+    CSS,
+)
 
 DEFAULT_PATH = "storage/app/markdown/course/"
 LANGUAGES: dict[str, list[str]] = {

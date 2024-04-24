@@ -11,6 +11,8 @@ from py_module import (
     LanguageNotFoundError,
     Color,
     File,
+    HTML,
+    CSS,
 )
 
 def color_html_code(content) -> str:
@@ -135,21 +137,28 @@ def open_unhighlighted_file() -> File:
             continue
         return file
 
-
-def parse_html_file():
-    file = open_unhighlighted_file()
-
-    html = color_html_code(file.content)
-    file.content = html
-    file.save_as_highlighted()
-
-
-def parse_file():
-    # TODO
-    ...
+def get_class(language: str) -> File:
+    language_class = {
+        "HTML": HTML,
+        "CSS": CSS,
+        # "JavaScript": JavaScript,
+        # "PHP": PHP,
+        # "C": C,
+        # "C++": Cpp,
+        # "C#": CSharp,
+        # "SQL": SQL,
+        # "Ruby": Ruby,
+        # "Python": Python,
+        # "Java": Java
+    }
+    for _language, _class in language_class.items():
+        if language == _language:
+            return _class
 
 
 def highlight_all():
+    pending: list[File] = []
+
     for lang in LANGUAGES:
         try:
             files = [f for f in listdir(
@@ -159,60 +168,24 @@ def highlight_all():
         except FileNotFoundError:
             continue
         unfinished_files = [f for f in files if f not in finished_files]
+        for unfinished_file in unfinished_files:
+            file_class = get_class(lang)
+            with open(f"{DEFAULT_PATH}{lang}/unhighlighted_html/{unfinished_file}", "r") as f:
+                content = f.read()
+            f: File = file_class(unfinished_file, content)
+            pending.append(f)
 
-        if unfinished_files:
-            print("Found unhighlighted files:")
-            for file in unfinished_files:
-                print(" - " + file)
+    for file in pending:
+        start = time.time()
+        file.highlight_code()
+        file.save_as_highlighted()
+        end = time.time()
+        print(f"Finished {file.file_name} in {end - start:.10f} seconds")
 
-            print("Continue? (y/n)")
-            option = input()
-            if 'y' in option:
-                print("TODO") #TODO
-                time.sleep(2)
-            else:
-                return
-        else:
-            print("No files to highlight.")
-            time.sleep(2)
-            return
-    else:
-        print("No files to highlight.")
-        time.sleep(2)
-        return
 
 
 def main():
-    # with open("storage/app/markdown/course/html/chapter1.html", "r") as f:
-    #     content = f.read()
-
-    # code_block = color_html_code(content)
-    # print(code_block)
-    while True:
-
-        print("1. Parse a markdown file.")
-        print("2. Parse a markdown directory.")
-        print("3. Hightlight code blocks in a parsed file.")
-        print("4. Hightlight code blocks in a parsed directory.")
-        print("5. Hightlight all unhighlighted code blocks.")
-        print("0. Exit.")
-        option = int(input("Enter an option: "))
-
-        if option == 1:
-            parse_file()
-        elif option == 2:
-            # TODO
-            pass
-        elif option == 3:
-            parse_html_file()
-        elif option == 4:
-            # TODO
-            pass
-        elif option == 5:
-            highlight_all()
-            pass
-        elif option == 0:
-            break
+    highlight_all()
 
 
 if __name__ == "__main__":
