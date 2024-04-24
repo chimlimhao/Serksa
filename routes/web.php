@@ -26,6 +26,7 @@ Route::get('/catalog',[HeaderController::class, 'catalog'])->name('catalog');
 // Catalog
 Route::get('/catalog/{courseId}/{chapterId}', [CatalogController::class, 'courseContent'])->name('course-content');
 Route::get('/catalog/{courseId}/{chapterId}/doc', [CatalogController::class, 'courseDoc'])->name('course-doc');
+Route::get('/catalog/{courseId}/{chapterId}/learning-material', [CatalogController::class, 'courseLearningMaterial'])->name('course-learning-mat');
 // Route::get('/catalog/learn-html', [CatalogController::class, 'html'])->name('learn-html');
 
 // Authentication For User
