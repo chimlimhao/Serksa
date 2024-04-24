@@ -62,7 +62,7 @@ class CatalogController extends Controller
             // Retrieve the course and chapter details using the IDs
             $course = Course::findOrFail($courseId);
             $chapter = Chapter::findOrFail($chapterId);
-            
+
             // Check if $chapter is not null before using it
             if ($chapter) {
 
@@ -89,15 +89,15 @@ class CatalogController extends Controller
                     // dd($parsedContent);
 
                     // Get the python script to run and highlight the freshly rendered HTML file and write it into the finished folder's file
-                    $output = shell_exec('python app/markdown/parse_markdown.py');
-                    dd($output);
+                    $output = shell_exec('python C:\Users\Manut\Documents\VS Code\Projects\EduWeb\storage\app\markdown\parse_markdown.py');
+                    // dd($output);
 
                     return view("auth.course.doc", compact("user","course","chapter","parsedContent"));
                 }
 
                 $doc_path = "app/markdown/course/". $course->title. "/" . "markdown/" . $file_name . ".md";
                 $markdownContent = File::get(storage_path($doc_path));
-                
+
                 // Create a file in a specific folder path
                 $full_file_path = $unfinished_dir.$file_name . ".html";
                 $unfinishedFile = fopen($full_file_path,"w");
