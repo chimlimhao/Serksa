@@ -25,7 +25,7 @@
                                 <a href="{{ route('course-content', ['courseId' => $course->id, 'chapterId' => $chapter->id]) }}"><span>Home</span></a>
                             </li>
                             <li>
-                                <a href=""><span>Learning Material</span></a>
+                                <a href="{{route('course-learning-mat', ['courseId' => $course->id, 'chapterId' => $chapter->id])}}"><span>Learning Material</span></a>
                             </li>
                             <li>
                                 <a href="{{ route('course-doc', ['courseId' => $course->id, 'chapterId' => $chapter->id]) }}"><span>Documentation</span></a>
