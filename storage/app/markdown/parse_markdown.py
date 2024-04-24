@@ -58,7 +58,7 @@ def highlight_all():
         file.highlight_code()
         file.save_as_highlighted()
         end = time.time()
-        print(f"Finished {file.file_name} in {end - start:.10f} seconds")
+        print(f"Highlighted {file.language}: {file.file_name} in {end - start:.10f} seconds")
 
 
 
