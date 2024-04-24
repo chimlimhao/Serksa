@@ -24,7 +24,7 @@ class ChapterSeeder extends Seeder
                 'chapter_title' => 'Introduction to HTML',
                 'chapter_desc' => 'Learn the basics of HTML.',
                 'chapter_video' => 'https://example.com/html-intro-video',
-                'chapter_doc' => 'chapter1.html',
+                'chapter_doc' => 'chapter1',
                 'chapter_order' => 1,
             ],
             [
@@ -32,7 +32,7 @@ class ChapterSeeder extends Seeder
                 'chapter_title' => 'HTML Elements',
                 'chapter_desc' => 'Explore different HTML elements.',
                 'chapter_video' => 'https://example.com/html-elements-video',
-                'chapter_doc' => 'default.html',
+                'chapter_doc' => 'default',
                 'chapter_order' => 2,
             ],
             [

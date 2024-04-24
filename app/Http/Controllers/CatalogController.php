@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
 use App\Models\Course;
 use App\Models\Chapter;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 use App\Providers\MarkdownServiceProvider;
 use League\CommonMark\CommonMarkConverter;
 
@@ -63,14 +65,50 @@ class CatalogController extends Controller
             
             // Check if $chapter is not null before using it
             if ($chapter) {
-                // Retrieve the Markdown content from the Chapter model
-                $markdownContent = $chapter->chapter_doc;
-                $doc_path = "app/markdown/course/". $course->title. "/" . $markdownContent;
 
-                // Parse the Markdown content using MarkdownService
-                $parsedContent = File::get(storage_path($doc_path));
-                // $parsedContent = Str::of($markdownContent)->markdown();
+                // Defined the path for both folders
+                $finished_dir = storage_path("app/markdown/course/HTML/finished_html/"); // dir path for finished html
+                $unfinished_dir = storage_path("app/markdown/course/HTML/unhighlighted_html/"); //dir path for unfinished html
+                $chapter_number = $chapter->chapter_order;
+                $file_name = "chapter{$chapter_number}";
+                $full_unfinished_path = $unfinished_dir.$file_name.".html" ; //Full file path for unfinished html file
+                $full_finished_path = $finished_dir.$file_name.".html"; // Full file path for finished html file
 
+                if (file_exists($full_finished_path)) {
+                    try {
+                        $parsedContent = File::get($full_finished_path);
+                        // dd($parsedContent); // Debugging check
+                        return view("auth.course.doc", compact("user", "course", "chapter", "parsedContent"));
+                    } catch (Exception $e) {
+                        // Handle file retrieval error
+                        dd($e->getMessage()); // Debugging error message
+                    }
+                }
+                else if (file_exists($full_unfinished_path)){
+                    $parsedContent = File::get($full_unfinished_path);
+                    // dd($parsedContent);
+
+                    // Get the python script to run and highlight the freshly rendered HTML file and write it into the finished folder's file
+                    $output = shell_exec('python app/markdown/parse_markdown.py');
+                    dd($output);
+
+                    return view("auth.course.doc", compact("user","course","chapter","parsedContent"));
+                }
+
+                $doc_path = "app/markdown/course/". $course->title. "/" . "markdown/" . $file_name . ".md";
+                $markdownContent = File::get(storage_path($doc_path));
+                
+                // Create a file in a specific folder path
+                $full_file_path = $unfinished_dir.$file_name . ".html";
+                $unfinishedFile = fopen($full_file_path,"w");
+
+                //Check if the folder is open, write content into it if opened then close
+                if($unfinishedFile){
+                    // Render md content into html
+                    $parsedContent = Str::of($markdownContent)->markdown();
+                    $unfinishHtml = fwrite($unfinishedFile , $parsedContent);
+                    fclose($unfinishedFile);
+                }
 
                 // Pass the parsed content to the view
                 return view("auth.course.doc", compact('user', 'course', 'chapter', 'parsedContent'));

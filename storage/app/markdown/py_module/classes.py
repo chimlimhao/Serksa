@@ -19,6 +19,7 @@ class Color:
     GREEN = "#60a642"
     BLUE = "#44b3f1"
     PURPLE = "#baa0f8"
+    ORANGE = ""
     GRAY = "#8b9798"
 
     PRIMARY = RED
