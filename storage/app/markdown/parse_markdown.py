@@ -1,9 +1,5 @@
-import json
-import re
 import time
 from os import listdir
-from os.path import isfile, join
-from typing import Type
 
 from py_module import (
     DEFAULT_PATH,
@@ -47,15 +43,15 @@ def highlight_all():
             continue
         unfinished_files = [f for f in files if f not in finished_files]
         for unfinished_file in unfinished_files:
-            file_class = get_class(lang)
-            with open(f"{DEFAULT_PATH}{lang}/unhighlighted_html/{unfinished_file}", "r") as f:
-                content = f.read()
-            f: File = file_class(unfinished_file, content)
+            f: File = File(unfinished_file, lang)
             pending.append(f)
+
+    if len(pending) == 0:
+        print("No files to highlight")
 
     for file in pending:
         start = time.time()
-        file.highlight_code()
+        file.highlight_code_block()
         file.save_as_highlighted()
         end = time.time()
         print(f"Highlighted {file.language}: {file.file_name} in {end - start:.10f} seconds")

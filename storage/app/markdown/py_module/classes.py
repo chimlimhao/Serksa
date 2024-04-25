@@ -87,8 +87,18 @@ class Color:
 
 class File:
 
-    LANGUAGE: str = None
-    EXTENTION: str = None
+    def __init__(self, file_name: str, language: str, directory: str = "unhighlighted_html") -> None:
+        self._fn = file_name
+        self._language = language
+        self._dir = directory
+
+        with open(
+            f"storage/app/markdown/course/{language}/{directory}/{file_name}",
+            "r"
+        ) as f:
+            data = f.read()
+
+        self._content = data
 
     @property
     def content(self) -> str:
@@ -100,25 +110,23 @@ class File:
 
     @property
     def language(self) -> str:
-        return self.LANGUAGE
+        return self._language
 
     @property
     def short(self) -> str:
         return self.SHORT
 
     @property
-    def extention(self) -> str:
-        return self.EXTENTION
+    def directory(self) -> str:
+        return self._dir
 
     @content.setter
     def content(self, data: str) -> None:
         self._content = data
 
-    def __init__(self, fn: str, data: str) -> None:
-        self._fn = fn
-        self._content = data
-
-    def path(self, directory="unknown") -> str:
+    def path(self, directory: str | None = None) -> str:
+        if directory == None:
+            directory = self._dir
         return f"storage/app/markdown/course/{self.language}/{directory}/{self._fn}"
 
     def save(self) -> None:
@@ -130,177 +138,170 @@ class File:
         with open(path, "w") as f:
             f.write(self._content)
 
-    def save_as_md(self) -> None:
-        if ".md" in self._fn:
-            self.save()
-        else:
-            # fmt: off
-            fn = f"storage/app/markdown/course/{self._fn.replace('.html', '.md')}"
-            with open(fn, "w") as f:
-                f.write(self._content)
-
-    def save_as_html(self) -> None:
-        if ".html" in self._fn:
-            self.save()
-        else:
-            fn = f"storage/app/markdown/course/{self._fn.replace('.md', '.html')}"
-            with open(fn, "w") as f:
-                f.write(self._content)
-            # fmt: on
-
-    def highlight_code(self) -> None:
-        pass
+    def highlight_code_block(self) -> None:
+        self._content = re.sub(
+            r'<code class="language-html">(.*?)</code>',
+            HTML.highlight_code,
+            self._content,
+            flags=re.DOTALL
+        )
+        self._content = re.sub(
+            r'<code class="language-css">(.*?)</code>',
+            CSS.highlight_code,
+            self._content,
+            flags=re.DOTALL
+        )
 
 
-
-class HTML(File):
+class HTML:
     LANGUAGE: str = "HTML"
     EXTENTION: str = ".html"
 
-    def __init__(self, fn: str, data: str,) -> None:
-        super().__init__(fn, data,)
+    tag_color = Color.primary
+    value_color = Color.secondary
+    attribute_color = Color.accent
+    comment_color = Color.gray
 
-        self.tag_color = Color.primary
-        self.value_color = Color.secondary
-        self.attribute_color = Color.accent
+    tag_pattern = re.compile(r'&lt;(/?)(\w+)')
+    """
+    `<div class="abc">abc</div>`\n
+    `-^^^------------------^^^-`
+    """
+    attribute_pattern = re.compile(r'(\s+\w+)=&quot;')
+    """
+    `<div class="abc">abc</div>`\n
+    `-----^^^^^----------------`
+    """
+    value_pattern = re.compile(r'&quot;(.*?)&quot;')
+    """
+    `<div class="abc">abc</div>`\n
+    `------------^^^-----------`
+    """
+    comment_pattern = re.compile(r'&lt;!--(.*?)(--&gt;)', flags=re.DOTALL)
 
-        self._tag_pattern = re.compile(r'&lt;(/?\w+)')
-        """
-        `<div class="abc">abc</div>`\n
-        `-^^^------------------^^^-`
-        """
-        self._attribute_pattern = re.compile(r'(\s+\w+)=&quot;')
-        """
-        `<div class="abc">abc</div>`\n
-        `-----^^^^^----------------`
-        """
-        self._value_pattern = re.compile(r'&quot;(.*?)&quot;')
-        """
-        `<div class="abc">abc</div>`\n
-        `------------^^^-----------`
-        """
+    # fmt: off
+    tag_outcome = fr'&lt;\1<p style="color: {tag_color};">\2</p>'
+    attribute_outcome = fr'<p style="color: {attribute_color};">\1</p>=&quot;'
+    value_outcome = fr'&quot;<p style="color: {value_color};">\1</p>&quot;'
+    # fmt: on
 
-        # fmt: off
-        self._tag_outcome = fr'&lt;<p style="color: {self.tag_color};">\1</p>'
-        self._attribute_outcome = fr'<p style="color: {self.attribute_color};">\1</p>=&quot;'
-        self._value_outcome = fr'&quot;<p style="color: {self.value_color};">\1</p>&quot;'
-        # fmt: on
+    @classmethod
+    def highlight_code(cls, code_block_match: re.Match) -> str:
+        code_block = code_block_match.group(1)
 
-    def highlight_code(self) -> None:
-        code_block_match = re.search(
-            r'<code class="language-html">(.*?)</code>',
-            self.content,
-            re.DOTALL,
+        code_block = re.sub(cls.tag_pattern,
+                            cls.tag_outcome,
+                            code_block
+                            )
+        code_block = re.sub(cls.attribute_pattern,
+                            cls.attribute_outcome,
+                            code_block
+                            )
+        code_block = re.sub(cls.value_pattern,
+                            cls.value_outcome,
+                            code_block
+                            )
+        code_block = re.sub(cls.comment_pattern,
+                            cls.comment_callback,
+                            code_block
+                            )
+
+        return f'<code class="language-html">{code_block}</code>'
+
+    @classmethod
+    def comment_callback(cls, code_block_match: re.Match) -> str:
+        code_block = code_block_match.group(1)
+
+        code_block = re.sub(
+            r'<p style="color: #[0-9a-f]{6};">(.*?)</p>',
+            r'\1',
+            code_block
         )
-        if not code_block_match:
-            return
-        code_block: str = code_block_match.group(1)
-
-        code_block = re.sub(self._tag_pattern,
-                            self._tag_outcome,
-                            code_block
-                            )
-        code_block = re.sub(self._attribute_pattern,
-                            self._attribute_outcome,
-                            code_block
-                            )
-        code_block = re.sub(self._value_pattern,
-                            self._value_outcome,
-                            code_block
-                            )
-
-        self._content = re.sub(
-            r'(<code class="language-html">).*?(</code>)',
-            r'\1' + code_block + r'\2',
-            self.content,
-            flags=re.DOTALL
-        )
+        return f'<p style="color: {cls.comment_color};">&lt;!--{code_block}--&gt;</p>'
 
 class CSS(File):
     LANGUAGE: str = "CSS"
     EXTENTION: str = ".css"
 
-    def __init__(self, fn: str, data: str) -> None:
-        super().__init__(fn, data)
+    class_color: str = Color.primary
+    type_color: str = Color.accent
+    at_color: str = Color.purple
+    comment_color: str = Color.gray
 
-        self.class_color: str = Color.primary
-        self.type_color: str = Color.accent
-        self.at_color: str = Color.purple
+    # fmt: off
+    class_pattern = re.compile(r'(?<!\d)([\.\#][a-zA-Z0-9-]+)([\s\{\:])')
+    """
+    `.welcome #inner a {`\n
+    `^^^^^^^^-^^^^^^---`
+    """
+    type_pattern = re.compile(r'(?<![\#\.\<\>\"\@])(\b[a-zA-Z0-9-]+)([\s\{\:])')
+    """
+    `.welcome #inner a {`\n
+    `----------------^-`
+    """
+    psudo_pattern = re.compile(r':(\b[a-zA-Z0-9-]+)([\s\{])')
+    """
+    `a::after {`\n
+    `---^^^^^--`
+    """
+    at_pattern = re.compile(r'(@\b[a-zA-Z0-9-]+)([\s\{\:])')
+    """
+    `@media screen and (max-width: 1200px) {`\n
+    `^^^^^^---------------------------------`
+    """
+    and_pattern = re.compile(r'(?<![\#\.\<\>\"\@])(\s*)(and)([\s\{\:])')
+    """
+    `@media screen and (max-width: 1200px) {`\n
+    `--------------^^^----------------------`
+    """
+    comment_pattern = re.compile(r'\/\*(.*?)(\*\/)', flags=re.DOTALL)
+    """Everything inside comments"""
 
-        # fmt: off
-        self._class_pattern = re.compile(r'(?<!\d)([\.\#][a-zA-Z0-9-]+)([\s\{\:])')
-        """
-        `.welcome #inner a {`\n
-        `^^^^^^^^-^^^^^^---`
-        """
-        self._type_pattern = re.compile(r'(?<![\#\.\<\>\"\@])(\b[a-zA-Z0-9-]+)([\s\{\:])')
-        """
-        `.welcome #inner a {`\n
-        `----------------^-`
-        """
-        self._psudo_pattern = re.compile(r':(\b[a-zA-Z0-9-]+)([\s\{])')
-        """
-        `a::after {`\n
-        `---^^^^^--`
-        """
-        self._at_pattern = re.compile(r'(@\b[a-zA-Z0-9-]+)([\s\{\:])')
-        """
-        `@media screen and (max-width: 1200px) {`\n
-        `^^^^^^---------------------------------`
-        """
-        self._and_pattern = re.compile(r'(?<![\#\.\<\>\"\@])(\s*)(and)([\s\{\:])')
-        """
-        `@media screen and (max-width: 1200px) {`\n
-        `--------------^^^----------------------`
-        """
-        self._comment_pattern = re.compile(r'(\/\*.*?\*\/)')
-        """1 line comments."""
+    class_outcome = fr'<p style="color: {class_color};">\1</p>\2'
+    type_outcome = fr'<p style="color: {type_color};">\1</p>\2'
+    psudo_outcome = fr'<p style="color: {type_color};">\1</p>\2'
+    at_outcome = fr'<p style="color: {at_color};">\1</p>\2'
+    and_outcome = fr'\1<p style="color: {at_color};">\2</p>\3'
+    # fmt: on
 
-        self._class_outcome = fr'<p style="color: {self.class_color};">\1</p>\2'
-        self._type_outcome = fr'<p style="color: {self.type_color};">\1</p>\2'
-        self._psudo_outcome = fr'<p style="color: {self.type_color};">\1</p>\2'
-        self._at_outcome = fr'<p style="color: {self.at_color};">\1</p>\2'
-        self._and_outcome = fr'\1<p style="color: {self.at_color};">\2</p>\3'
-        # fmt: on
-
-    def highlight_code(self) -> None:
-        code_block_match = re.search(
-            r'<code class="language-css">(.*?)</code>',
-            self.content,
-            re.DOTALL,
-        )
-        if not code_block_match:
-            return
+    @classmethod
+    def highlight_code(cls, code_block_match: re.Match) -> str:
         code_block: str = code_block_match.group(1)
 
-        code_block = re.sub(self._at_pattern,
-            self._at_outcome,
-            code_block
-        )
-        code_block = re.sub(self._and_pattern,
-            self._and_outcome,
-            code_block
-        )
-        code_block = re.sub(self._comment_pattern,
-            '',
-            code_block
-        )
-        code_block = re.sub(self._class_pattern,
-            self._class_outcome,
-            code_block
-        )
-        code_block = re.sub(self._type_pattern,
-            self._type_outcome,
-            code_block
-        )
-        code_block = re.sub(self._psudo_pattern,
-            self._psudo_outcome,
-            code_block
-        )
+        code_block = re.sub(cls.at_pattern,
+                            cls.at_outcome,
+                            code_block
+                            )
+        code_block = re.sub(cls.and_pattern,
+                            cls.and_outcome,
+                            code_block
+                            )
+        code_block = re.sub(cls.class_pattern,
+                            cls.class_outcome,
+                            code_block
+                            )
+        code_block = re.sub(cls.type_pattern,
+                            cls.type_outcome,
+                            code_block
+                            )
+        code_block = re.sub(cls.psudo_pattern,
+                            cls.psudo_outcome,
+                            code_block
+                            )
+        code_block = re.sub(cls.comment_pattern,
+                            cls.comment_callback,
+                            code_block
+                            )
 
-        self._content = re.sub(
-            r'(<code class="language-css">).*?(</code>)',
-            r'\1' + code_block + r'\2',
-            self.content,
+        return f'<code class="language-css">{code_block}</code>'
+
+    @classmethod
+    def comment_callback(cls, code_block_match: re.Match) -> str:
+        code_block = code_block_match.group(1)
+        code_block = re.sub(
+            r'<p style="color: #[0-9a-f]{6};">(.*?)</p>',
+            r'\1',
+            code_block,
             flags=re.DOTALL
         )
+        return f'<p style="color: {cls.comment_color};">/*{code_block}*/</p>'
