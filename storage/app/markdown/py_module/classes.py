@@ -219,7 +219,7 @@ class HTML:
         )
         return f'<p style="color: {cls.comment_color};">&lt;!--{code_block}--&gt;</p>'
 
-class CSS(File):
+class CSS:
     LANGUAGE: str = "CSS"
     EXTENTION: str = ".css"
 
@@ -234,7 +234,7 @@ class CSS(File):
     `.welcome #inner a {`\n
     `^^^^^^^^-^^^^^^---`
     """
-    type_pattern = re.compile(r'(?<![\#\.\<\>\"\@])(\b[a-zA-Z0-9-]+)([\s\{\:])')
+    type_pattern = re.compile(r'(?<![\#\.\<\>\"\@])(\b[a-zA-Z-]+)([\s\{\:])')
     """
     `.welcome #inner a {`\n
     `----------------^-`
