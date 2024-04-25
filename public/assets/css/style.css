@@ -651,7 +651,7 @@ header .sub-menu-wrap.open-menu{
 
 
 .content .progress-wrap .progress .progress-card .progress-context{
-    padding: 10px; 
+    padding: 10px;
 }
 
 .content .progress-wrap .progress .progress-card .progress-context h4{
@@ -881,9 +881,14 @@ tt, code, kbd, samp{
     border-radius: 5px;
     padding: 2px;
 }
+
 .main-doc p,
 .main-material p{
     margin: 10px 0;
+}
+
+pre code {
+    color: #000;
 }
 
 .main-doc pre .language-html {
