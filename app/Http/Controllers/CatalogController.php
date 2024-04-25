@@ -78,7 +78,7 @@ class CatalogController extends Controller
                     // make dynamic chapter number
                     $chapter_number = $chapter->chapter_order;
                     $file_name = "chapter{$chapter_number}";
-                    $chapter_markdown = "chapter($chapter_number}.md";
+                    $chapter_markdown = "chapter{$chapter_number}.md";
                     $default_markdown = "default.md";
 
                     $full_unfinished_path = $unfinished_dir . $file_name . ".html";
@@ -103,7 +103,7 @@ class CatalogController extends Controller
                         $markdownContent = File::get($full_chapter_markdown_path);
 
                         $full_file_path = $markdown_dir . $chapter_markdown;
-                        $file_path = fopen($full_file_path, "w");
+                        $file_path = fopen($full_unfinished_path, "w");
                         if ($file_path) {
                             $parsedContent = Str::of($markdownContent)->markdown();
                             $writeToFile = fwrite($file_path, $parsedContent);
