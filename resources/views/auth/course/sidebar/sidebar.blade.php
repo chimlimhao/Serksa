@@ -2,19 +2,19 @@
     <div class="html-sidebar">
         <div class="header">
             <div class="lang-icon">
-                <img src="{{ $course->img }}" alt="">
+                <img src="{{ $courses->img }}" alt="">
             </div>
             <div class="lang-context">
                 <h5>Programming Language:</h5>
-                <h5>{{ $course->title }}</h5>
-                <h6>{{ $course->chapters->count() }} Chapters</h6>
+                <h5>{{ $courses->title }}</h5>
+                <h6>{{ $courses->chapters->count() }} Chapters</h6>
             </div>
         </div>
         <div class="middle">
             <ul>
-                @foreach($course->chapters as $index => $chapter)
+                @foreach($courses->chapters as $index => $chapter)
                 <li > <!-- Check if it's the first chapter -->
-                    <a href="{{ route('course-content', ['courseId' => $course->id, 'chapterId' => $chapter->id]) }}" onclick="handleChapterClick(this)">
+                    <a href="{{ route('course-content', ['courseId' => $courses->id, 'chapterId' => $chapter->id]) }}" onclick="handleChapterClick(this)">
                         <h4>Chapter {{ $chapter->chapter_order }}:</h4>
                         <p>{{ $chapter->chapter_title }}</p>
                     </a>

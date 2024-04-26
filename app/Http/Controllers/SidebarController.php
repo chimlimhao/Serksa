@@ -8,12 +8,12 @@ use Illuminate\Support\Facades\Auth;
 class SidebarController extends Controller
 {
     public function dashboard(){
-        $user = Auth::user(); // Get the authenticated user
-        return view('auth.sidebar-auth.dashboard')->with('user', $user);
+        $users = Auth::user(); // Get the authenticated user
+        return view('auth.header-auth.home.dashboard', compact('users'));
     }
 
     public function course(){
-        $user = Auth::user();
-        return view('auth.sidebar-auth.course')->with('user', $user);
+        $users = Auth::user();
+        return view('auth.header-auth.home.course', compact('users'));
     }
 }

@@ -2,6 +2,7 @@
 
 use Database\Seeders\ChapterSeeder;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DocController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\HeaderController;
@@ -19,9 +20,15 @@ Route::get('/admin/login', [AdminController::class, 'loginAdmin'])->name('admin.
 
 Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin-dashboard');
 
-// Welcome page
+// Header page
 Route::get('/welcome',[HeaderController::class, 'index'])->name('home'); 
 Route::get('/catalog',[HeaderController::class, 'catalog'])->name('catalog');
+Route::get('/doc',[HeaderController::class, 'doc'])->name('doc');
+Route::get('/community',[HeaderController::class, 'community'])->name('community');
+Route::get('/pricing',[HeaderController::class, 'pricing'])->name('pricing');
+
+// Doc
+Route::get('/doc/{courseId}',[DocController::class, 'docContent'])->name('doc-content');
 
 // Catalog
 Route::get('/catalog/{courseId}/{chapterId}', [CatalogController::class, 'courseContent'])->name('course-content');

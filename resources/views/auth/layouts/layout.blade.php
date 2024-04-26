@@ -26,12 +26,12 @@
                 <div class="user-profile">
                     <a href="#"><i class="fas fa-bell"></i></a>
                     {{-- <p>{{$user->name}}</p> --}}
-                    <a href="#"><img src="{{$user->avatar}}" alt="Profile Picture" onclick="toggleProfileMenu()"></a>
+                    <a href="#"><img src="{{$users->avatar}}" alt="Profile Picture" onclick="toggleProfileMenu()"></a>
                     <div class="sub-menu-wrap" id="subMenu">
                         <div class="sub-menu">
                             <div class="user-info">
-                                <a href="#"><img src="{{$user->avatar}}" alt="Profile Picture"></a>
-                                <h3>{{$user->name}}</h3>
+                                <a href="#"><img src="{{$users->avatar}}" alt="Profile Picture"></a>
+                                <h3>{{$users->name}}</h3>
                             </div>
                             <hr>
                             <a href="#"><i class="fa-solid fa-user"></i>

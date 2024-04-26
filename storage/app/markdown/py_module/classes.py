@@ -1,5 +1,5 @@
 import re
-
+from typing import Optional
 
 class LanguageNotFoundError(Exception):
     pass
@@ -124,7 +124,7 @@ class File:
     def content(self, data: str) -> None:
         self._content = data
 
-    def path(self, directory: str | None = None) -> str:
+    def path(self, directory: Optional[str] = None) -> str:
         if directory == None:
             directory = self._dir
         return f"storage/app/markdown/course/{self.language}/{directory}/{self._fn}"

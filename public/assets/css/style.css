@@ -437,7 +437,7 @@ header .sub-menu-wrap.open-menu{
     margin-top: 10px;
     width: 20%;
     /* width: 250px; */
-    height: auto;
+    /* height: auto; */
     /* border: 1px solid #000; */
 }
 
@@ -543,7 +543,7 @@ header .sub-menu-wrap.open-menu{
 .body-content .catalog-sidebar ul .sidebar-menu{
     /* position: absolute; */
     width: 100%;
-    max-height: 400;
+    max-height: 450px;
     transition: max-height 0.5s ease;
     overflow: hidden;
 }
@@ -742,31 +742,31 @@ header .sub-menu-wrap.open-menu{
     margin: 15px 0;
 }
 
-.course-wrap .main .course-content .main .main-navbar{
+.course-wrap .main .course-content .main .course-navbar{
     width: 100%;
     height: auto;
 }
-.course-wrap .main .course-content .main .main-navbar ul{
+.course-wrap .main .course-content .main .course-navbar ul{
     display: flex;
     justify-content: start;
     align-items: center;
     border-bottom: 1px solid var(--text-highlight);
 }
-.course-wrap .main .course-content .main .main-navbar ul li{
+.course-wrap .main .course-content .main .course-navbar ul li{
     margin-right: 10px;
     padding: 10px;
 }
-.course-wrap .main .course-content .main .main-navbar ul li.active{
+.course-wrap .main .course-content .main .course-navbar ul li.active{
     border-bottom: 3px solid var(--accent);
 }
 
-.course-wrap .main .course-content .main .main-navbar ul li:hover{
+.course-wrap .main .course-content .main .course-navbar ul li:hover{
     border: 1px solid transparent;
     border-radius: 10px 10px 0 0;
     background-color: var(--secondary);
 }
 
-.course-wrap .main .course-content .main .main-content{
+.course-wrap .main .course-content .main .course-content{
     margin: 20px 0;
 }
 
@@ -859,6 +859,12 @@ header .sub-menu-wrap.open-menu{
     justify-content: center;
     align-items: center;
     margin: 10px 0;
+    border-top: 1px solid;
+    border-bottom: 1px solid;
+}
+iframe{
+    margin: 10px 0;
+    border-radius: 5px;
 }
 
 /* Docs content */
@@ -881,17 +887,16 @@ tt, code, kbd, samp{
     border-radius: 5px;
     padding: 2px;
 }
-
-.main-doc p,
+.course-doc p,
 .main-material p{
     margin: 10px 0;
 }
 
-pre code {
+pre code{
     color: #000;
 }
 
-.main-doc pre .language-html {
+.course-doc pre .language-html {
     /* background-color: #f8f8f8;
     border: 1px solid #ddd;
     padding: 10px;
@@ -900,10 +905,10 @@ pre code {
     font-family: monospace;
     color: #000;
 }
-.main-doc .code-line {
+.course-doc .code-line {
     margin-bottom: 16px;
 }
-/* .main-doc code {
+/* .course-doc code {
     font-family: 'SF Mono', Monaco, Consolas, 'Ubuntu Mono', monospace;
     color: #D6D6D6;
     background-color: #333;
@@ -914,7 +919,7 @@ pre code {
     display: inline-block;
     tab-size: 4;
 } */
-.main-doc h1, .main-doc h2 {
+.course-doc h1, .course-doc h2 {
     /* border-bottom: 1px solid var(--highlight); */
     font-weight: 600;
     /* margin-bottom: 16px; */
@@ -923,7 +928,7 @@ pre code {
     /* border-bottom: 1px solid rgba(255, 255, 255, 0.18); */
 }
 
-.main-doc hr,
+.course-doc hr,
 .main-material hr  {
     border-width: 0px 0px 1px;
     /* width: 100%; */
@@ -933,46 +938,46 @@ pre code {
     margin: 10px 0;
 }
 
-.main-doc ul,
+.course-doc ul,
 .main-material ul  {
     margin-bottom: 0.7em;
 }
 
-.main-doc li ,
+.course-doc li ,
 .main-material li{
     list-style: circle;
     margin-left: 50px;
 }
 
-.main-doc a,
+.course-doc a,
 .main-material a {
     color: #8ABEB7;
 }
 
-.main-doc a:hover,
+.course-doc a:hover,
 .main-material a:hover {
     color: #65A59A;
 }
 
-.main-doc table,
+.course-doc table,
 .main-material table {
     border-collapse: collapse;
     margin-bottom: 0.7em;
 }
 
-.main-doc th, .main-doc td,
+.course-doc th, .course-doc td,
 .main-material th, .main-material td {
     padding: 5px 10px;
     text-align: center;
     border-color: rgba(255, 255, 255, 0.18);
 }
 
-.main-doc th,
+.course-doc th,
 .main-material th {
     border-bottom: 1px solid var(--accent);
 }
 
-.main-doc td,
+.course-doc td,
 .main-,.material td {
     border-top: 1px solid var(--highlight);
     border-bottom: 1px solid var(--highlight);

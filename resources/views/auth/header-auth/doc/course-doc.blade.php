@@ -12,7 +12,14 @@
 </nav>
 @endsection
 
-
+@section('sidebar')
+    @include('auth.partials.sidebar')
+@endsection
 
 @section('content')
+<div class="main-doc">
+    <div class="doc-content">
+        {!! $parsedContent !!}
+    </div>
+</div>
 @endsection

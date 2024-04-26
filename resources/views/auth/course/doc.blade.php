@@ -19,29 +19,29 @@
                 </a>
             </div>
             <div class="main">
-                <div class="main-navbar">
+                <div class="course-navbar">
                     <ul>
                         <li>
-                            <a href="{{ route('course-content', ['courseId' => $course->id, 'chapterId' => $chapter->id]) }}"><span>Home</span></a>
+                            <a href="{{ route('course-content', ['courseId' => $courses->id, 'chapterId' => $chapters->id]) }}"><span>Home</span></a>
                         </li>
                         <li>
-                            <a href="{{route('course-learning-mat', ['courseId' => $course->id, 'chapterId' => $chapter->id])}}"><span>Learning Material</span></a>
+                            <a href="{{route('course-learning-mat', ['courseId' => $courses->id, 'chapterId' => $chapters->id])}}"><span>Learning Material</span></a>
                         </li>
                         <li class="active">
-                            <a href="{{ route('course-doc', ['courseId' => $course->id, 'chapterId' => $chapter->id]) }}"><span>Documentation</span></a>
+                            <a href="{{ route('course-doc', ['courseId' => $courses->id, 'chapterId' => $chapters->id]) }}"><span>Documentation</span></a>
                         </li>
                     </ul>
                 </div>
-                <div class="main-content">
-                    @if($chapter)
+                <div class="course-content">
+                    @if($chapters)
                         {{-- Display chapter details --}}
-                        <h3>Chapter {{$chapter->chapter_order}}:</h3>
-                        <h3>{{ $chapter->chapter_title }}</h3>
+                        <h3>Chapter {{$chapters->chapter_order}}:</h3>
+                        <h3>{{ $chapters->chapter_title }}</h3>
                     @else
                         <h3>No Chapter Found</h3>
                     @endif
                 </div>
-                <div class="main-doc">
+                <div class="course-doc">
                     {{-- Use Blade directive to render Markdown content --}}
                     {!! $parsedContent !!}
 

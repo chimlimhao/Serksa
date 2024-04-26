@@ -5,15 +5,24 @@
             <span id="languagesIcon" class="arrow-icon">^</span>
         </h2>
         <div class="sidebar-menu" id="languages">
-            <li><a href=""><span>HTML</span></a>
-            <li><a href=""><span>CSS</span></a>
+            @if ($courses && $courses instanceof Illuminate\Database\Eloquent\Collection)
+                @foreach ($courses as $course)
+                    <li><a
+                            href="{{ route('doc-content', ['courseId' => $course->id]) }}"><span>{{ $course->title }}</span></a>
+                    </li>
+                @endforeach
+            @else
+                <p>No courses found.</p>
+            @endif
+
+            {{-- <li><a href=""><span>CSS</span></a>
             <li><a href=""><span>JavaScript</span></a>
             <li><a href=""><span>Java</span></a>
             <li><a href=""><span>Python</span></a>
             <li><a href=""><span>C</span></a>
             <li><a href=""><span>C++</span></a>
             <li><a href=""><span>Php</span></a>
-            <li><a href=""><span>SQL</span></a>
+            <li><a href=""><span>SQL</span></a> --}}
         </div>
         <h2 onclick="toggleSidebarMenu('subjects', 'subjectsIcon')">
             Major Subjects
