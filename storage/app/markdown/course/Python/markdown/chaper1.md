@@ -32,7 +32,7 @@ print(object_1.value) # 2
 ___
 Every methods in a class need to have an argument `self` at the start. This contains the data of the instance.
 
-When manipulating the data if an object. You need to always use `self.` before the variable name.
+When manipulating the data in an object. You need to always use `self.` before the variable name.
 ```python
 class Parent:
 
