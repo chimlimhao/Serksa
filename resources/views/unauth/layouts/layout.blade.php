@@ -16,14 +16,7 @@
     <div class="container">
         <header>
             <a href="{{route('home')}}"><img src="{{asset('assets/image/logo.png')}}" alt="Web Logo"></a>
-            <nav>
-                <ul>
-                    <li><a href="{{route('catalog')}}">Catalog</a></li>
-                    <li><a href="">Resource</a></li>
-                    <li><a href="">Community</a></li>
-                    <li><a href="">Pricing</a></li>
-                </ul>
-            </nav>
+            @yield('header')
             <div class="header-content">
                 <div class="search-bar">
                     <button><i class="ri-search-line"></i></button>
