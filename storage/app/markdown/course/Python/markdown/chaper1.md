@@ -10,8 +10,6 @@ class Parent:
 ```
 ### Creating Instances
 ___
-How to use classes as object:
-
 ```python
 object_1 = Parent()
 ```
