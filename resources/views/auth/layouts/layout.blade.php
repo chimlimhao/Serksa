@@ -24,7 +24,7 @@
                     <input type="text" placeholder="Search...">
                 </div>
                 <div class="user-profile">
-                    <a href="#"><i class="fas fa-bell"></i></a>
+                    <a href="#"><i class="fa-regular fa-bell"></i></a>
                     {{-- <p>{{$user->name}}</p> --}}
                     <a href="#"><img src="{{$users->avatar}}" alt="Profile Picture" onclick="toggleProfileMenu()"></a>
                     <div class="sub-menu-wrap" id="subMenu">
