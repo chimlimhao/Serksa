@@ -19,9 +19,9 @@
             <nav>
                 <ul>
                     <li><a href="{{route('catalog')}}">Catalog</a></li>
-                    <li><a href="">Resource</a></li>
-                    <li><a href="">Community</a></li>
-                    <li><a href="">Pricing</a></li>
+                    <li><a href="{{route('doc')}}">Documentation</a></li>
+                    <li><a href="{{route('community')}}">Community</a></li>
+                    <li><a href="{{route('pricing')}}">Pricing</a></li>
                 </ul>
             </nav>
             <div class="header-content">
