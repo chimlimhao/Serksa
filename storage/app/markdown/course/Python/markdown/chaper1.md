@@ -107,7 +107,7 @@ class Object:
     @value.setter
     def value(self, value):
         ...
-        return self.value_data = value
+        self.value_data = value
 
 object_1 = Object(5)
 object_1.value = 10
