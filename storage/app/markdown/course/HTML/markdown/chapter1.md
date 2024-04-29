@@ -3,7 +3,7 @@
 <img src="test" alt="testts">test</img>
 ```
 
-Insert your **image-path** to the src attribute.🥹🖕
+Insert your **image-path** to the src attribute.🥹🖕  
 Here is the source [code]().
 
 ## Chapter 1
