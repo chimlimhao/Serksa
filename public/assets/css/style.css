@@ -134,6 +134,7 @@ header .sub-menu-wrap.open-menu{
     max-height: 450px; /*Set this to 400px to open up/show the dropdown menu through js */
 }
 
+
 .sub-menu-wrap .sub-menu{
     background-color:var(--white);
     padding:20px;
@@ -1004,7 +1005,7 @@ pre {
     word-spacing: 0px;
     -webkit-text-stroke-width: 0px;
 }
-pre p {
+pre span {
     display: inline;
     font-family: monospace;
 }
