@@ -5,14 +5,9 @@
             <span id="languagesIcon" class="arrow-icon">^</span>
         </h2>
         <div class="sidebar-menu" id="languages">
-            <li><a href=""><span>HTML & CSS</span></a>
-            <li><a href=""><span>JavaScript</span></a>
-            <li><a href=""><span>Java</span></a>
-            <li><a href=""><span>Python</span></a>
-            <li><a href=""><span>C</span></a>
-            <li><a href=""><span>C++</span></a>
-            <li><a href=""><span>Php</span></a>
-            <li><a href=""><span>SQL</span></a>
+            @foreach ($courses as $course)
+            <li><a href="{{route("doc-content", ['courseId' => $course->id])}}"><span>{{$course->title}}</span></a>
+            @endforeach
         </div>
         <h2 onclick="toggleSidebarMenu('subjects', 'subjectsIcon')">
             Major Subjects
