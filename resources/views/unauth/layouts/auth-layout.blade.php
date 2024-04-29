@@ -19,7 +19,7 @@
             <nav>
                 <ul>
                     <li><a href="{{route('catalog')}}">Catalog</a></li>
-                    <li><a href="">Resource</a></li>
+                    <li><a href="">Documentation</a></li>
                     <li><a href="">Community</a></li>
                     <li><a href="">Pricing</a></li>
                 </ul>
