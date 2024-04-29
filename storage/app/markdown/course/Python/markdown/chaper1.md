@@ -30,7 +30,7 @@ print(object_1.value) # 2
 ___
 Every methods in a class need to have an argument `self` at the start. This contains the data of the instance.
 
-When manipulating the data in an object. You need to always use `self.` before the variable name.
+When manipulating the data of an object. You need to always use `self.` before the variable name.
 ```python
 class Parent:
 
@@ -57,11 +57,13 @@ print(object_1.value) # 0
 ___
 In `Python` you can set a method to be a property. This means to access it, you write what you would do when getting a variable an the instance.
 
+Propeties are used to make aliases for datas and add securities.
+
 For example:
 
-#### Before
+#### Without property
 ```python
-class Parent:
+class Object:
 
     def __init__(self, value):
         self.value_data = value
@@ -70,13 +72,13 @@ class Parent:
     def value(self):
         return self.value_data
 
-
-object_1.value_data # this is how to access a variable
-object_1.value() # this is how you call a method
+object_1 = Object(5)
+print(object_1.value_data) # 5
+print(object_1.value()) # 5
 ```
-#### After
+#### With property
 ```python
-class Parent:
+class Object:
 
     def __init__(self, value):
         self.value_data = value
@@ -86,15 +88,16 @@ class Parent:
     def value(self):
         return self.value_data
 
-
-object_1.value # this is how you call a property
+object = Object(5)
+x = object_1.value # this is how you call a property
+print(x) # 5
 ```
 ___
 #### Properies can have setters
 
 This is useful because you can add checks to any data that come through.
 ```python
-class Parent:
+class Object:
     ...
 
     @property
@@ -106,7 +109,7 @@ class Parent:
         ...
         return self.value_data = value
 
-
+object_1 = Object(5)
 object_1.value = 10
 print(object_1.value) # 10
 ```
