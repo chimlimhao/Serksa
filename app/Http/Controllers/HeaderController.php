@@ -32,35 +32,35 @@ class HeaderController extends Controller
         }
     }
     public function doc(){
+        $courses = Course::all();
+        $markdownContent = File::get(storage_path("app/markdown/default.md"));
+        $parsedContent = Str::of($markdownContent)->markdown();
         if (Auth::check()){
             $users = Auth::user();
-            $courses = Course::all();
-            $markdownContent = File::get(storage_path("app/markdown/default.md"));
             // dd($markdownContent);
-            $parsedContent = Str::of($markdownContent)->markdown();
             return view("auth.header-auth.document",compact("users", "courses", "parsedContent"));
         }
-        return view("auth.header-unauth.document");
+        return view("unauth.header-unauth.document", compact("courses", "parsedContent"));
     }
 
     public function community(){
+        $courses = Course::all();
+        $chapters = Chapter::all();
         if (Auth::check()){
             $users = Auth::user();
-            $courses = Course::all();
-            $chapters = Chapter::all();
             return view("auth.header-auth.community",compact("users", "courses","chapters"));
         }
-        return view("auth.header-unauth.community");
+        return view("unauth.header-unauth.community");
     }
 
     public function pricing(){
+        $courses = Course::all();
+        $chapters = Chapter::all();
         if (Auth::check()){
             $users = Auth::user();
-            $courses = Course::all();
-            $chapters = Chapter::all();
             return view("auth.header-auth.pricing",compact("users", "courses","chapters"));
         }
-        return view("auth.header-unauth.pricing");
+        return view("unauth.header-unauth.pricing");
     }
     public function logout(){
         Auth::logout();
