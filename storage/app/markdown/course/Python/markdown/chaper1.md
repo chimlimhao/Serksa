@@ -101,7 +101,7 @@ class Parent:
     def value(self):
         return self.value_data
 
-    @get_value.setter
+    @value.setter
     def value(self, value):
         ...
         return self.value_data = value
