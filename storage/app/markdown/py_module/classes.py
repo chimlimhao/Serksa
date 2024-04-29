@@ -180,9 +180,9 @@ class HTML:
     comment_pattern = re.compile(r'&lt;!--(.*?)(--&gt;)', flags=re.DOTALL)
 
     # fmt: off
-    tag_outcome = fr'&lt;\1<p style="color: {tag_color};">\2</p>'
-    attribute_outcome = fr'<p style="color: {attribute_color};">\1</p>=&quot;'
-    value_outcome = fr'&quot;<p style="color: {value_color};">\1</p>&quot;'
+    tag_outcome = fr'&lt;\1<span style="color: {tag_color};">\2</span>'
+    attribute_outcome = fr'<span style="color: {attribute_color};">\1</span>=&quot;'
+    value_outcome = fr'&quot;<span style="color: {value_color};">\1</span>&quot;'
     # fmt: on
 
     @classmethod
@@ -213,11 +213,11 @@ class HTML:
         code_block = code_block_match.group(1)
 
         code_block = re.sub(
-            r'<p style="color: #[0-9a-f]{6};">(.*?)</p>',
+            r'<span style="color: #[0-9a-f]{6};">(.*?)</span>',
             r'\1',
             code_block
         )
-        return f'<p style="color: {cls.comment_color};">&lt;!--{code_block}--&gt;</p>'
+        return f'<span style="color: {cls.comment_color};">&lt;!--{code_block}--&gt;</span>'
 
 class CSS:
     LANGUAGE: str = "CSS"
@@ -257,11 +257,11 @@ class CSS:
     comment_pattern = re.compile(r'\/\*(.*?)(\*\/)', flags=re.DOTALL)
     """Everything inside comments"""
 
-    class_outcome = fr'<p style="color: {class_color};">\1</p>\2'
-    type_outcome = fr'<p style="color: {type_color};">\1</p>\2'
-    psudo_outcome = fr'<p style="color: {type_color};">\1</p>\2'
-    at_outcome = fr'<p style="color: {at_color};">\1</p>\2'
-    and_outcome = fr'\1<p style="color: {at_color};">\2</p>\3'
+    class_outcome = fr'<span style="color: {class_color};">\1</span>\2'
+    type_outcome = fr'<span style="color: {type_color};">\1</span>\2'
+    psudo_outcome = fr'<span style="color: {type_color};">\1</span>\2'
+    at_outcome = fr'<span style="color: {at_color};">\1</span>\2'
+    and_outcome = fr'\1<span style="color: {at_color};">\2</span>\3'
     # fmt: on
 
     @classmethod
@@ -299,9 +299,9 @@ class CSS:
     def comment_callback(cls, code_block_match: re.Match) -> str:
         code_block = code_block_match.group(1)
         code_block = re.sub(
-            r'<p style="color: #[0-9a-f]{6};">(.*?)</p>',
+            r'<span style="color: #[0-9a-f]{6};">(.*?)</span>',
             r'\1',
             code_block,
             flags=re.DOTALL
         )
-        return f'<p style="color: {cls.comment_color};">/*{code_block}*/</p>'
+        return f'<span style="color: {cls.comment_color};">/*{code_block}*/</span>'
