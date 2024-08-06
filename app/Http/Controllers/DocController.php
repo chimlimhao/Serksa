@@ -16,10 +16,11 @@ class DocController extends Controller
     public function docContent($courseId)
     {
         try {
-            $courses = Course::findOrFail($courseId);
+            $course = Course::findOrFail($courseId);
+            $courses = Course::all();
             $parsedContent = null; // Initialize parsedContent
 
-            $base_dir = storage_path("app/markdown/course/{$courses->title}/");
+            $base_dir = storage_path("app/markdown/course/{$course->title}/");
             if (is_dir($base_dir)) {
                 $doc_dir = $base_dir . "markdown/";
                 $full_doc_path = $doc_dir . "full-doc-ver.md";

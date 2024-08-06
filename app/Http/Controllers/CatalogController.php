@@ -79,14 +79,16 @@ class CatalogController extends Controller
                     // make dynamic chapter number
                     $chapter_number = $chapters->chapter_order;
                     $file_name = "chapter{$chapter_number}";
-                    $chapter_markdown = "chapter{$chapter_number}";
+                    // $chapter_markdown = "chapter{$chapter_number}";
                     $default_markdown = "default";
 
                     $defaultToHtml = $unfinished_dir . $default_markdown . ".html";
                     // dd($defaultToHtml);
                     $full_unfinished_path = $unfinished_dir . $file_name . ".html";
+                    $full_chapter_path = $unfinished_dir . $file_name . ".html";
+                    // dd($full_chapter_path);
                     $full_finished_path = $finished_dir . $file_name . ".html";
-                    $full_chapter_markdown_path = $markdown_dir . $chapter_markdown . ".md";
+                    $full_chapter_markdown_path = $markdown_dir . $file_name . ".md";
                     $full_default_markdown_path = $markdown_dir . $default_markdown. ".md";
 
                     // Check the finished folder, if there are finished content there. pass it to blade view if so.
@@ -109,10 +111,12 @@ class CatalogController extends Controller
                     /* Check the markdown folder for the chapter markdown content. if there is, extract it into controller and parse/render it.
                     Then create a new html file in the unhighlight folder and pass the freshly rendered html there.
                     */
+                    // dd($full_chapter_markdown_path);
                     else if (file_exists($full_chapter_markdown_path)) {
                         $markdownContent = File::get($full_chapter_markdown_path);
+                        // dd($markdownContent);
 
-                        $file_path = fopen($full_unfinished_path, "w");
+                        $file_path = fopen($full_chapter_path, "w");
                         if ($file_path) {
                             $parsedContent = Str::of($markdownContent)->markdown();
                             $writeToFile = fwrite($file_path, $parsedContent);

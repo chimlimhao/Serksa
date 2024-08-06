@@ -9,6 +9,8 @@
 @endsection
 
 @section('content')
+<div class="content">
+    
     <div class="course-wrap">
         <div class="main">
             <div class="course-content">
@@ -35,8 +37,7 @@
                     <div class="course-content">
                         @if($chapters)
                             {{-- <h3>Chapter {{$chapter->chapter_order}}: {{ $chapter->chapter_title }}</h3> --}}
-                            <h3>Chapter {{$chapters->chapter_order}}: </h3>
-                            <h3>{{ $chapters->chapter_title }}</h3>
+                            <h3>Chapter {{$chapters->chapter_order}}: {{ $chapters->chapter_title }}</h3>
                         @else
                             <h3>No Chapter Found</h3>
                         @endif
@@ -107,4 +108,5 @@
             </div>
         </div>
     </div>
+</div>
 @endsection

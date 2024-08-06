@@ -9,6 +9,7 @@
 @endsection
 
 @section('content')
+<div class="content">
     <div class="catalog-wrap">
         <div class="main">
             <h3>Explore the catalog</h3>
@@ -56,8 +57,7 @@
                     @if ($count < 5)
                         <!-- Limit to the first 5 courses -->
                         @php $count++; @endphp
-                        <a
-                            href="{{ $firstChapter ? route('course-content', ['courseId' => $course->id, 'chapterId' => $chapterId]) : '#' }}">
+                        <a href="{{ $firstChapter ? route('course-content', ['courseId' => $course->id, 'chapterId' => $chapterId]) : '#' }}">
                             <div class="course-card">
                                 <div class="head-card">
                                     <img src="{{ $course->img }}" alt="{{ $course->title }}">
@@ -84,4 +84,5 @@
 
         </div>
     </div>
+</div>
 @endsection

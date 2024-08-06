@@ -5,15 +5,11 @@
             <span id="languagesIcon" class="arrow-icon">^</span>
         </h2>
         <div class="sidebar-menu" id="languages">
-            @if ($courses && $courses instanceof Illuminate\Database\Eloquent\Collection)
-                @foreach ($courses as $course)
-                    <li><a
-                            href="{{ route('doc-content', ['courseId' => $course->id]) }}"><span>{{ $course->title }}</span></a>
-                    </li>
-                @endforeach
-            @else
-                <p>No courses found.</p>
-            @endif
+            @foreach ($courses as $course)
+                <li><a
+                        href="{{ route('doc-content', ['courseId' => $course->id]) }}"><span>{{ $course->title }}</span></a>
+                </li>
+            @endforeach
 
             {{-- <li><a href=""><span>CSS</span></a>
             <li><a href=""><span>JavaScript</span></a>

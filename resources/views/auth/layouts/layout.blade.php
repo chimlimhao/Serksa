@@ -63,9 +63,7 @@
             <div class="sidebar-wrap">
                 @yield('sidebar')
             </div>
-            <div class="content">
-                @yield('content')
-            </div>
+            @yield('content')
         </div>
     </div>
     <script src="{{asset('assets/js/app.js')}}"></script>

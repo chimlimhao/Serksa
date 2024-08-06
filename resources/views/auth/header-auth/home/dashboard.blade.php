@@ -26,6 +26,7 @@
 @endsection
 
 @section('content')
+<div class="content">
     <div class="progress-wrap">
         <h2>My Learning Progress</h2>
         <div class="progress">
@@ -110,4 +111,5 @@
             </a>
         </div>
     </div>
+</div>
 @endsection

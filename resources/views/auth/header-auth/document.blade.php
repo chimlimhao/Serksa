@@ -18,11 +18,13 @@
 
 
 @section('content')
-<div class="main-doc">
-    <div class="doc-content">
-        {{-- <h1>Docs</h1>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit nisi maiores praesentium dicta quibusdam odit quisquam omnis, expedita dolore optio voluptates corrupti harum eligendi sequi nemo consequatur voluptatibus rem ullam.</p> --}}
-        {!! $parsedContent !!}
+<div class="content">
+    <div class="main-doc">
+        <div class="doc-content">
+            {{-- <h1>Docs</h1>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit nisi maiores praesentium dicta quibusdam odit quisquam omnis, expedita dolore optio voluptates corrupti harum eligendi sequi nemo consequatur voluptatibus rem ullam.</p> --}}
+            {!! $parsedContent !!}
+        </div>
     </div>
 </div>
 @endsection

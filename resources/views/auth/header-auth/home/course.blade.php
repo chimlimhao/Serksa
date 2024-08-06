@@ -26,7 +26,9 @@
 @endsection
 
 @section('content')
-<div class="course-wrap">
-    
+<div class="content">
+    <div class="course-wrap">
+        
+    </div>
 </div>
 @endsection
