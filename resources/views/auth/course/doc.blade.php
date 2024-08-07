@@ -46,9 +46,10 @@
                     {!! $parsedContent !!}
 
                 </div>
-                
+
             </div>
         </div>
     </div>
+    <script src="{{asset('assets/js/codeblock.js')}}"></script>
 </div>
 @endsection
