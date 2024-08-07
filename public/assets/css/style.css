@@ -31,13 +31,19 @@ header{
     /* top: 0;
     left: 0; */
     width: 100%;
+    max-height: 100px;
+    height: 100px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 5%;
+    padding: 1rem;
     background-color: var(--background);
     z-index: 1000; /* Ensure that the header is on top of everything else avoiding overlapping */
     border-bottom: 1px solid var(--line); /* Optional */
+}
+
+header a {
+    margin-right: 2rem;
 }
 
 header a img{
@@ -46,16 +52,34 @@ header a img{
     cursor: pointer;
 }
 
-header nav ul li, a{
-    font-size: 16px;
-    font-weight: 500;
+header nav {
+    max-width: 750px;
+    width: 100%;
 }
 
+header nav ul {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+/* header nav ul li {
+
+} */
+
 header nav ul li{
+    margin-right: 0.25rem;
+    font-size: 16px;
+    font-weight: 500;
+    width: fit-content;
+}
+
+/* header nav ul li{
     display: inline-block;
     padding: 0 30px;
     cursor: pointer;
-}
+} */
 
 header nav ul li a:hover{
     color: var(--accent);
@@ -66,6 +90,16 @@ header nav ul li a.active{
 }
 
 header .header-content{
+    margin-left: 1rem;
+    display: flex;
+}
+
+.spacer {
+    min-width: 2rem;
+    flex-grow: 2;
+}
+
+.header-content .search-bar {
     display: flex;
 }
 
@@ -74,7 +108,7 @@ header .header-content .search-bar input{
     border-radius: 15px;
     padding: 15px;
     margin-right: 20px;
-    width: 220px;
+    flex-grow: 1;
     outline: none;
 }
 
@@ -83,6 +117,7 @@ header .header-content .search-bar button{
     border: 1px solid transparent;
     font-size: 20px;
     cursor: pointer;
+    margin-right: 1rem;
 }
 
 header .header-content .auth button{
@@ -106,10 +141,10 @@ header .header-content .auth button:hover{
 header .user-profile{
     display: flex;
     align-items: center;
-    margin-right: 50px;
+    /* margin-right: 50px; */
 }
 
-header .user-profile a{
+header .user-profile a:first-child{
     margin-right: 25px; /* Add space between notification and profile picture */
 }
 
@@ -422,21 +457,22 @@ header .sub-menu-wrap.open-menu{
     width: 100vw;
     height: 100%;
     background-color: var(--background);
+    display: flex;
 }
 
 /* Left sidebar menu */
 .body-content .sidebar-wrap{
     background-color: var(--background);
-    width: 20%;
-    height: 100%;
+    width: 16rem;
+    height: 100vh;
 }
 .body-content .sidebar-wrap .side-nav, .catalog-sidebar{
-    position: fixed;
+    /* position: fixed; */
     display: flex;
     justify-content: center;
     align-items: center;
     margin-top: 10px;
-    width: 20%;
+    width: 100%;
     /* width: 250px; */
     /* height: auto; */
     /* border: 1px solid #000; */
@@ -487,10 +523,6 @@ header .sub-menu-wrap.open-menu{
 }
 
 /* Catalog Sidebar */
-
-.body-content .catalog-sidebar{
-    position: fixed;
-}
 
 .body-content .catalog-sidebar ul h2{
     cursor: pointer;
@@ -557,8 +589,8 @@ header .sub-menu-wrap.open-menu{
 /* Right content */
 
 .content{
-    position: absolute;
-    width: 80%;
+    /* position: absolute; */
+    width: 100%;
     min-height: 100vh; /* Use min-height instead of height */
     right: 0;
     padding: 20px 30px;
@@ -574,7 +606,8 @@ header .sub-menu-wrap.open-menu{
 
 .content .progress-wrap .progress{
     display: flex;
-    justify-content: space-between;
+    flex-wrap: wrap;
+    justify-content: space-around;
     align-items: center;
 }
 
@@ -606,7 +639,9 @@ header .sub-menu-wrap.open-menu{
 
 .content .progress-wrap .progress .progress-card{
     position: relative;
-    width: 250px;
+    min-width: 250px;
+    /* max-width: 300px; */
+    /* flex-grow: 1; */
     height: 300px;
     background-color: var(--white);
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5); /* Adjust the shadow values as needed */
@@ -661,23 +696,24 @@ header .sub-menu-wrap.open-menu{
     align-items: center;
     padding: 20px;
 }
-
-.content .progress-wrap .progress .progress-card .resume{
+.resume{
     position: absolute;
     bottom: 0;
     padding: 10px;
     /* border: 1px solid; */
-    width: 100%;
+    text-align: right;
+    right: 0;
 }
 
 .content .progress-wrap .progress .progress-card .resume a{
+    width: 100%;
     display: flex;
     transition: transform .5s ease 0s;
 }
 
 .content .progress-wrap .progress .progress-card .resume a p{
-    margin-left: 140px;
-    margin-right: 10px;
+    text-align: right;
+    right: 0;
 }
 
 
@@ -685,11 +721,7 @@ header .sub-menu-wrap.open-menu{
     transform: translateX(5px);
 }
 
-/* Catalog's course Sidebar */
-.sidebar-wrap{
-    background-color: var(--background);
-    position: fixed;
-}
+
 
 .sidebar-wrap .html-sidebar{
     padding: 20px;
@@ -1192,4 +1224,19 @@ pre span {
     border: none;
     padding: 10px 20px;
     border-radius: 8px;
+}
+
+@media screen and (max-width: 1200px) {
+    .search-bar input {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 1000px) {
+    header nav {
+        display: none;
+    }
+    .body-content .sidebar-wrap {
+        display: none;
+    }
 }

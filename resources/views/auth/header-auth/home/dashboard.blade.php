@@ -36,7 +36,7 @@
                     </div>
                 </div>
                 <div class="progress-context">
-                    Course
+                    <span>Course</span>
                     <h4>Course Name</h4>
                     <s>Current Modules:</s>
                 </div>
@@ -54,7 +54,7 @@
                     </div>
                 </div>
                 <div class="progress-context">
-                    Course
+                    <span>Course</span>
                     <h4>Course Name</h4>
                     <s>Current Modules:</s>
                 </div>
@@ -72,7 +72,7 @@
                     </div>
                 </div>
                 <div class="progress-context">
-                    Course
+                    <span>Course</span>
                     <h4>Course Name</h4>
                     <s>Current Modules:</s>
                 </div>
@@ -90,7 +90,7 @@
                     </div>
                 </div>
                 <div class="progress-context">
-                    Course
+                    <span>Course</span>
                     <h4>Course Name</h4>
                     <s>Current Modules:</s>
                 </div>

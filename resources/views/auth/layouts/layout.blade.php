@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css"
     rel="stylesheet">
-    
+
     <link rel="stylesheet"
     href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
@@ -18,6 +18,7 @@
         <header>
             <a href="{{route('home')}}"><img src="{{asset('assets/image/logo.png')}}" alt="Web Logo"></a>
             @yield('header')
+            <div class="spacer"></div>
             <div class="header-content">
                 <div class="search-bar">
                     <button><i class="ri-search-line"></i></button>
@@ -58,7 +59,7 @@
                     </div>
                 </div>
             </div>
-        </header>   
+        </header>
         <div class="body-content">
             <div class="sidebar-wrap">
                 @yield('sidebar')
