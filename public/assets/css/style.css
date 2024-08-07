@@ -906,6 +906,19 @@ pre code{
     font-family: monospace;
     color: #000;
 }
+
+.language-html .tag {
+    color: #ff0000;
+}
+
+.language-html .attribute {
+    color: #44b3f1;
+}
+
+.language-html .value {
+    color: #60a642;
+}
+
 .course-doc .code-line {
     margin-bottom: 16px;
 }
