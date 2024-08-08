@@ -943,6 +943,7 @@ pre code{
     color: #000;
 }
 
+/* Temp: move to attributes urself*/
 .language-html .tag {
     color: #ff0000;
 }
