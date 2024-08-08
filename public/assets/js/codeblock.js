@@ -6,9 +6,7 @@ class HTML {
     static commentPattern = new RegExp(/&lt;!--(.*?)(--&gt;)/, "gis");
 
     static highlight(block) {
-        console.log(block);
         block = block.replace(this.quotePattern, '&quot;');
-        console.log(block);
 
         block = block.replace(this.tagPattern, (match, slash, value) => {
             slash = slash ? slash : "";

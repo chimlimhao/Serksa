@@ -41,10 +41,10 @@ header{
     z-index: 1000; /* Ensure that the header is on top of everything else avoiding overlapping */
     border-bottom: 1px solid var(--line); /* Optional */
 }
-
+/*
 header a {
     margin-right: 2rem;
-}
+} */
 
 header a img{
     width: 90px;
@@ -53,6 +53,7 @@ header a img{
 }
 
 header nav {
+    margin-left: 1rem;
     max-width: 750px;
     width: 100%;
 }
@@ -61,7 +62,8 @@ header nav ul {
     width: 100%;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: flex-start;
+    gap: 1rem;
 }
 
 /* header nav ul li {
@@ -605,10 +607,13 @@ header .sub-menu-wrap.open-menu{
 }
 
 .content .progress-wrap .progress{
+    margin-top: 2rem;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around;
+    gap: 20px;
+    justify-content: space-evenly;
     align-items: center;
+    align-content: center;
 }
 
 .content .progress-wrap .view-all{
@@ -639,14 +644,13 @@ header .sub-menu-wrap.open-menu{
 
 .content .progress-wrap .progress .progress-card{
     position: relative;
-    min-width: 250px;
+    width: 250px;
     /* max-width: 300px; */
     /* flex-grow: 1; */
     height: 300px;
     background-color: var(--white);
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5); /* Adjust the shadow values as needed */
     border-radius: 15px;
-    margin: 30px 10px;
 }
 
 .content .progress-wrap .progress .progress-card .progress-bar {
@@ -1069,7 +1073,12 @@ pre span {
 .catalog-wrap .main .course-cards {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between; /* Center cards horizontally */
+    /* Fix the  cards to the left */
+    justify-content: flex-start;
+    /* Center cards horizontally */
+    /* justify-content: space-evenly; */
+    align-items: center;
+    align-content: center;
     gap: 20px; /* Add space between cards */
     margin: 20px 0;
 }
@@ -1080,7 +1089,7 @@ pre span {
     height: 310px; /* Allow the card height to expand based on content */
     cursor: pointer;
     padding: 5px;
-    margin-bottom: 20px;
+    /* margin-bottom: 20px; */
     border: 1px solid;
     border-radius: 20px;
     display: flex; /* Enable flexbox for the card */
@@ -1232,7 +1241,7 @@ pre span {
     }
 }
 
-@media screen and (max-width: 1000px) {
+@media screen and (max-width: 800px) {
     header nav {
         display: none;
     }
