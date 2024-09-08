@@ -51,7 +51,7 @@ class CatalogController extends Controller
                 return redirect()->back()->with('error', 'Chapter not found');
             }
         } else {
-            return redirect(route("login"));
+            return redirect(route("login-form"));
         }
     }
 

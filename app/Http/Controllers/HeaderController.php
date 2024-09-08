@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Course;
 use App\Models\Chapter;
+use App\Models\Pricing;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -54,13 +55,12 @@ class HeaderController extends Controller
     }
 
     public function pricing(){
-        $courses = Course::all();
-        $chapters = Chapter::all();
+        $pricings = Pricing::all();
         if (Auth::check()){
             $users = Auth::user();
-            return view("auth.header-auth.pricing",compact("users", "courses","chapters"));
+            return view("auth.header-auth.pricing",compact("users", "pricings"));
         }
-        return view("unauth.header-unauth.pricing");
+        return view("unauth.header-unauth.pricing", compact("pricings"));
     }
     public function logout(){
         Auth::logout();

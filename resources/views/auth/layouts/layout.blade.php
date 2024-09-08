@@ -11,6 +11,7 @@
     <link rel="stylesheet"
     href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <title>EduWeb</title>
 </head>
 <body>
@@ -67,5 +68,6 @@
         </div>
     </div>
     <script src="{{asset('assets/js/app.js')}}"></script>
+    <script src="https://checkout.payway.com.kh/plugins/checkout2-0.js"></script>
 </body>
 </html>

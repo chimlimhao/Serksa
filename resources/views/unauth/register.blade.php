@@ -1,7 +1,7 @@
 @extends('unauth.layouts.auth-layout')
 
 @section('auth-button')
-    <a href="{{route('login')}}"><button>Sign In</button></a>
+    <a href="{{route('login-form')}}"><button>Sign In</button></a>
 @endsection
 
 @section('content')
@@ -11,13 +11,13 @@
         </div>
         <div class="auth-form">
             {{-- auth form on the side side --}}
-            <form action="">
+            <form action="{{route('signup')}}" method="POST">
                 @csrf
                 <h4>Sign Up</h4>
-                <input type="text" name="username" placeholder="Username">
+                <input type="text" name="name" placeholder="Username">
                 <input type="email" name="email" placeholder="Email">
                 <input type="password" name="password" placeholder="Password">
-                <button>Sign Up</button>
+                <button type="submit">Sign Up</button>
                 <p><b>Or sign up using:</b></p>
                 <div class="social-icons">
                     <a href="/auth/google/redirect" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>

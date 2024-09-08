@@ -23,18 +23,13 @@
                     <input type="text" placeholder="Search...">
                 </div>
                 <div class="auth">
-                    <a href="{{route('login')}}"><button>Sign In</button></a>
-                    <a href="{{route('register')}}"><button>Sign Up</button></a>              
+                    <a href="{{route('login-form')}}"><button>Sign In</button></a>
+                    <a href="{{route('register-form')}}"><button>Sign Up</button></a>              
                 </div>
             </div>
         </header>   
         <div class="body-content">
-            <div class="sidebar-wrap">
-                @yield('sidebar')
-            </div>
-            <div class="content">
-                @yield('content')
-            </div>
+            @yield('content')
         </div>
     </div>
     <script src="{{asset('assets/js/app.js')}}"></script>

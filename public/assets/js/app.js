@@ -1,3 +1,49 @@
+$(document).ready(function () {
+    $('#confirmPurchaseButton').click(function (event) {
+        event.preventDefault(); // Prevent default form submission
+        console.log("Confirm button clicked");
+        AbaPayway.checkout();
+    });
+});
+function purchaseProduct(productId) {
+    $.ajax({
+        url: '/pricing/purchase/' + productId,
+        type: 'GET',
+        success: function(data) {
+            // Populate the pop-up with product details
+            $('#popupProductName').text(data.title);
+            $('#popupProductPrice').text(data.amount);
+            // Fill hidden form fields
+            $('#hash').val(data.hash);
+            $('#tran_id').val(data.transactionId);
+            $('#amount').val(data.amount);
+            $('#firstname').val(data.firstName);
+            $('#lastname').val(data.lastName);
+            $('#phone').val(data.phone);
+            $('#email').val(data.email);
+            $('#items').val(data.items);
+            $('#return_params').val(data.return_params);
+            $('#shipping').val(data.shipping);
+            $('#currency').val(data.currency);
+            $('#type').val(data.type);
+            $('#payment_option').val(data.payment_option);
+            $('#merchant_id').val(data.merchant_id);
+            $('#req_time').val(data.req_time);
+            // Show the pop-up
+            console.log("Showing popup");
+            $('#overlay').show();
+            $('#purchasePopup').show();
+        },
+        error: function(xhr, status, error) {
+            console.log('Error:', error);
+        }
+    });
+}
+function closePopup() {
+    $('#overlay').hide();
+    $('#purchasePopup').hide();
+}
+
 // JavaScript code to adjust scroll position after clicking a navigation link
 document.addEventListener('DOMContentLoaded', function() {
     // Select all navigation links that need to scroll to specific content

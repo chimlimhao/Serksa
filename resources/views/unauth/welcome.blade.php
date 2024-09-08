@@ -30,7 +30,7 @@
                     <input type="text" placeholder="Search...">
                 </div>
                 <div class="auth">
-                    <a href="{{route('register')}}"><button>Getting Started</button></a>
+                    <a href="{{route('register-form')}}"><button>Getting Started</button></a>
                 </div>
             </div>
         </header>   

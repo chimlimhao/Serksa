@@ -9,13 +9,19 @@ use App\Http\Controllers\HeaderController;
 use App\Http\Controllers\SocialController;
 use App\Http\Controllers\CatalogController;
 use App\Http\Controllers\SidebarController;
+use App\Http\Controllers\PayWayController;
 
 Route::get('/', function () {
     return redirect()->route('home');
 });
+
+
+// Subscription
+Route::get('/pricing/purchase/{id}', [PayWayController::class, 'purchase']);
+
 // Admin Page
 Route::get('/create-admin', [AdminController::class, 'createAdmin']);
-Route::get('/admin', [AdminController::class, 'login'])->name('login-form');
+Route::get('/admin', [AdminController::class, 'login'])->name('login-admin');
 Route::get('/admin/login', [AdminController::class, 'loginAdmin'])->name('admin.login');
 
 Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin-dashboard');
@@ -36,9 +42,13 @@ Route::get('/catalog/{courseId}/{chapterId}/doc', [CatalogController::class, 'co
 Route::get('/catalog/{courseId}/{chapterId}/learning-material', [CatalogController::class, 'courseLearningMaterial'])->name('course-learning-mat');
 // Route::get('/catalog/learn-html', [CatalogController::class, 'html'])->name('learn-html');
 
-// Authentication For User
-Route::get('/register', [AuthController::class, 'register'])->name('register');
-Route::get('/login', [AuthController::class,'login'])->name('login');
+
+// Authentication/-Form For User
+Route::get('/register-form', [AuthController::class, 'registerForm'])->name('register-form');
+Route::get('/login-form', [AuthController::class, 'loginForm'])->name('login-form');
+Route::post('/signup', [AuthController::class, 'signUp'])->name('signup');
+Route::post('/login', [AuthController::class, 'login'])->name('login');
+
 
 // Auth User Sidebar
 Route::get('/dashboard', [SidebarController::class,'dashboard'])->name('sidebar-dashboard');
@@ -57,5 +67,7 @@ Route::middleware('auth')->group(function () {
 //     Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
 //     // Other admin-specific routes...
 // });
+
+
 
 
