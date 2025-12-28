@@ -1,1 +1,0 @@
-@extends('unauth.layouts.layout')
