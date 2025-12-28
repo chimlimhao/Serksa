@@ -1,7 +1,7 @@
 'use client';
 
 import { Card, CardContent } from "@/components/ui/card";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ArrowDown } from "lucide-react";
 
 interface DiagramNode {
     emoji: string;
@@ -37,8 +37,34 @@ export function DiagramSection({ nodes }: DiagramSectionProps) {
             </h2>
             <Card>
                 <CardContent className="pt-6">
-                    <div className="bg-muted/30 p-8 rounded-lg">
-                        <div className="flex items-center justify-between max-w-2xl mx-auto">
+                    <div className="bg-muted/30 p-4 md:p-8 rounded-lg">
+                        {/* Mobile: Vertical Layout */}
+                        <div className="flex md:hidden flex-col items-center gap-4 max-w-xs mx-auto">
+                            {nodes.map((node, index) => (
+                                <div key={index} className="flex flex-col items-center w-full">
+                                    <div className="text-center">
+                                        <div className={`w-16 h-16 ${colorClasses[node.color]} rounded-lg flex items-center justify-center mb-2 mx-auto`}>
+                                            <span className="text-xl">{node.emoji}</span>
+                                        </div>
+                                        <div className="font-semibold text-sm">{node.title}</div>
+                                        <div className="text-xs text-muted-foreground">{node.subtitle}</div>
+                                    </div>
+
+                                    {index < nodes.length - 1 && (
+                                        <div className="flex items-center justify-center my-2">
+                                            <div className="flex flex-col items-center gap-1">
+                                                <div className={`w-0.5 h-8 ${arrowColors[nodes[index + 1].color].split(' ')[0]}`}></div>
+                                                <ArrowDown className={`w-4 h-4 ${arrowColors[nodes[index + 1].color].split(' ')[1]}`} />
+                                                <div className={`w-0.5 h-8 ${arrowColors[nodes[index + 1].color].split(' ')[0]}`}></div>
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+                            ))}
+                        </div>
+
+                        {/* Desktop: Horizontal Layout */}
+                        <div className="hidden md:flex items-center justify-between max-w-2xl mx-auto">
                             {nodes.map((node, index) => (
                                 <div key={index} className="flex items-center">
                                     <div className="text-center">
