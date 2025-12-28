@@ -13,7 +13,7 @@ export function RealWorldExampleSection({ title, description, points }: RealWorl
         <section className="mb-12">
             <h3 className="text-xl font-bold mb-4">{title}</h3>
             <Card>
-                <CardContent className="pt-6">
+                <CardContent className="">
                     <p className="mb-4">{description}</p>
                     <ul className="space-y-2 text-sm text-muted-foreground">
                         {points.map((point, index) => (

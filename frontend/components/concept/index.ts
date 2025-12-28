@@ -9,3 +9,4 @@ export { MisunderstandingSection } from './MisunderstandingSection';
 export { RealWorldExampleSection } from './RealWorldExampleSection';
 export { ConceptNavigation } from './ConceptNavigation';
 export { ConceptCard } from './ConceptCard';
+export { LearningPathBanner } from './LearningPathBanner';

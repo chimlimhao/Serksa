@@ -13,9 +13,11 @@ import {
     MisunderstandingSection,
     RealWorldExampleSection,
     ConceptNavigation,
+    LearningPathBanner,
 } from '@/components/concept';
 import { getConceptBySlug, webDevConcepts } from '@/lib/concepts-data';
 import { conceptContent } from '@/lib/concept-content';
+import { getLearningPathContext } from '@/lib/learning-path';
 
 interface ConceptPageProps {
     params: Promise<{
@@ -53,13 +55,41 @@ export default function ConceptPage({ params }: ConceptPageProps) {
         );
     }
 
-    // Find previous and next concepts
-    const currentIndex = webDevConcepts.findIndex(c => c.slug === slug);
-    const previousConcept = currentIndex > 0 ? webDevConcepts[currentIndex - 1] : undefined;
-    const nextConcept = currentIndex < webDevConcepts.length - 1 ? webDevConcepts[currentIndex + 1] : undefined;
+    // Get learning path context
+    const learningPathContext = getLearningPathContext(slug);
+
+    // Find previous and next concepts (fallback to all concepts if not in learning path)
+    let previousConcept, nextConcept;
+
+    if (learningPathContext.isInPath) {
+        // Use learning path navigation
+        previousConcept = learningPathContext.previous ? {
+            href: `/concepts/${learningPathContext.previous.slug}`,
+            title: learningPathContext.previous.title,
+        } : undefined;
+
+        nextConcept = learningPathContext.next ? {
+            href: `/concepts/${learningPathContext.next.slug}`,
+            title: learningPathContext.next.title,
+        } : undefined;
+    } else {
+        // Fallback to all concepts navigation
+        const currentIndex = webDevConcepts.findIndex(c => c.slug === slug);
+        previousConcept = currentIndex > 0 ? {
+            href: `/concepts/${webDevConcepts[currentIndex - 1].slug}`,
+            title: webDevConcepts[currentIndex - 1].title,
+        } : undefined;
+        nextConcept = currentIndex < webDevConcepts.length - 1 ? {
+            href: `/concepts/${webDevConcepts[currentIndex + 1].slug}`,
+            title: webDevConcepts[currentIndex + 1].title,
+        } : undefined;
+    }
 
     return (
         <ConceptLayout>
+            {/* Learning Path Banner (only shows if concept is in the path) */}
+            <LearningPathBanner context={learningPathContext} />
+
             <ConceptHeader
                 title={concept.title}
                 category={concept.category}
@@ -93,14 +123,8 @@ export default function ConceptPage({ params }: ConceptPageProps) {
             />
 
             <ConceptNavigation
-                previous={previousConcept ? {
-                    href: `/concepts/${previousConcept.slug}`,
-                    title: previousConcept.title,
-                } : undefined}
-                next={nextConcept ? {
-                    href: `/concepts/${nextConcept.slug}`,
-                    title: nextConcept.title,
-                } : undefined}
+                previous={previousConcept}
+                next={nextConcept}
             />
         </ConceptLayout>
     );

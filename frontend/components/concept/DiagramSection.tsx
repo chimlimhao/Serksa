@@ -36,7 +36,7 @@ export function DiagramSection({ nodes }: DiagramSectionProps) {
                 Visual Diagram
             </h2>
             <Card>
-                <CardContent className="pt-6">
+                <CardContent className="">
                     <div className="bg-muted/30 p-4 md:p-8 rounded-lg">
                         {/* Mobile: Vertical Layout */}
                         <div className="flex md:hidden flex-col items-center gap-4 max-w-xs mx-auto">
@@ -64,11 +64,11 @@ export function DiagramSection({ nodes }: DiagramSectionProps) {
                         </div>
 
                         {/* Desktop: Horizontal Layout */}
-                        <div className="hidden md:flex items-center justify-between max-w-2xl mx-auto">
+                        <div className="hidden md:flex items-start justify-between max-w-2xl mx-auto">
                             {nodes.map((node, index) => (
-                                <div key={index} className="flex items-center">
+                                <div key={index} className="flex items-start">
                                     <div className="text-center">
-                                        <div className={`w-20 h-20 ${colorClasses[node.color]} rounded-lg flex items-center justify-center mb-2`}>
+                                        <div className={`h-20 ${colorClasses[node.color]} rounded-lg flex items-center justify-center mb-2`}>
                                             <span className="text-2xl">{node.emoji}</span>
                                         </div>
                                         <div className="font-semibold">{node.title}</div>
@@ -76,7 +76,7 @@ export function DiagramSection({ nodes }: DiagramSectionProps) {
                                     </div>
 
                                     {index < nodes.length - 1 && (
-                                        <div className="flex-1 flex items-center justify-center mx-4">
+                                        <div className="flex items-center mx-4" style={{ marginTop: '40px' }}>
                                             <div className="flex items-center gap-2">
                                                 <div className={`h-0.5 w-16 ${arrowColors[nodes[index + 1].color].split(' ')[0]}`}></div>
                                                 <ArrowRight className={`w-5 h-5 ${arrowColors[nodes[index + 1].color].split(' ')[1]}`} />

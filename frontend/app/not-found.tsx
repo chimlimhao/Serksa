@@ -29,7 +29,7 @@ export default function NotFound() {
                     {/* Suggestions */}
                     <div className="space-y-4 pt-4">
                         <p className="text-sm text-muted-foreground">
-                            Maybe you'd like to explore our web development concepts instead?
+                            Maybe you'd like to explore our system design concepts instead?
                         </p>
                         <div className="flex flex-col sm:flex-row gap-4 justify-center">
                             <Link href="/">

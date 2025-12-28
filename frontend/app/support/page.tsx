@@ -98,7 +98,40 @@ export default function SupportPage() {
                             </CardContent>
                         </Card>
 
-                        {/* Temporarily hidden - Financial support section */}
+                        {/* Financial Support - QR Code Payment */}
+                        <Card className="border-accent/20">
+                            <CardHeader>
+                                <CardTitle className="flex items-center gap-2">
+                                    <Heart className="w-5 h-5 text-accent" />
+                                    Support This Project
+                                </CardTitle>
+                            </CardHeader>
+                            <CardContent className="space-y-4">
+                                <p className="text-muted-foreground">
+                                    Creating and maintaining this site takes time. If you'd like to support the project financially,
+                                    you can send a donation via bank transfer. It's completely optional and doesn't unlock any features—everything stays free for everyone.
+                                </p>
+                                <div className="bg-muted/30 p-6 rounded-lg text-center space-y-4">
+                                    <div className="text-sm font-medium">Scan to Support</div>
+                                    {/* TODO: Replace with your actual QR code image */}
+                                    <div className="w-48 h-48 mx-auto bg-white rounded-lg flex items-center justify-center border-2 border-dashed border-muted-foreground/20">
+                                        <div className="text-center text-muted-foreground text-sm">
+                                            <div className="mb-2">📱</div>
+                                            <div>Your Bank QR Code</div>
+                                            <div className="text-xs mt-1">(Add image here)</div>
+                                        </div>
+                                    </div>
+                                    <p className="text-xs text-muted-foreground">
+                                        Scan with your banking app to send a donation
+                                    </p>
+                                </div>
+                                <p className="text-sm text-muted-foreground italic">
+                                    Your support helps cover hosting costs and motivates me to create more content. Thank you! 🙏
+                                </p>
+                            </CardContent>
+                        </Card>
+
+                        {/* Temporarily hidden - Buy Me a Coffee/Ko-fi section */}
                         {/* <Card className="border-accent/20">
                             <CardHeader>
                                 <CardTitle className="flex items-center gap-2">
@@ -130,7 +163,6 @@ export default function SupportPage() {
                                 </p>
                             </CardContent>
                         </Card> */}
-
 
                         {/* What Your Support Does */}
                         <Card>

@@ -79,7 +79,7 @@ export default function SuggestPage() {
                         </div>
                         <h1 className="text-4xl md:text-5xl font-bold">Suggest a Concept</h1>
                         <p className="text-lg text-muted-foreground max-w-xl mx-auto">
-                            Have a web development concept you wish was explained simply? Let me know!
+                            Have a system design concept you wish was explained simply? Let me know!
                         </p>
                     </div>
 
@@ -164,7 +164,7 @@ export default function SuggestPage() {
 
                     {/* Info Card */}
                     <Card className="mt-8 bg-muted/30">
-                        <CardContent className="pt-6">
+                        <CardContent className="">
                             <h3 className="font-semibold mb-3">What happens next?</h3>
                             <ul className="space-y-2 text-sm text-muted-foreground">
                                 <li className="flex items-start gap-2">

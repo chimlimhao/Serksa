@@ -16,7 +16,7 @@ export function WhatItIsSection({ content }: WhatItIsSectionProps) {
                 What It Is
             </h2>
             <Card>
-                <CardContent className="pt-6">
+                <CardContent className="">
                     {typeof content === 'string' ? (
                         <p className="text-lg leading-relaxed" dangerouslySetInnerHTML={{ __html: content }} />
                     ) : (

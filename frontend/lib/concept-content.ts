@@ -1851,4 +1851,375 @@ export const conceptContent: Record<string, ConceptContentData> = {
             ]
         }
     },
+
+    // LEARNING PATH CONCEPTS - Level 1: How a System Works
+
+    'client-server': {
+        whatItIs: "A <strong>client</strong> is the one who asks for something, and a <strong>server</strong> is the one who provides it. In web applications, your browser (client) asks for web pages, and a server sends them back.",
+        analogy: {
+            title: "The Customer and Shop Owner",
+            items: [
+                { emoji: "👤", title: "Client", subtitle: "Asks for things" },
+                { emoji: "🏪", title: "Server", subtitle: "Provides things", highlighted: true },
+                { emoji: "📦", title: "Response", subtitle: "What you get back" },
+            ],
+            description: "Just like a customer asks a shop owner for products, a client asks a server for data or services."
+        },
+        diagram: [
+            { emoji: "💻", title: "Your Browser", subtitle: "Client", color: "primary" },
+            { emoji: "🌐", title: "Request", subtitle: "Asking for data", color: "secondary" },
+            { emoji: "🖥️", title: "Web Server", subtitle: "Sends response", color: "accent" },
+        ],
+        howItWorks: [
+            { step: "1", title: "Client Makes Request", description: "You type a URL or click a link in your browser" },
+            { step: "2", title: "Request Travels", description: "Your request goes over the internet to the server" },
+            { step: "3", title: "Server Processes", description: "The server finds what you asked for" },
+            { step: "4", title: "Server Responds", description: "The server sends back the data (HTML, images, etc.)" },
+            { step: "5", title: "Client Displays", description: "Your browser shows you the web page" },
+        ],
+        misunderstanding: {
+            wrong: "The client and server are physical computers in different locations",
+            correct: "Client and server are roles. Your laptop can be both a client (when browsing) and a server (when running a local server). It's about who's asking vs who's answering."
+        },
+        realWorld: {
+            title: "Real-World Example",
+            description: "When you check Instagram:",
+            points: [
+                "Your phone (client) asks Instagram's servers for your feed",
+                "Instagram's server finds your personalized posts",
+                "Server sends back the data",
+                "Your phone displays the feed",
+                "Every like, comment, or scroll is a new request from client to server"
+            ]
+        }
+    },
+
+    'request-response': {
+        whatItIs: "A <strong>request</strong> is when a client asks for something, and a <strong>response</strong> is what the server sends back. This is the fundamental conversation pattern of the web.",
+        analogy: {
+            title: "The Question and Answer",
+            items: [
+                { emoji: "❓", title: "Request", subtitle: "The question" },
+                { emoji: "💬", title: "Processing", subtitle: "Thinking", highlighted: true },
+                { emoji: "✅", title: "Response", subtitle: "The answer" },
+            ],
+            description: "Like asking a librarian for a book and getting it back, every web interaction is a request-response cycle."
+        },
+        diagram: [
+            { emoji: "📱", title: "Request", subtitle: "GET /profile", color: "primary" },
+            { emoji: "⚙️", title: "Server", subtitle: "Processing", color: "secondary" },
+            { emoji: "📄", title: "Response", subtitle: "200 OK + Data", color: "accent" },
+        ],
+        howItWorks: [
+            { step: "1", title: "Client Sends Request", description: "Includes: URL, method (GET/POST), headers, maybe data" },
+            { step: "2", title: "Server Receives", description: "Server reads what you're asking for" },
+            { step: "3", title: "Server Processes", description: "Runs code, queries database, prepares response" },
+            { step: "4", title: "Server Sends Response", description: "Includes: status code (200, 404), headers, data" },
+            { step: "5", title: "Client Handles Response", description: "Shows success, error, or the data you requested" },
+        ],
+        misunderstanding: {
+            wrong: "The connection stays open the whole time you're on a website",
+            correct: "Each request-response is a separate conversation. After the server responds, the connection usually closes. Your browser makes many separate requests for images, CSS, data, etc."
+        },
+        realWorld: {
+            title: "Real-World Example",
+            description: "Loading a Twitter page:",
+            points: [
+                "Request 1: GET /home → Response: HTML page",
+                "Request 2: GET /profile-pic.jpg → Response: Your photo",
+                "Request 3: GET /api/tweets → Response: Latest tweets data",
+                "Request 4: POST /api/like → Response: Success confirmation",
+                "Each is a separate request-response cycle"
+            ]
+        }
+    },
+
+    'backend-explained': {
+        whatItIs: "The <strong>backend</strong> is the part of a system that users don't see. It handles business logic, database operations, authentication, and everything that happens 'behind the scenes' on the server.",
+        analogy: {
+            title: "The Kitchen of a Restaurant",
+            items: [
+                { emoji: "🍽️", title: "Frontend", subtitle: "Dining area (what you see)" },
+                { emoji: "👨‍🍳", title: "Backend", subtitle: "Kitchen (where work happens)", highlighted: true },
+                { emoji: "🗄️", title: "Database", subtitle: "Pantry (where ingredients are stored)" },
+            ],
+            description: "Customers see the dining room (frontend), but the real work happens in the kitchen (backend)."
+        },
+        diagram: [
+            { emoji: "👤", title: "User", subtitle: "Interacts with frontend", color: "primary" },
+            { emoji: "⚙️", title: "Backend", subtitle: "Processes logic", color: "secondary" },
+            { emoji: "💾", title: "Database", subtitle: "Stores data", color: "accent" },
+        ],
+        howItWorks: [
+            { step: "1", title: "Receives Requests", description: "Frontend sends user actions to backend" },
+            { step: "2", title: "Validates Data", description: "Checks if the request is valid and authorized" },
+            { step: "3", title: "Business Logic", description: "Runs calculations, rules, workflows" },
+            { step: "4", title: "Database Operations", description: "Reads or writes data as needed" },
+            { step: "5", title: "Sends Response", description: "Returns result to frontend" },
+        ],
+        misunderstanding: {
+            wrong: "Backend is just a database",
+            correct: "Backend is the code that runs on the server. It includes business logic, APIs, authentication, and talks to the database. The database is just one component the backend uses."
+        },
+        realWorld: {
+            title: "Real-World Example",
+            description: "When you post on Facebook:",
+            points: [
+                "Frontend: You type and click 'Post'",
+                "Backend: Validates you're logged in",
+                "Backend: Checks post content for spam/violations",
+                "Backend: Saves post to database",
+                "Backend: Notifies your friends",
+                "Frontend: Shows success message"
+            ]
+        }
+    },
+
+    'database-basics': {
+        whatItIs: "A <strong>database</strong> is an organized collection of data that can be easily accessed, managed, and updated. It's where applications store information permanently.",
+        analogy: {
+            title: "The Filing Cabinet",
+            items: [
+                { emoji: "🗄️", title: "Database", subtitle: "Organized storage" },
+                { emoji: "📁", title: "Tables", subtitle: "Folders for different types", highlighted: true },
+                { emoji: "📄", title: "Records", subtitle: "Individual documents" },
+            ],
+            description: "Like a filing cabinet with organized folders, a database stores data in structured tables."
+        },
+        diagram: [
+            { emoji: "💾", title: "Database", subtitle: "Data storage", color: "primary" },
+            { emoji: "📊", title: "Tables", subtitle: "Organized structure", color: "secondary" },
+            { emoji: "🔍", title: "Queries", subtitle: "Find data", color: "accent" },
+        ],
+        howItWorks: [
+            { step: "1", title: "Create Tables", description: "Define structure: users table, posts table, etc." },
+            { step: "2", title: "Insert Data", description: "Add new records (new user, new post)" },
+            { step: "3", title: "Query Data", description: "Search and retrieve specific information" },
+            { step: "4", title: "Update Data", description: "Modify existing records" },
+            { step: "5", title: "Delete Data", description: "Remove records when needed" },
+        ],
+        misunderstanding: {
+            wrong: "Databases are only for big companies with lots of data",
+            correct: "Every app needs a database, even small ones. Your todo app, blog, or game all need to store data somewhere. Without a database, data disappears when you close the app."
+        },
+        realWorld: {
+            title: "Real-World Example",
+            description: "A simple blog database:",
+            points: [
+                "Users table: id, name, email, password",
+                "Posts table: id, title, content, author_id, created_at",
+                "Comments table: id, post_id, user_id, text",
+                "Query: 'Get all posts by user John' → Returns John's posts",
+                "Update: 'Change post title' → Modifies the record"
+            ]
+        }
+    },
+
+    // LEARNING PATH CONCEPTS - Level 2: How Systems Talk
+
+    'stateless-stateful': {
+        whatItIs: "<strong>Stateless</strong> means the server doesn't remember previous requests. <strong>Stateful</strong> means the server remembers you between requests. Most modern web APIs are stateless.",
+        analogy: {
+            title: "The Forgetful vs Remembering Cashier",
+            items: [
+                { emoji: "🤷", title: "Stateless", subtitle: "Forgets you after each transaction" },
+                { emoji: "🧠", title: "Stateful", subtitle: "Remembers your order", highlighted: true },
+                { emoji: "🎫", title: "Token", subtitle: "Your receipt (proof)" },
+            ],
+            description: "Stateless is like a cashier who forgets you instantly. You must show your receipt (token) each time to prove who you are."
+        },
+        diagram: [
+            { emoji: "📱", title: "Request 1", subtitle: "With token", color: "primary" },
+            { emoji: "🖥️", title: "Server", subtitle: "Doesn't remember", color: "secondary" },
+            { emoji: "📱", title: "Request 2", subtitle: "Must send token again", color: "accent" },
+        ],
+        howItWorks: [
+            { step: "1", title: "Client Logs In", description: "Server verifies credentials" },
+            { step: "2", title: "Server Issues Token", description: "Gives client a proof of identity" },
+            { step: "3", title: "Client Stores Token", description: "Saves it (in cookie or localStorage)" },
+            { step: "4", title: "Future Requests", description: "Client includes token in every request" },
+            { step: "5", title: "Server Validates", description: "Checks token, doesn't need to remember you" },
+        ],
+        misunderstanding: {
+            wrong: "Stateless means the app can't remember anything about users",
+            correct: "The app remembers data in the database. 'Stateless' only means the server doesn't remember the conversation between requests. The client sends proof (token) with each request."
+        },
+        realWorld: {
+            title: "Real-World Example",
+            description: "REST APIs are stateless:",
+            points: [
+                "You log in → Server gives you a JWT token",
+                "Request 1: GET /profile (with token) → Server returns your profile",
+                "Request 2: POST /post (with token) → Server creates post",
+                "Server doesn't remember Request 1 when handling Request 2",
+                "Each request is independent, token proves who you are"
+            ]
+        }
+    },
+
+    // LEARNING PATH CONCEPTS - Level 4: Data Problems
+
+    'database-sharding': {
+        whatItIs: "<strong>Sharding</strong> is splitting a large database into smaller pieces (shards) distributed across multiple servers. Each shard contains a subset of the data.",
+        analogy: {
+            title: "The Library Branches",
+            items: [
+                { emoji: "📚", title: "Shard A", subtitle: "Books A-M" },
+                { emoji: "📚", title: "Shard B", subtitle: "Books N-Z", highlighted: true },
+                { emoji: "🔍", title: "Router", subtitle: "Knows which branch" },
+            ],
+            description: "Like splitting a huge library into branches by alphabet, sharding splits data across servers."
+        },
+        diagram: [
+            { emoji: "👤", title: "User Request", subtitle: "Find user data", color: "primary" },
+            { emoji: "🧭", title: "Shard Router", subtitle: "Directs to right shard", color: "secondary" },
+            { emoji: "💾", title: "Shard 3", subtitle: "Has this user's data", color: "accent" },
+        ],
+        howItWorks: [
+            { step: "1", title: "Choose Shard Key", description: "Decide how to split data (by user ID, location, etc.)" },
+            { step: "2", title: "Distribute Data", description: "Split data across multiple database servers" },
+            { step: "3", title: "Route Requests", description: "Application knows which shard has the data" },
+            { step: "4", title: "Query Shard", description: "Only query the relevant shard, not all data" },
+            { step: "5", title: "Return Result", description: "Much faster since searching smaller dataset" },
+        ],
+        misunderstanding: {
+            wrong: "Sharding is the same as replication",
+            correct: "Replication copies the same data to multiple servers (for backup/speed). Sharding splits different data across servers (for scale). They solve different problems."
+        },
+        realWorld: {
+            title: "Real-World Example",
+            description: "Instagram shards by user ID:",
+            points: [
+                "Shard 1: Users with ID 1-1,000,000",
+                "Shard 2: Users with ID 1,000,001-2,000,000",
+                "Shard 3: Users with ID 2,000,001-3,000,000",
+                "Your ID is 1,500,000 → Always goes to Shard 2",
+                "Billions of users, but each shard handles manageable size"
+            ]
+        }
+    },
+
+    // LEARNING PATH CONCEPTS - Level 5: Reliability & Failure
+
+    'redundancy': {
+        whatItIs: "<strong>Redundancy</strong> means having backup copies of critical components. If one fails, another takes over immediately, preventing downtime.",
+        analogy: {
+            title: "The Backup Pilot",
+            items: [
+                { emoji: "✈️", title: "Main Pilot", subtitle: "Primary system" },
+                { emoji: "👨‍✈️", title: "Co-Pilot", subtitle: "Backup ready", highlighted: true },
+                { emoji: "🛡️", title: "Safety", subtitle: "No single point of failure" },
+            ],
+            description: "Like having a co-pilot ready to take over if the pilot can't fly, redundancy ensures backup systems are ready."
+        },
+        diagram: [
+            { emoji: "🖥️", title: "Server 1", subtitle: "Primary", color: "primary" },
+            { emoji: "🖥️", title: "Server 2", subtitle: "Backup (ready)", color: "secondary" },
+            { emoji: "✅", title: "Always Available", subtitle: "No downtime", color: "accent" },
+        ],
+        howItWorks: [
+            { step: "1", title: "Deploy Duplicates", description: "Run multiple copies of servers, databases, etc." },
+            { step: "2", title: "Sync Data", description: "Keep backups updated with latest data" },
+            { step: "3", title: "Monitor Health", description: "Constantly check if primary is working" },
+            { step: "4", title: "Detect Failure", description: "Notice when primary goes down" },
+            { step: "5", title: "Automatic Failover", description: "Backup takes over instantly" },
+        ],
+        misunderstanding: {
+            wrong: "Redundancy is wasteful because backup servers sit idle",
+            correct: "Backups can handle traffic too (load balancing). Even if idle, the cost of downtime (lost revenue, angry users) far exceeds the cost of redundancy."
+        },
+        realWorld: {
+            title: "Real-World Example",
+            description: "Netflix redundancy:",
+            points: [
+                "Multiple data centers across regions",
+                "If US-East-1 fails, traffic goes to US-West-2",
+                "Database has 3 replicas minimum",
+                "Critical services run on multiple servers",
+                "You never notice when one server fails"
+            ]
+        }
+    },
+
+    'health-checks': {
+        whatItIs: "<strong>Health checks</strong> are automated tests that constantly verify if a server or service is working properly. If a health check fails, the system can take action.",
+        analogy: {
+            title: "The Doctor's Checkup",
+            items: [
+                { emoji: "🏥", title: "Health Check", subtitle: "Regular examination" },
+                { emoji: "💚", title: "Healthy", subtitle: "All systems go", highlighted: true },
+                { emoji: "🚨", title: "Unhealthy", subtitle: "Take action" },
+            ],
+            description: "Like a doctor checking your pulse and temperature, health checks verify servers are alive and working."
+        },
+        diagram: [
+            { emoji: "⏰", title: "Every 30s", subtitle: "Automated check", color: "primary" },
+            { emoji: "🖥️", title: "Server", subtitle: "Responds with status", color: "secondary" },
+            { emoji: "✅", title: "Healthy", subtitle: "Keep routing traffic", color: "accent" },
+        ],
+        howItWorks: [
+            { step: "1", title: "Define Health Endpoint", description: "Create /health route that checks critical functions" },
+            { step: "2", title: "Schedule Checks", description: "Ping the endpoint every 10-60 seconds" },
+            { step: "3", title: "Server Responds", description: "Returns 200 OK if healthy, 500 if problems" },
+            { step: "4", title: "Detect Failure", description: "If 3 checks fail in a row, mark as unhealthy" },
+            { step: "5", title: "Take Action", description: "Stop sending traffic, alert team, restart server" },
+        ],
+        misunderstanding: {
+            wrong: "Health checks just ping the server to see if it's on",
+            correct: "Good health checks test critical functions: Can it connect to the database? Is memory usage normal? Can it process requests? A server can be 'on' but still unhealthy."
+        },
+        realWorld: {
+            title: "Real-World Example",
+            description: "AWS Load Balancer health checks:",
+            points: [
+                "Checks /health every 30 seconds",
+                "Healthy response: 200 OK + 'database connected'",
+                "Unhealthy: Server doesn't respond or returns 500",
+                "After 3 failed checks, stop sending traffic to that server",
+                "Automatically routes users to healthy servers only"
+            ]
+        }
+    },
+
+    // LEARNING PATH CONCEPTS - Level 6: Security Basics
+
+    'authorization-explained': {
+        whatItIs: "<strong>Authorization</strong> determines what an authenticated user is allowed to do. It's about permissions and access control, not identity.",
+        analogy: {
+            title: "The Hotel Key Card",
+            items: [
+                { emoji: "🔑", title: "Authentication", subtitle: "Proves you're a guest" },
+                { emoji: "🚪", title: "Authorization", subtitle: "Which rooms you can enter", highlighted: true },
+                { emoji: "🚫", title: "Forbidden", subtitle: "Can't access everything" },
+            ],
+            description: "Your hotel key card proves who you are (authentication), but only opens certain doors (authorization)."
+        },
+        diagram: [
+            { emoji: "👤", title: "User", subtitle: "Logged in", color: "primary" },
+            { emoji: "🔐", title: "Check Permissions", subtitle: "Can they do this?", color: "secondary" },
+            { emoji: "✅", title: "Allowed", subtitle: "Proceed", color: "accent" },
+        ],
+        howItWorks: [
+            { step: "1", title: "User Authenticated", description: "System knows who you are" },
+            { step: "2", title: "User Attempts Action", description: "Try to delete a post, view admin panel, etc." },
+            { step: "3", title: "Check Permissions", description: "Does this user have the right role/permission?" },
+            { step: "4", title: "Grant or Deny", description: "Allow action or return 403 Forbidden" },
+            { step: "5", title: "Log Action", description: "Record who did what for security audit" },
+        ],
+        misunderstanding: {
+            wrong: "If you're logged in, you can do anything",
+            correct: "Authentication (login) proves who you are. Authorization determines what you can do. A regular user can't delete other people's posts even though they're logged in."
+        },
+        realWorld: {
+            title: "Real-World Example",
+            description: "Google Docs permissions:",
+            points: [
+                "Authentication: You log in with Google account",
+                "Authorization: Owner can delete, Editor can edit, Viewer can only read",
+                "You try to delete a doc you don't own → 403 Forbidden",
+                "You try to edit a doc where you're a Viewer → Not allowed",
+                "Same person, different permissions for different documents"
+            ]
+        }
+    },
 };

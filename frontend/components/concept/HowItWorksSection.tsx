@@ -24,7 +24,7 @@ export function HowItWorksSection({ steps }: HowItWorksSectionProps) {
             <div className="space-y-4">
                 {steps.map((item, i) => (
                     <Card key={i}>
-                        <CardContent className="pt-6">
+                        <CardContent className="">
                             <div className="flex items-start gap-4">
                                 <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-primary-foreground font-bold flex-shrink-0">
                                     {item.step}

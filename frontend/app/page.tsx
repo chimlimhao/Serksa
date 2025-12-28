@@ -29,25 +29,25 @@ export default function Home() {
                             100% Free · No Signup Required
                         </Badge>
                         <h1 className="text-4xl md:text-6xl font-bold leading-tight">
-                            Web Development Concepts <br />
+                            System Design Concepts <br />
                             <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
                                 Explained Simply
                             </span>
                         </h1>
                         <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
-                            Master {webDevConcepts.length} professional web development concepts through simple analogies,
+                            Master {webDevConcepts.length} professional system design concepts through simple analogies,
                             clear diagrams, and mental models that actually stick.
                         </p>
                         <div className="flex flex-wrap justify-center gap-4">
-                            <Link href="/concepts">
+                            <Link href="/learn">
                                 <Button size="lg" className="gap-2">
-                                    Start Learning
+                                    Start Learning Path
                                     <ArrowRight className="w-4 h-4" />
                                 </Button>
                             </Link>
-                            <Link href="/about">
+                            <Link href="/concepts">
                                 <Button size="lg" variant="outline">
-                                    Learn More
+                                    Browse All Concepts
                                 </Button>
                             </Link>
                         </div>
@@ -201,7 +201,7 @@ export default function Home() {
                             Ready to Level Up Your Skills?
                         </h2>
                         <p className="text-lg text-muted-foreground">
-                            Join thousands of developers learning web development concepts the simple way.
+                            Join thousands of developers learning system design concepts the simple way.
                             No signup required · No credit card · No catch
                         </p>
                         <div className="flex flex-wrap justify-center gap-4">

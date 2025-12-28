@@ -10,8 +10,8 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Serksa - Web Development Concepts Explained Simply",
-  description: "Learn core web development concepts through simple analogies, clear diagrams, and mental models that actually stick.",
+  title: "Serksa - System Design Concepts Explained Simply",
+  description: "Learn core system design concepts through simple analogies, clear diagrams, and mental models that actually stick.",
 };
 
 export default function RootLayout({

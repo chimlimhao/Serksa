@@ -380,6 +380,88 @@ export const webDevConcepts: Concept[] = [
         readTime: "9 min",
         slug: "service-mesh"
     },
+
+    // Learning Path - Level 1: How a System Works
+    {
+        title: "Client vs Server",
+        description: "Understanding who asks and who answers in web applications",
+        category: "API & Backend",
+        difficulty: "Beginner",
+        readTime: "4 min",
+        slug: "client-server"
+    },
+    {
+        title: "Request & Response",
+        description: "The fundamental conversation pattern of the web",
+        category: "API & Backend",
+        difficulty: "Beginner",
+        readTime: "5 min",
+        slug: "request-response"
+    },
+    {
+        title: "Backend Explained",
+        description: "What happens behind the scenes on the server",
+        category: "API & Backend",
+        difficulty: "Beginner",
+        readTime: "5 min",
+        slug: "backend-explained"
+    },
+    {
+        title: "Database Basics",
+        description: "Where applications store data permanently",
+        category: "API & Backend",
+        difficulty: "Beginner",
+        readTime: "6 min",
+        slug: "database-basics"
+    },
+
+    // Learning Path - Level 2: How Systems Talk
+    {
+        title: "Stateless vs Stateful",
+        description: "Does the server remember you between requests?",
+        category: "API & Backend",
+        difficulty: "Intermediate",
+        readTime: "6 min",
+        slug: "stateless-stateful"
+    },
+
+    // Learning Path - Level 4: Data Problems
+    {
+        title: "Database Sharding",
+        description: "Splitting databases across multiple servers for scale",
+        category: "Performance & Scaling",
+        difficulty: "Advanced",
+        readTime: "7 min",
+        slug: "database-sharding"
+    },
+
+    // Learning Path - Level 5: Reliability & Failure
+    {
+        title: "Redundancy",
+        description: "Having backup copies to prevent downtime",
+        category: "Performance & Scaling",
+        difficulty: "Intermediate",
+        readTime: "6 min",
+        slug: "redundancy"
+    },
+    {
+        title: "Health Checks",
+        description: "Automated tests to verify servers are working",
+        category: "DevOps & Infrastructure",
+        difficulty: "Intermediate",
+        readTime: "5 min",
+        slug: "health-checks"
+    },
+
+    // Learning Path - Level 6: Security Basics
+    {
+        title: "Authorization Explained",
+        description: "What authenticated users are allowed to do",
+        category: "Security",
+        difficulty: "Intermediate",
+        readTime: "6 min",
+        slug: "authorization-explained"
+    },
 ];
 
 // Helper functions

@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Search, BookOpen } from "lucide-react";
 
 interface HeaderProps {
-    activeTab?: 'home' | 'concepts' | 'about' | 'support' | 'suggest';
+    activeTab?: 'home' | 'concepts' | 'learn' | 'about' | 'support' | 'suggest';
 }
 
 export function Header({ activeTab }: HeaderProps) {
@@ -18,6 +18,13 @@ export function Header({ activeTab }: HeaderProps) {
                         </span>
                     </Link>
                     <nav className="hidden md:flex items-center gap-6">
+                        <Link
+                            href="/learn"
+                            className={`text-sm font-medium transition-colors ${activeTab === 'learn' ? 'text-[#001BB7]' : 'hover:text-[#001BB7]'
+                                }`}
+                        >
+                            Learning Path
+                        </Link>
                         <Link
                             href="/concepts"
                             className={`text-sm font-medium transition-colors ${activeTab === 'concepts' ? 'text-[#001BB7]' : 'hover:text-[#001BB7]'
@@ -51,7 +58,7 @@ export function Header({ activeTab }: HeaderProps) {
                         <Link href="/concepts">
                             <Button size="sm">
                                 <Search className="w-4 h-4 mr-2" />
-                                Explore 45 Concepts
+                                Explore 54 Concepts
                             </Button>
                         </Link>
                     </div>

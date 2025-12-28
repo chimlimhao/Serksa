@@ -41,7 +41,7 @@ export default function ConceptsPage() {
                     <div className="mb-12 space-y-4">
                         <h1 className="text-4xl md:text-5xl font-bold">All Concepts</h1>
                         <p className="text-lg text-muted-foreground max-w-2xl">
-                            Browse {webDevConcepts.length} professional web development concepts.
+                            Browse {webDevConcepts.length} professional system design concepts.
                             Each one is designed to help things "click" in under 10 minutes.
                         </p>
                     </div>

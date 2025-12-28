@@ -45,21 +45,21 @@ export default function AboutPage() {
                         <Card className="my-8">
                             <CardContent className="">
                                 <p className="text-lg italic text-muted-foreground">
-                                    "A simple site that explains tech concepts the way you wish someone explained them to you."
+                                    "A simple site that explains system design concepts the way you wish someone explained them to you."
                                 </p>
                             </CardContent>
                         </Card>
 
                         <h2 className="text-2xl font-bold mt-12 mb-4">Why This Exists</h2>
                         <p className="text-muted-foreground mb-4">
-                            When I was learning to code, I struggled with technical jargon and overly complex explanations.
-                            I'd read documentation that assumed I already knew what I was trying to learn.
+                            When I was learning system design, I struggled with overly academic explanations and scattered resources.
+                            I'd read articles that assumed I already understood distributed systems, scalability, and architecture patterns.
                         </p>
                         <p className="text-muted-foreground mb-4">
-                            I wished someone would just explain things simply, with analogies I could relate to and diagrams that made sense.
+                            I wished someone would just explain things simply, with real-world analogies and clear diagrams that showed how everything connects.
                         </p>
                         <p className="text-muted-foreground mb-4">
-                            So I built this. It's the resource I needed as a beginner. Now it's here for you.
+                            So I built this. It's the resource I needed when preparing for system design interviews and building scalable applications. Now it's here for you.
                         </p>
 
                         <h2 className="text-2xl font-bold mt-12 mb-4">The Philosophy</h2>
@@ -98,12 +98,12 @@ export default function AboutPage() {
                             </li>
                             <li className="flex items-start gap-2">
                                 <span className="text-destructive">✗</span>
-                                <span>Not interactive coding exercises (use freeCodeCamp for that)</span>
+                                <span>Not interactive coding exercises (use LeetCode for that)</span>
                             </li>
-                            <li className="flex items-start gap-2">
+                            {/* <li className="flex items-start gap-2">
                                 <span className="text-destructive">✗</span>
                                 <span>Not AI-generated content (every word is written by a human)</span>
-                            </li>
+                            </li> */}
                             <li className="flex items-start gap-2">
                                 <span className="text-destructive">✗</span>
                                 <span>Not behind a paywall (and never will be)</span>
@@ -112,8 +112,8 @@ export default function AboutPage() {
 
                         <h2 className="text-2xl font-bold mt-12 mb-4">Who Made This?</h2>
                         <p className="text-muted-foreground mb-4">
-                            Hi! I'm a developer who believes that learning should be accessible and enjoyable.
-                            I've spent years explaining tech concepts to beginners, and this site is a collection of those explanations.
+                            Hi! I'm a developer who believes that system design should be accessible to everyone.
+                            I've spent years building scalable systems and explaining these concepts to engineers, and this site is a collection of those explanations.
                         </p>
                         <p className="text-muted-foreground mb-4">
                             This is a side project built with love, maintained in my free time, and shared freely with the community.

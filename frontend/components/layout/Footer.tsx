@@ -14,16 +14,17 @@ export function Footer() {
                             </span>
                         </div>
                         <p className="text-sm text-muted-foreground max-w-xs">
-                            Master web development with 45 comprehensive concepts explained simply. From APIs to deployment, learn everything you need to build modern web applications.
+                            Master system design with 54 comprehensive concepts explained simply. From APIs to deployment, learn everything you need to build scalable applications.
                         </p>
                         <div className="text-xs text-muted-foreground">
-                            ✨ All 45 concepts now available!
+                            ✨ All 54 concepts now available!
                         </div>
                     </div>
                     <div>
                         <h3 className="font-semibold mb-4">Learn</h3>
                         <ul className="space-y-2 text-sm text-muted-foreground">
-                            <li><Link href="/concepts" className="hover:text-foreground transition-colors">All Concepts (45)</Link></li>
+                            <li><Link href="/learn" className="hover:text-foreground transition-colors">Learning Path</Link></li>
+                            <li><Link href="/concepts" className="hover:text-foreground transition-colors">All Concepts (54)</Link></li>
                             <li><Link href="/concepts?category=api-backend" className="hover:text-foreground transition-colors">API & Backend</Link></li>
                             <li><Link href="/concepts?category=frontend" className="hover:text-foreground transition-colors">Frontend</Link></li>
                             <li><Link href="/concepts?category=security" className="hover:text-foreground transition-colors">Security</Link></li>
