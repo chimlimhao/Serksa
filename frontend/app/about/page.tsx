@@ -43,7 +43,7 @@ export default function AboutPage() {
                         <h1 className="text-4xl md:text-5xl font-bold mb-6">About Serksa</h1>
 
                         <Card className="my-8">
-                            <CardContent className="pt-6">
+                            <CardContent className="">
                                 <p className="text-lg italic text-muted-foreground">
                                     "A simple site that explains tech concepts the way you wish someone explained them to you."
                                 </p>
@@ -65,7 +65,7 @@ export default function AboutPage() {
                         <h2 className="text-2xl font-bold mt-12 mb-4">The Philosophy</h2>
                         <div className="space-y-4">
                             <Card>
-                                <CardContent className="pt-6">
+                                <CardContent className="">
                                     <h3 className="font-semibold mb-2">Clarity Over Completeness</h3>
                                     <p className="text-sm text-muted-foreground">
                                         I'd rather you understand 80% really well than be confused by 100% of the details.
@@ -73,7 +73,7 @@ export default function AboutPage() {
                                 </CardContent>
                             </Card>
                             <Card>
-                                <CardContent className="pt-6">
+                                <CardContent className="">
                                     <h3 className="font-semibold mb-2">Mental Models Over Memorization</h3>
                                     <p className="text-sm text-muted-foreground">
                                         Good analogies stick. They help you reason about new problems, not just remember facts.
@@ -81,7 +81,7 @@ export default function AboutPage() {
                                 </CardContent>
                             </Card>
                             <Card>
-                                <CardContent className="pt-6">
+                                <CardContent className="">
                                     <h3 className="font-semibold mb-2">Visual Over Textual</h3>
                                     <p className="text-sm text-muted-foreground">
                                         A simple diagram can explain in seconds what paragraphs of text cannot.
@@ -122,7 +122,7 @@ export default function AboutPage() {
                         <h2 className="text-2xl font-bold mt-12 mb-4">How You Can Help</h2>
                         <div className="space-y-4">
                             <Card>
-                                <CardContent className="pt-6">
+                                <CardContent className="">
                                     <h3 className="font-semibold mb-2 flex items-center gap-2">
                                         <span>📢</span> Share It
                                     </h3>
@@ -132,7 +132,7 @@ export default function AboutPage() {
                                 </CardContent>
                             </Card>
                             <Card>
-                                <CardContent className="pt-6">
+                                <CardContent className="">
                                     <h3 className="font-semibold mb-2 flex items-center gap-2">
                                         <span>💡</span> Suggest Concepts
                                     </h3>
@@ -142,7 +142,7 @@ export default function AboutPage() {
                                 </CardContent>
                             </Card>
                             <Card>
-                                <CardContent className="pt-6">
+                                <CardContent className="">
                                     <h3 className="font-semibold mb-2 flex items-center gap-2">
                                         <Heart className="w-4 h-4 text-accent" /> Support
                                     </h3>

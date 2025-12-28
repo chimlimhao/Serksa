@@ -70,7 +70,8 @@ export default function SupportPage() {
                                             </p>
                                         </div>
                                     </div>
-                                    <div className="flex items-start gap-3">
+                                    {/* Temporarily hidden - GitHub star section */}
+                                    {/* <div className="flex items-start gap-3">
                                         <span className="text-2xl">⭐</span>
                                         <div>
                                             <div className="font-semibold">Star on GitHub</div>
@@ -83,7 +84,7 @@ export default function SupportPage() {
                                                 </a>
                                             </Button>
                                         </div>
-                                    </div>
+                                    </div> */}
                                     <div className="flex items-start gap-3">
                                         <span className="text-2xl">💡</span>
                                         <div>
@@ -97,8 +98,8 @@ export default function SupportPage() {
                             </CardContent>
                         </Card>
 
-                        {/* Financial Support */}
-                        <Card className="border-accent/20">
+                        {/* Temporarily hidden - Financial support section */}
+                        {/* <Card className="border-accent/20">
                             <CardHeader>
                                 <CardTitle className="flex items-center gap-2">
                                     <Coffee className="w-5 h-5 text-accent" />
@@ -128,7 +129,8 @@ export default function SupportPage() {
                                     Your support helps cover hosting costs and motivates me to create more content.
                                 </p>
                             </CardContent>
-                        </Card>
+                        </Card> */}
+
 
                         {/* What Your Support Does */}
                         <Card>
