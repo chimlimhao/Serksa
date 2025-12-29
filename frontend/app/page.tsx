@@ -24,10 +24,10 @@ export default function Home() {
 
                 <div className="container mx-auto px-4 relative z-10">
                     <div className="max-w-4xl mx-auto text-center space-y-8">
-                        <Badge className="bg-primary/10 text-primary hover:bg-primary/20">
+                        {/* <Badge className="bg-primary/10 text-primary hover:bg-primary/20">
                             <Lightbulb className="w-3 h-3 mr-1" />
                             100% Free · No Signup Required
-                        </Badge>
+                        </Badge> */}
                         <h1 className="text-4xl md:text-6xl font-bold leading-tight">
                             System Design Concepts <br />
                             <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
