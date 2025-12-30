@@ -1,31 +1,15 @@
 'use client';
 
 import Link from "next/link";
-import { BookOpen, Home, Map, Search, User, Users, Zap, Shield, Smartphone, Server, Database as DatabaseIcon, Cloud, Lock, Gauge, Lightbulb, Heart } from "lucide-react";
-import { SearchModal } from "@/components/ui/search-modal";
-import { webDevConcepts } from "@/lib/concepts-data";
+import { User, Users, Zap, Shield, Smartphone, Server, Database as DatabaseIcon, Cloud, Lock, Gauge } from "lucide-react";
 import { motion } from "motion/react";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import { MediaBetweenText } from "@/components/fancy/blocks/media-between-text";
-import VariableFontHoverByRandomLetter from "@/components/fancy/text/variable-font-hover-by-random-letter";
+import { SiteLogo, DockNavigation, SiteFooter } from "@/components/layout";
 
 export default function LearningPathPage() {
-    const searchData = webDevConcepts.map(concept => ({
-        id: concept.slug,
-        title: concept.title,
-        description: concept.description,
-        category: concept.category,
-    }));
 
-    const dockItems = [
-        { icon: Home, label: "Home", onClick: () => window.location.href = "/" },
-        { icon: Map, label: "Walkthrough", onClick: () => window.location.href = "/learn" },
-        { icon: BookOpen, label: "All Concepts", onClick: () => window.location.href = "/concepts" },
-        { icon: Lightbulb, label: "Suggest", onClick: () => window.location.href = "/suggest" },
-        { icon: Heart, label: "Support", onClick: () => window.location.href = "/support" },
-        { icon: User, label: "About", onClick: () => window.location.href = "/about" },
-    ];
 
     const stages = [
         {
@@ -113,12 +97,14 @@ export default function LearningPathPage() {
     const ArchitectureDiagram = ({ stage }: { stage: number }) => {
         if (stage === 1) {
             return (
-                <div className="flex items-center justify-center gap-24 py-8">
-                    <DiagramNode icon={Smartphone} label="User" color="bg-purple-500" />
-                    <span className="text-3xl text-gray-400">→</span>
-                    <DiagramNode icon={Server} label="Server" color="bg-blue-500" />
-                    <span className="text-3xl text-gray-400">→</span>
-                    <DiagramNode icon={DatabaseIcon} label="Database" color="bg-green-500" />
+                <div className="w-full overflow-x-auto">
+                    <div className="flex items-center justify-center gap-4 sm:gap-8 md:gap-16 lg:gap-24 py-8 min-w-max px-4">
+                        <DiagramNode icon={Smartphone} label="User" color="bg-purple-500" />
+                        <span className="text-2xl sm:text-3xl text-gray-400">→</span>
+                        <DiagramNode icon={Server} label="Server" color="bg-blue-500" />
+                        <span className="text-2xl sm:text-3xl text-gray-400">→</span>
+                        <DiagramNode icon={DatabaseIcon} label="Database" color="bg-green-500" />
+                    </div>
                 </div>
             );
         }
@@ -233,38 +219,6 @@ export default function LearningPathPage() {
 
     return (
         <div className="min-h-screen bg-white">
-            {/* Logo */}
-            <div className="fixed top-6 left-6 z-50">
-                <Link href="/" className="flex items-center gap-2 px-4 py-2 bg-white/95 backdrop-blur-lg border border-gray-200 rounded-full hover:border-gray-300 transition-colors">
-                    <BookOpen className="w-5 h-5 text-[#ff5941]" />
-                    <span className="font-bold text-[#ff5941] leading-none">Serksa</span>
-                </Link>
-            </div>
-
-            {/* Dock */}
-            <div className="fixed bottom-2 left-0 right-0 z-50 flex justify-center px-4 pointer-events-none">
-                <div className="pointer-events-auto">
-                    <div className="flex items-center gap-1 p-2 rounded-2xl backdrop-blur-lg border bg-white/95 border-gray-200">
-                        {dockItems.map((item) => {
-                            const Icon = item.icon;
-                            return (
-                                <button key={item.label} onClick={item.onClick} className="relative group p-3 rounded-lg hover:bg-gray-100 transition-colors">
-                                    <Icon className="w-5 h-5 text-gray-700 group-hover:text-gray-900" />
-                                    <span className="absolute -top-8 left-1/2 -translate-x-1/2 px-2 py-1 rounded text-xs bg-gray-900 text-white opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
-                                        {item.label}
-                                    </span>
-                                </button>
-                            );
-                        })}
-                        <SearchModal data={searchData}>
-                            <button className="relative group p-3 rounded-lg hover:bg-gray-100 transition-colors">
-                                <Search className="w-5 h-5 text-gray-700 group-hover:text-gray-900" />
-                                <span className="absolute -top-8 left-1/2 -translate-x-1/2 px-2 py-1 rounded text-xs bg-gray-900 text-white opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">Search</span>
-                            </button>
-                        </SearchModal>
-                    </div>
-                </div>
-            </div>
 
             <div className="pt-24 pb-32 px-6 max-w-5xl mx-auto">
                 {/* Hero */}
@@ -414,27 +368,7 @@ export default function LearningPathPage() {
             </div>
 
             {/* Footer */}
-            <footer className="relative overflow-hidden w-full h-96 bg-white flex justify-end px-12 text-right items-start py-16 text-[#ff5941]">
-                <div className="flex flex-row space-x-12 sm:space-x-16 md:space-x-24 text-sm sm:text-lg md:text-xl">
-                    <ul>
-                        <li className="hover:underline cursor-pointer"><Link href="/learn">Walkthrough</Link></li>
-                        <li className="hover:underline cursor-pointer"><Link href="/concepts">All Concepts</Link></li>
-                        <li className="hover:underline cursor-pointer"><Link href="/about">About</Link></li>
-                    </ul>
-                    <ul>
-                        <li className="hover:underline cursor-pointer"><a href="https://github.com" target="_blank" rel="noopener noreferrer">Github</a></li>
-                        <li className="hover:underline cursor-pointer"><a href="https://instagram.com" target="_blank" rel="noopener noreferrer">Instagram</a></li>
-                        <li className="hover:underline cursor-pointer"><a href="https://twitter.com" target="_blank" rel="noopener noreferrer">X (Twitter)</a></li>
-                    </ul>
-                </div>
-                <VariableFontHoverByRandomLetter
-                    label="Serksa"
-                    fromFontVariationSettings="'wght' 400"
-                    toFontVariationSettings="'wght' 900"
-                    staggerDuration={0.03}
-                    className="absolute bottom-4 left-0 sm:text-[240px] text-[100px] text-[#ff5941] font-bold leading-none cursor-pointer"
-                />
-            </footer>
+            <SiteFooter />
         </div>
     );
 }

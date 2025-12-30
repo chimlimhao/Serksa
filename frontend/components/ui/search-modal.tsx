@@ -79,7 +79,10 @@ export function SearchModal({ children, data }: SearchModalProps) {
                                         key={i}
                                         className="flex cursor-pointer items-center gap-3"
                                         value={item.title}
-                                        onSelect={() => setOpen(false)}
+                                        onSelect={() => {
+                                            setOpen(false);
+                                            window.location.href = `/concepts/${item.id}`;
+                                        }}
                                     >
                                         {item.icon && <item.icon className="size-5" />}
                                         <div className="flex flex-col">

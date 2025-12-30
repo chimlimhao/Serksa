@@ -18,13 +18,13 @@ export function SiteFooter() {
                 </ul>
                 <ul>
                     <li className="hover:underline cursor-pointer">
-                        <a href="https://github.com" target="_blank" rel="noopener noreferrer">Github</a>
+                        <a href="https://github.com/chimlimhao/Serksa" target="_blank" rel="noopener noreferrer">Github</a>
                     </li>
                     <li className="hover:underline cursor-pointer">
-                        <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">Instagram</a>
+                        <a href="https://www.instagram.com/its_limhao/" target="_blank" rel="noopener noreferrer">Instagram</a>
                     </li>
                     <li className="hover:underline cursor-pointer">
-                        <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">X (Twitter)</a>
+                        <a href="https://x.com/c_limhao" target="_blank" rel="noopener noreferrer">X (Twitter)</a>
                     </li>
                 </ul>
             </div>

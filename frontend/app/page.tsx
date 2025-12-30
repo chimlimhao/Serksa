@@ -7,11 +7,12 @@ import { Dock } from "@/components/ui/dock-two";
 import { SearchModal } from "@/components/ui/search-modal";
 import { TextRotate } from "@/components/ui/text-rotate";
 import StackingCards, { StackingCardItem } from "@/components/fancy/blocks/stacking-cards";
-import { BookOpen, Home, Map, Search, User, Lightbulb, Heart } from "lucide-react";
+import { BookOpen } from "lucide-react";
 import { LayoutGroup, motion } from "motion/react";
 import { cn } from "@/lib/utils";
 import { webDevConcepts } from "@/lib/concepts-data";
 import VariableFontHoverByRandomLetter from "@/components/fancy/text/variable-font-hover-by-random-letter";
+import { DockNavigation, SiteLogo } from "@/components/layout";
 
 const cards = [
     {
@@ -67,56 +68,8 @@ export default function HomePage() {
         category: concept.category,
     }));
 
-    const dockItems = [
-        { icon: Home, label: "Home", onClick: () => window.location.href = "/" },
-        { icon: Map, label: "Walkthrough", onClick: () => window.location.href = "/learn" },
-        { icon: BookOpen, label: "All Concepts", onClick: () => window.location.href = "/concepts" },
-        { icon: Lightbulb, label: "Suggest", onClick: () => window.location.href = "/suggest" },
-        { icon: Heart, label: "Support", onClick: () => window.location.href = "/support" },
-        { icon: User, label: "About", onClick: () => window.location.href = "/about" },
-    ];
-
     return (
         <div className="relative w-full h-screen overflow-y-scroll snap-y snap-mandatory bg-white">
-            {/* Logo at top left */}
-            {/* <div className="fixed top-6 left-6 z-50">
-                <Link href="/" className="flex items-center gap-2 px-4 py-2 bg-white/95 backdrop-blur-lg border border-gray-200 rounded-full hover:border-gray-300 transition-colors">
-                    <BookOpen className="w-5 h-5 text-[#ff5941]" />
-                    <span className="font-bold text-[#ff5941] leading-none">Serksa</span>
-                </Link>
-            </div> */}
-
-            {/* Dock at Bottom - Sticky */}
-            <div className="fixed bottom-2 left-0 right-0 z-50 flex justify-center px-4 pointer-events-none">
-                <div className="pointer-events-auto">
-                    <div className="flex items-center gap-1 p-2 rounded-2xl backdrop-blur-lg border bg-white/95 border-gray-200">
-                        {dockItems.map((item) => {
-                            const Icon = item.icon;
-                            return (
-                                <button
-                                    key={item.label}
-                                    onClick={item.onClick}
-                                    className="relative group p-3 rounded-lg hover:bg-gray-100 transition-colors"
-                                >
-                                    <Icon className="w-5 h-5 text-gray-700 group-hover:text-gray-900" />
-                                    <span className="absolute -top-8 left-1/2 -translate-x-1/2 px-2 py-1 rounded text-xs bg-gray-900 text-white opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
-                                        {item.label}
-                                    </span>
-                                </button>
-                            );
-                        })}
-                        {/* Search Button */}
-                        <SearchModal data={searchData}>
-                            <button className="relative group p-3 rounded-lg hover:bg-gray-100 transition-colors">
-                                <Search className="w-5 h-5 text-gray-700 group-hover:text-gray-900" />
-                                <span className="absolute -top-8 left-1/2 -translate-x-1/2 px-2 py-1 rounded text-xs bg-gray-900 text-white opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
-                                    Search
-                                </span>
-                            </button>
-                        </SearchModal>
-                    </div>
-                </div>
-            </div>
             {/* Hero Section - Full Viewport */}
             <section className="relative h-screen flex items-center justify-center bg-white overflow-hidden snap-start snap-always">
                 {/* Subtle grid background */}
@@ -164,52 +117,38 @@ export default function HomePage() {
 
                 {/* Content */}
                 <div className="relative z-10 text-center px-6 max-w-6xl mx-auto">
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6 }}
-                        className="inline-flex items-center gap-2 mb-6 px-4 py-2 bg-gradient-to-r from-gray-100 to-gray-50 rounded-full text-gray-600 text-sm font-medium uppercase tracking-wider shadow-sm"
-                    >
+                    <div className="inline-flex items-center gap-2 mb-6 px-4 py-2 bg-gradient-to-r from-gray-100 to-gray-50 rounded-full text-gray-600 text-sm font-medium uppercase tracking-wider shadow-sm">
                         <BookOpen className="w-4 h-4 text-[#ff5941]" />
                         <span className="font-bold text-[#ff5941]">Serksa</span>
                         <span className="text-gray-400">·</span>
                         <span>Visual Learning</span>
-                    </motion.div>
+                    </div>
 
-                    <LayoutGroup>
-                        <motion.div className="text-5xl md:text-7xl lg:text-8xl font-bold text-gray-900 mb-6 leading-tight flex flex-col items-center justify-center" layout>
-                            <motion.span layout transition={{ type: "spring", damping: 30, stiffness: 400 }}>
-                                Learn it{" "}
-                            </motion.span>
-                            <TextRotate
-                                texts={[
-                                    "fast ⚡",
-                                    "in minutes ⏱️",
-                                    "visually 👁️",
-                                    "fun 🎉",
-                                    "simple ✨",
-                                ]}
-                                mainClassName="text-white px-3 bg-[#ff5941] overflow-hidden py-2 justify-center rounded-lg"
-                                staggerFrom={"last"}
-                                initial={{ y: "100%" }}
-                                animate={{ y: 0 }}
-                                exit={{ y: "-120%" }}
-                                staggerDuration={0.025}
-                                splitLevelClassName="overflow-hidden pb-1"
-                                transition={{ type: "spring", damping: 30, stiffness: 400 }}
-                                rotationInterval={2000}
-                            />
-                        </motion.div>
-                    </LayoutGroup>
+                    <div className="text-5xl md:text-7xl lg:text-8xl font-bold text-gray-900 mb-6 leading-tight flex flex-col items-center justify-center">
+                        <span>Learn it{" "}</span>
+                        <TextRotate
+                            texts={[
+                                "fast ⚡",
+                                "in minutes ⏱️",
+                                "visually 👁️",
+                                "fun 🎉",
+                                "simple ✨",
+                            ]}
+                            mainClassName="text-white px-3 bg-[#ff5941] overflow-hidden py-2 justify-center rounded-lg shadow-lg"
+                            staggerFrom={"last"}
+                            initial={{ y: "100%" }}
+                            animate={{ y: 0 }}
+                            exit={{ y: "-120%" }}
+                            staggerDuration={0.025}
+                            splitLevelClassName="overflow-hidden pb-1"
+                            transition={{ type: "spring", damping: 30, stiffness: 400 }}
+                            rotationInterval={2000}
+                        />
+                    </div>
 
-                    <motion.p
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6, delay: 0.3 }}
-                        className="text-xl md:text-2xl text-gray-600 mb-10 max-w-3xl mx-auto"
-                    >
+                    <p className="text-xl md:text-2xl text-gray-600 mb-10 max-w-3xl mx-auto">
                         Understand system design concepts through visual diagrams and real-world examples from apps you use every day
-                    </motion.p>
+                    </p>
                 </div>
 
                 {/* Scroll Indicator */}
@@ -228,7 +167,7 @@ export default function HomePage() {
                 >
                     {/* Scroll Down Header */}
                     <div className="relative h-screen w-full z-10 text-2xl md:text-7xl font-bold uppercase flex justify-center items-center text-[#ff5941] whitespace-pre bg-white">
-                        Scroll down ↓
+                        What Serksa Offers ↓
                     </div>
 
                     <StackingCards
