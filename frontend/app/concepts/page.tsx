@@ -2,18 +2,36 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
-import { Search, ArrowLeft } from "lucide-react";
-import { Header } from "@/components/layout/Header";
-import { Footer } from "@/components/layout/Footer";
-import { ConceptCard } from "@/components/concept/ConceptCard";
-import { webDevConcepts, categories, type Concept } from "@/lib/concepts-data";
+import { Search, BookOpen, Home, Map, User, ChevronLeft, ChevronRight } from "lucide-react";
+import { Dock } from "@/components/ui/dock-two";
+import { SearchModal } from "@/components/ui/search-modal";
+import { webDevConcepts, categories } from "@/lib/concepts-data";
+import { motion } from "motion/react";
+import { cn } from "@/lib/utils";
+import VariableFontHoverByRandomLetter from "@/components/fancy/text/variable-font-hover-by-random-letter";
 
 export default function ConceptsPage() {
     const [selectedCategory, setSelectedCategory] = useState<string>('All');
     const [searchQuery, setSearchQuery] = useState<string>('');
+    const [currentPage, setCurrentPage] = useState<number>(1);
+    const CONCEPTS_PER_PAGE = 15;
+
+    // Prepare search data from concepts
+    const searchData = webDevConcepts.map(concept => ({
+        id: concept.slug,
+        title: concept.title,
+        description: concept.description,
+        category: concept.category,
+    }));
+
+    const dockItems = [
+        { icon: Home, label: "Home", onClick: () => window.location.href = "/" },
+        { icon: Map, label: "Learning Path", onClick: () => window.location.href = "/learn" },
+        { icon: BookOpen, label: "All Concepts", onClick: () => window.location.href = "/concepts" },
+        { icon: User, label: "About", onClick: () => window.location.href = "/about" },
+    ];
 
     // Filter concepts based on category and search
     const filteredConcepts = webDevConcepts.filter(concept => {
@@ -23,58 +41,124 @@ export default function ConceptsPage() {
         return matchesCategory && matchesSearch;
     });
 
+    // Pagination calculations
+    const totalPages = Math.ceil(filteredConcepts.length / CONCEPTS_PER_PAGE);
+    const startIndex = (currentPage - 1) * CONCEPTS_PER_PAGE;
+    const endIndex = startIndex + CONCEPTS_PER_PAGE;
+    const paginatedConcepts = filteredConcepts.slice(startIndex, endIndex);
+
+    // Reset to page 1 when filters change
+    const handleCategoryChange = (category: string) => {
+        setSelectedCategory(category);
+        setCurrentPage(1);
+    };
+
+    const handleSearchChange = (query: string) => {
+        setSearchQuery(query);
+        setCurrentPage(1);
+    };
+
     return (
-        <div className="min-h-screen">
-            <Header activeTab="concepts" />
+        <div className="min-h-screen bg-white">
+            {/* Logo at top left */}
+            <div className="fixed top-6 left-6 z-50">
+                <Link href="/" className="flex items-center gap-2 px-4 py-2 bg-white/95 backdrop-blur-lg border border-gray-200 rounded-full hover:border-gray-300 transition-colors">
+                    <BookOpen className="w-5 h-5 text-[#ff5941]" />
+                    <span className="font-bold text-[#ff5941] leading-none">Serksa</span>
+                </Link>
+            </div>
 
-            <div className="pt-24 pb-16">
-                <div className="container mx-auto px-4">
-                    {/* Back Button */}
-                    <Link href="/">
-                        <Button variant="ghost" size="sm" className="mb-6">
-                            <ArrowLeft className="w-4 h-4 mr-2" />
-                            Back to Home
-                        </Button>
-                    </Link>
-
-                    {/* Page Header */}
-                    <div className="mb-12 space-y-4">
-                        <h1 className="text-4xl md:text-5xl font-bold">All Concepts</h1>
-                        <p className="text-lg text-muted-foreground max-w-2xl">
-                            Browse {webDevConcepts.length} professional system design concepts.
-                            Each one is designed to help things "click" in under 10 minutes.
-                        </p>
+            {/* Dock at Bottom - Sticky */}
+            <div className="fixed bottom-2 left-0 right-0 z-50 flex justify-center px-4 pointer-events-none">
+                <div className="pointer-events-auto">
+                    <div className="flex items-center gap-1 p-2 rounded-2xl backdrop-blur-lg border bg-white/95 border-gray-200">
+                        {dockItems.map((item) => {
+                            const Icon = item.icon;
+                            return (
+                                <button
+                                    key={item.label}
+                                    onClick={item.onClick}
+                                    className="relative group p-3 rounded-lg hover:bg-gray-100 transition-colors"
+                                >
+                                    <Icon className="w-5 h-5 text-gray-700 group-hover:text-gray-900" />
+                                    <span className="absolute -top-8 left-1/2 -translate-x-1/2 px-2 py-1 rounded text-xs bg-gray-900 text-white opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
+                                        {item.label}
+                                    </span>
+                                </button>
+                            );
+                        })}
+                        {/* Search Button */}
+                        <SearchModal data={searchData}>
+                            <button className="relative group p-3 rounded-lg hover:bg-gray-100 transition-colors">
+                                <Search className="w-5 h-5 text-gray-700 group-hover:text-gray-900" />
+                                <span className="absolute -top-8 left-1/2 -translate-x-1/2 px-2 py-1 rounded text-xs bg-gray-900 text-white opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
+                                    Search
+                                </span>
+                            </button>
+                        </SearchModal>
                     </div>
+                </div>
+            </div>
+
+            <div className="pt-24 pb-32 px-6">
+                <div className="max-w-7xl mx-auto">
+                    {/* Page Header */}
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6 }}
+                        className="mb-12 text-center"
+                    >
+                        <h1 className="text-5xl md:text-7xl font-bold text-gray-900 mb-6">All Concepts</h1>
+                        <p className="text-xl md:text-2xl text-gray-600 max-w-3xl mx-auto">
+                            Browse {webDevConcepts.length} system design concepts. High-level explanations with real software examples.
+                        </p>
+                    </motion.div>
 
                     {/* Search */}
-                    <div className="mb-8 max-w-md">
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6, delay: 0.1 }}
+                        className="mb-8 max-w-md mx-auto"
+                    >
                         <div className="relative">
-                            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                            <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
                             <Input
                                 placeholder="Search concepts..."
-                                className="pl-10"
+                                className="pl-12 h-12 rounded-full border-2 border-gray-200 focus:border-[#ff5941] transition-colors"
                                 value={searchQuery}
-                                onChange={(e) => setSearchQuery(e.target.value)}
+                                onChange={(e) => handleSearchChange(e.target.value)}
                             />
                         </div>
-                    </div>
+                    </motion.div>
 
                     {/* Category Filter */}
-                    <div className="mb-8 flex flex-wrap gap-2">
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6, delay: 0.2 }}
+                        className="mb-12 flex flex-wrap gap-3 justify-center"
+                    >
                         {categories.map((category) => (
                             <Badge
                                 key={category}
                                 variant={category === selectedCategory ? "default" : "outline"}
-                                className="cursor-pointer hover:bg-primary hover:text-primary-foreground transition-colors"
-                                onClick={() => setSelectedCategory(category)}
+                                className={cn(
+                                    "cursor-pointer px-4 py-2 text-sm font-semibold rounded-full transition-all",
+                                    category === selectedCategory
+                                        ? "bg-[#ff5941] text-white hover:bg-[#ff6951]"
+                                        : "border-2 border-gray-300 text-gray-700 hover:border-[#ff5941] hover:text-[#ff5941]"
+                                )}
+                                onClick={() => handleCategoryChange(category)}
                             >
                                 {category}
                             </Badge>
                         ))}
-                    </div>
+                    </motion.div>
 
                     {/* Results Count */}
-                    <div className="mb-4 text-sm text-muted-foreground">
+                    <div className="mb-6 text-center text-sm text-gray-600">
                         Showing {filteredConcepts.length} {filteredConcepts.length === 1 ? 'concept' : 'concepts'}
                         {selectedCategory !== 'All' && ` in ${selectedCategory}`}
                         {searchQuery && ` matching "${searchQuery}"`}
@@ -82,52 +166,168 @@ export default function ConceptsPage() {
 
                     {/* Concepts Grid */}
                     {filteredConcepts.length > 0 ? (
-                        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                            {filteredConcepts.map((concept) => (
-                                <ConceptCard
-                                    key={concept.slug}
-                                    title={concept.title}
-                                    description={concept.description}
-                                    category={concept.category}
-                                    difficulty={concept.difficulty}
-                                    readTime={concept.readTime}
-                                    slug={concept.slug}
-                                />
-                            ))}
-                        </div>
+                        <>
+                            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                {paginatedConcepts.map((concept, index) => (
+                                    <motion.div
+                                        key={concept.slug}
+                                        initial={{ opacity: 0, y: 20 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        transition={{ duration: 0.5, delay: index * 0.05 }}
+                                    >
+                                        <Link href={`/concepts/${concept.slug}`}>
+                                            <div className="group relative h-full p-6 bg-white border-2 border-gray-200 rounded-2xl hover:border-[#ff5941] transition-all duration-300 hover:shadow-lg cursor-pointer">
+                                                <div className="flex items-start justify-between mb-4">
+                                                    <span className="text-xs font-semibold text-[#ff5941] uppercase tracking-wider">
+                                                        {concept.category}
+                                                    </span>
+                                                    <span className={cn(
+                                                        "text-xs px-2 py-1 rounded-full",
+                                                        concept.difficulty === "Beginner" && "bg-green-100 text-green-700",
+                                                        concept.difficulty === "Intermediate" && "bg-yellow-100 text-yellow-700",
+                                                        concept.difficulty === "Advanced" && "bg-red-100 text-red-700"
+                                                    )}>
+                                                        {concept.difficulty}
+                                                    </span>
+                                                </div>
+                                                <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-[#ff5941] transition-colors">
+                                                    {concept.title}
+                                                </h3>
+                                                <p className="text-gray-600 text-sm line-clamp-3 mb-4">
+                                                    {concept.description}
+                                                </p>
+                                                <div className="text-xs text-gray-500">
+                                                    {concept.readTime} read
+                                                </div>
+                                            </div>
+                                        </Link>
+                                    </motion.div>
+                                ))}
+                            </div>
+
+                            {/* Pagination */}
+                            {totalPages > 1 && (
+                                <div className="mt-12 flex justify-center items-center gap-2">
+                                    <button
+                                        onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                                        disabled={currentPage === 1}
+                                        className="px-4 py-2 rounded-full border-2 border-gray-300 text-gray-700 font-semibold hover:border-[#ff5941] hover:text-[#ff5941] disabled:opacity-50 disabled:cursor-not-allowed transition-colors cursor-pointer"
+                                    >
+                                        <ChevronLeft className="w-5 h-5" />
+                                    </button>
+
+                                    <div className="flex gap-2">
+                                        {Array.from({ length: Math.min(totalPages, 5) }, (_, i) => {
+                                            let page;
+                                            if (totalPages <= 5) {
+                                                page = i + 1;
+                                            } else if (currentPage <= 3) {
+                                                page = i + 1;
+                                            } else if (currentPage >= totalPages - 2) {
+                                                page = totalPages - 4 + i;
+                                            } else {
+                                                page = currentPage - 2 + i;
+                                            }
+                                            return (
+                                                <button
+                                                    key={page}
+                                                    onClick={() => setCurrentPage(page)}
+                                                    className={cn(
+                                                        "w-10 h-10 rounded-full font-semibold transition-colors cursor-pointer",
+                                                        page === currentPage
+                                                            ? "bg-[#ff5941] text-white"
+                                                            : "border-2 border-gray-300 text-gray-700 hover:border-[#ff5941] hover:text-[#ff5941]"
+                                                    )}
+                                                >
+                                                    {page}
+                                                </button>
+                                            );
+                                        })}
+                                    </div>
+
+                                    <button
+                                        onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                                        disabled={currentPage === totalPages}
+                                        className="px-4 py-2 rounded-full border-2 border-gray-300 text-gray-700 font-semibold hover:border-[#ff5941] hover:text-[#ff5941] disabled:opacity-50 disabled:cursor-not-allowed transition-colors cursor-pointer"
+                                    >
+                                        <ChevronRight className="w-5 h-5" />
+                                    </button>
+                                </div>
+                            )}
+                        </>
                     ) : (
-                        <div className="text-center py-12">
-                            <p className="text-muted-foreground mb-4">
+                        <div className="text-center py-16">
+                            <p className="text-gray-600 text-lg mb-6">
                                 No concepts found matching your search.
                             </p>
-                            <Button
-                                variant="outline"
+                            <button
+                                className="px-6 py-3 bg-gray-900 text-white rounded-full font-semibold hover:bg-gray-800 transition-colors cursor-pointer"
                                 onClick={() => {
                                     setSearchQuery('');
                                     setSelectedCategory('All');
+                                    setCurrentPage(1);
                                 }}
                             >
                                 Clear Filters
-                            </Button>
+                            </button>
                         </div>
                     )}
 
                     {/* Coming Soon */}
-                    <div className="mt-16 text-center p-12 bg-muted/30 rounded-lg">
-                        <h3 className="text-2xl font-bold mb-4">More Coming Soon</h3>
-                        <p className="text-muted-foreground mb-6">
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6 }}
+                        viewport={{ once: true }}
+                        className="mt-20 text-center p-12 bg-gradient-to-br from-gray-50 to-white rounded-3xl border-2 border-gray-200"
+                    >
+                        <h3 className="text-3xl font-bold text-gray-900 mb-4">More Coming Soon</h3>
+                        <p className="text-gray-600 text-lg mb-6">
                             New concepts are added regularly. Have a suggestion?
                         </p>
                         <Link href="/suggest">
-                            <Button variant="outline">
+                            <button className="px-8 py-4 bg-[#ff5941] text-white rounded-full text-lg font-semibold hover:bg-[#ff6951] transition-colors cursor-pointer">
                                 Suggest a Concept
-                            </Button>
+                            </button>
                         </Link>
-                    </div>
+                    </motion.div>
                 </div>
             </div>
 
-            <Footer />
+            {/* Footer */}
+            <div className="relative overflow-hidden w-full h-96 flex justify-end px-12 text-right items-start py-16 text-[#ff5941]">
+                <div className="flex flex-row space-x-12 sm:space-x-16 md:space-x-24 text-sm sm:text-lg md:text-xl">
+                    <ul>
+                        <li className="hover:underline cursor-pointer">
+                            <Link href="/learn">Walkthrough</Link>
+                        </li>
+                        <li className="hover:underline cursor-pointer">
+                            <Link href="/concepts">All Concepts</Link>
+                        </li>
+                        <li className="hover:underline cursor-pointer">
+                            <Link href="/about">About</Link>
+                        </li>
+                    </ul>
+                    <ul>
+                        <li className="hover:underline cursor-pointer">
+                            <a href="https://github.com" target="_blank" rel="noopener noreferrer">Github</a>
+                        </li>
+                        <li className="hover:underline cursor-pointer">
+                            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">Instagram</a>
+                        </li>
+                        <li className="hover:underline cursor-pointer">
+                            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">X (Twitter)</a>
+                        </li>
+                    </ul>
+                </div>
+                <VariableFontHoverByRandomLetter
+                    label="Serksa"
+                    fromFontVariationSettings="'wght' 400"
+                    toFontVariationSettings="'wght' 900"
+                    staggerDuration={0.03}
+                    className="absolute bottom-0 left-0 sm:text-[240px] text-[100px] text-[#ff5941] font-bold leading-none cursor-pointer"
+                />
+            </div>
         </div>
     );
 }

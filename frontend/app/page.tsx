@@ -1,345 +1,403 @@
 'use client';
 
-import { useState } from "react";
+import { useRef, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent } from "@/components/ui/card";
-import { BookOpen, ArrowRight, Sparkles, Map, Eye } from "lucide-react";
-import { Header } from "@/components/layout/Header";
-import { Footer } from "@/components/layout/Footer";
-import { ConceptCard } from "@/components/concept/ConceptCard";
-import { getFeaturedConcepts, webDevConcepts } from "@/lib/concepts-data";
+import { Dock } from "@/components/ui/dock-two";
+import { SearchModal } from "@/components/ui/search-modal";
+import { TextRotate } from "@/components/ui/text-rotate";
+import StackingCards, { StackingCardItem } from "@/components/fancy/blocks/stacking-cards";
+import { BookOpen, Home, Map, Search, User, Lightbulb, Heart } from "lucide-react";
+import { LayoutGroup, motion } from "motion/react";
+import { cn } from "@/lib/utils";
+import { webDevConcepts } from "@/lib/concepts-data";
+import VariableFontHoverByRandomLetter from "@/components/fancy/text/variable-font-hover-by-random-letter";
 
-export default function Home() {
-    const featuredConcepts = getFeaturedConcepts(6);
-    const [hoveredNode, setHoveredNode] = useState<string | null>(null);
+const cards = [
+    {
+        bgColor: "bg-[#f97316]",
+        title: "Simple Explanations",
+        description:
+            "No jargon, no assumptions. Every concept is explained like you're learning it for the first time. We use everyday analogies that actually make sense.",
+        image:
+            "https://plus.unsplash.com/premium_vector-1739262161806-d954eb02427c?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxjb2xsZWN0aW9uLXBhZ2V8MXxxdGU5Smx2R3d0b3x8ZW58MHx8fHx8",
+    },
+    {
+        bgColor: "bg-[#0015ff]",
+        title: "Visual Learning",
+        description:
+            "See how everything connects with clear diagrams. Visual flows show you exactly how data moves through systems, making complex architectures easy to understand.",
+        image:
+            "https://plus.unsplash.com/premium_vector-1739200616200-69a138d91627?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxjb2xsZWN0aW9uLXBhZ2V8MnxxdGU5Smx2R3d0b3x8ZW58MHx8fHx8",
+    },
+    {
+        bgColor: "bg-[#ff5941]",
+        title: "Real Examples",
+        description:
+            "Learn from apps you use every day. We explain concepts using Instagram, WhatsApp, Netflix, and other real-world applications you already understand.",
+        image:
+            "https://plus.unsplash.com/premium_vector-1738597190290-a3b571590b9e?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxjb2xsZWN0aW9uLXBhZ2V8OHxxdGU5Smx2R3d0b3x8ZW58MHx8fHx8",
+    },
+    {
+        bgColor: "bg-[#1f464d]",
+        title: "No Fluff",
+        description:
+            "Get straight to the point. We focus on what you actually need to know, cutting through the noise to deliver clear, actionable knowledge.",
+        image:
+            "https://plus.unsplash.com/premium_vector-1738935247245-97940c74cced?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxjb2xsZWN0aW9uLXBhZ2V8MTZ8cXRlOUpsdkd3dG98fGVufDB8fHx8fA%3D%3D",
+    },
+    {
+        bgColor: "bg-[#0015ff]",
+        title: "Always Free",
+        description:
+            "100% free, forever. No paywalls, no premium tiers, no hidden costs. Quality education should be accessible to everyone, everywhere.",
+        image:
+            "https://plus.unsplash.com/premium_vector-1738935247692-1c2f2c924fd8?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxjb2xsZWN0aW9uLXBhZ2V8MjJ8cXRlOUpsdkd3dG98fGVufDB8fHx8fA%3D%3D",
+    },
+];
+
+export default function HomePage() {
+    const container = useRef<HTMLDivElement>(null);
+
+    // Prepare search data from concepts
+    const searchData = webDevConcepts.map(concept => ({
+        id: concept.slug,
+        title: concept.title,
+        description: concept.description,
+        category: concept.category,
+    }));
+
+    const dockItems = [
+        { icon: Home, label: "Home", onClick: () => window.location.href = "/" },
+        { icon: Map, label: "Walkthrough", onClick: () => window.location.href = "/learn" },
+        { icon: BookOpen, label: "All Concepts", onClick: () => window.location.href = "/concepts" },
+        { icon: Lightbulb, label: "Suggest", onClick: () => window.location.href = "/suggest" },
+        { icon: Heart, label: "Support", onClick: () => window.location.href = "/support" },
+        { icon: User, label: "About", onClick: () => window.location.href = "/about" },
+    ];
 
     return (
-        <div className="min-h-screen">
-            <Header activeTab="home" />
+        <div className="relative w-full h-screen overflow-y-scroll snap-y snap-mandatory bg-white">
+            {/* Logo at top left */}
+            {/* <div className="fixed top-6 left-6 z-50">
+                <Link href="/" className="flex items-center gap-2 px-4 py-2 bg-white/95 backdrop-blur-lg border border-gray-200 rounded-full hover:border-gray-300 transition-colors">
+                    <BookOpen className="w-5 h-5 text-[#ff5941]" />
+                    <span className="font-bold text-[#ff5941] leading-none">Serksa</span>
+                </Link>
+            </div> */}
 
-            {/* Hero Section - Interactive Diagram */}
-            <section className="pt-32 pb-24 md:pt-40 md:pb-32">
-                <div className="container mx-auto px-4">
-                    {/* Headline */}
-                    <div className="max-w-4xl mx-auto text-center mb-20 space-y-6">
-                        <Badge className="bg-primary/10 text-primary hover:bg-primary/20 border-primary/20">
-                            <Sparkles className="w-3 h-3 mr-1" />
-                            Visual Learning · Real-World Analogies
-                        </Badge>
-
-                        <h1 className="text-5xl md:text-7xl font-bold leading-tight tracking-tight">
-                            System Design,
-                            <br />
-                            <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
-                                Explained Visually
-                            </span>
-                        </h1>
-
-                        <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-                            Master how apps like Instagram, WhatsApp, and YouTube actually work—through interactive diagrams and real-world analogies.
-                        </p>
-                    </div>
-
-                    {/* Interactive System Design Diagram */}
-                    <div className="max-w-5xl mx-auto mb-16">
-                        <div className="bg-gradient-to-br from-muted/30 to-muted/10 rounded-3xl p-8 md:p-16 border border-border/50">
-                            {/* Diagram Title */}
-                            <div className="text-center mb-12">
-                                <p className="text-sm font-medium text-muted-foreground mb-2">
-                                    {hoveredNode ? `Exploring: ${hoveredNode}` : "Hover to explore"}
-                                </p>
-                                <h3 className="text-2xl font-bold">How Instagram Works</h3>
-                            </div>
-
-                            {/* Flow Diagram */}
-                            <div className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-4">
-                                {/* Node 1: Client */}
-                                <div
-                                    className="group cursor-pointer transition-all duration-300"
-                                    onMouseEnter={() => setHoveredNode("Your Phone")}
-                                    onMouseLeave={() => setHoveredNode(null)}
+            {/* Dock at Bottom - Sticky */}
+            <div className="fixed bottom-2 left-0 right-0 z-50 flex justify-center px-4 pointer-events-none">
+                <div className="pointer-events-auto">
+                    <div className="flex items-center gap-1 p-2 rounded-2xl backdrop-blur-lg border bg-white/95 border-gray-200">
+                        {dockItems.map((item) => {
+                            const Icon = item.icon;
+                            return (
+                                <button
+                                    key={item.label}
+                                    onClick={item.onClick}
+                                    className="relative group p-3 rounded-lg hover:bg-gray-100 transition-colors"
                                 >
-                                    <div className={`relative transition-all duration-300 ${hoveredNode === "Your Phone" ? "scale-110" : "scale-100"}`}>
-                                        <div className="w-32 h-32 bg-gradient-to-br from-blue-500/20 to-blue-600/20 rounded-2xl flex items-center justify-center border-2 border-blue-500/30 group-hover:border-blue-500 group-hover:shadow-lg group-hover:shadow-blue-500/20">
-                                            <span className="text-5xl">📱</span>
-                                        </div>
-                                        <div className="mt-4 text-center">
-                                            <p className="font-semibold text-sm">Your Phone</p>
-                                            <p className="text-xs text-muted-foreground">Client</p>
-                                        </div>
-                                        {hoveredNode === "Your Phone" && (
-                                            <div className="absolute -bottom-16 left-1/2 -translate-x-1/2 w-48 bg-popover border rounded-lg p-3 shadow-lg z-10">
-                                                <p className="text-xs">Opens Instagram app & sends requests</p>
-                                            </div>
-                                        )}
-                                    </div>
-                                </div>
-
-                                {/* Arrow 1 */}
-                                <div className="hidden md:flex flex-col items-center">
-                                    <div className="flex items-center gap-2">
-                                        <div className="h-0.5 w-16 bg-gradient-to-r from-blue-500 to-purple-500"></div>
-                                        <ArrowRight className="w-5 h-5 text-purple-500" />
-                                    </div>
-                                    <p className="text-xs text-muted-foreground mt-1">Request</p>
-                                </div>
-
-                                {/* Node 2: Server */}
-                                <div
-                                    className="group cursor-pointer transition-all duration-300"
-                                    onMouseEnter={() => setHoveredNode("Instagram Server")}
-                                    onMouseLeave={() => setHoveredNode(null)}
-                                >
-                                    <div className={`relative transition-all duration-300 ${hoveredNode === "Instagram Server" ? "scale-110" : "scale-100"}`}>
-                                        <div className="w-32 h-32 bg-gradient-to-br from-purple-500/20 to-purple-600/20 rounded-2xl flex items-center justify-center border-2 border-purple-500/30 group-hover:border-purple-500 group-hover:shadow-lg group-hover:shadow-purple-500/20">
-                                            <span className="text-5xl">⚙️</span>
-                                        </div>
-                                        <div className="mt-4 text-center">
-                                            <p className="font-semibold text-sm">Instagram Server</p>
-                                            <p className="text-xs text-muted-foreground">Backend</p>
-                                        </div>
-                                        {hoveredNode === "Instagram Server" && (
-                                            <div className="absolute -bottom-16 left-1/2 -translate-x-1/2 w-48 bg-popover border rounded-lg p-3 shadow-lg z-10">
-                                                <p className="text-xs">Processes requests & runs business logic</p>
-                                            </div>
-                                        )}
-                                    </div>
-                                </div>
-
-                                {/* Arrow 2 */}
-                                <div className="hidden md:flex flex-col items-center">
-                                    <div className="flex items-center gap-2">
-                                        <div className="h-0.5 w-16 bg-gradient-to-r from-purple-500 to-pink-500"></div>
-                                        <ArrowRight className="w-5 h-5 text-pink-500" />
-                                    </div>
-                                    <p className="text-xs text-muted-foreground mt-1">Query</p>
-                                </div>
-
-                                {/* Node 3: Database */}
-                                <div
-                                    className="group cursor-pointer transition-all duration-300"
-                                    onMouseEnter={() => setHoveredNode("Database")}
-                                    onMouseLeave={() => setHoveredNode(null)}
-                                >
-                                    <div className={`relative transition-all duration-300 ${hoveredNode === "Database" ? "scale-110" : "scale-100"}`}>
-                                        <div className="w-32 h-32 bg-gradient-to-br from-pink-500/20 to-pink-600/20 rounded-2xl flex items-center justify-center border-2 border-pink-500/30 group-hover:border-pink-500 group-hover:shadow-lg group-hover:shadow-pink-500/20">
-                                            <span className="text-5xl">💾</span>
-                                        </div>
-                                        <div className="mt-4 text-center">
-                                            <p className="font-semibold text-sm">Database</p>
-                                            <p className="text-xs text-muted-foreground">Data Storage</p>
-                                        </div>
-                                        {hoveredNode === "Database" && (
-                                            <div className="absolute -bottom-16 left-1/2 -translate-x-1/2 w-48 bg-popover border rounded-lg p-3 shadow-lg z-10">
-                                                <p className="text-xs">Stores all posts, photos & user data</p>
-                                            </div>
-                                        )}
-                                    </div>
-                                </div>
-                            </div>
-
-                            {/* Example Use Case */}
-                            <div className="mt-16 text-center">
-                                <div className="inline-block bg-background/80 backdrop-blur-sm border rounded-full px-6 py-3">
-                                    <p className="text-sm">
-                                        <span className="font-semibold">Example:</span> When you like a photo →
-                                        <span className="text-blue-600"> Phone</span> sends request →
-                                        <span className="text-purple-600"> Server</span> processes →
-                                        <span className="text-pink-600"> Database</span> saves it
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* CTA Buttons */}
-                    <div className="flex flex-wrap justify-center gap-4 mb-12">
-                        <Link href="/learn">
-                            <Button size="lg" className="gap-2 h-12 px-8 text-base">
-                                <Map className="w-5 h-5" />
-                                Start Learning Path
-                            </Button>
-                        </Link>
-                        <Link href="/concepts">
-                            <Button size="lg" variant="outline" className="gap-2 h-12 px-8 text-base">
-                                <BookOpen className="w-5 h-5" />
-                                Browse All Concepts
-                            </Button>
-                        </Link>
-                    </div>
-
-                    {/* Stats */}
-                    <div className="flex flex-wrap justify-center gap-8 text-center">
-                        <div>
-                            <p className="text-3xl font-bold">{webDevConcepts.length}</p>
-                            <p className="text-sm text-muted-foreground">Concepts</p>
-                        </div>
-                        <div className="w-px bg-border"></div>
-                        <div>
-                            <p className="text-3xl font-bold">23</p>
-                            <p className="text-sm text-muted-foreground">Learning Path</p>
-                        </div>
-                        <div className="w-px bg-border"></div>
-                        <div>
-                            <p className="text-3xl font-bold">100%</p>
-                            <p className="text-sm text-muted-foreground">Free</p>
-                        </div>
+                                    <Icon className="w-5 h-5 text-gray-700 group-hover:text-gray-900" />
+                                    <span className="absolute -top-8 left-1/2 -translate-x-1/2 px-2 py-1 rounded text-xs bg-gray-900 text-white opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
+                                        {item.label}
+                                    </span>
+                                </button>
+                            );
+                        })}
+                        {/* Search Button */}
+                        <SearchModal data={searchData}>
+                            <button className="relative group p-3 rounded-lg hover:bg-gray-100 transition-colors">
+                                <Search className="w-5 h-5 text-gray-700 group-hover:text-gray-900" />
+                                <span className="absolute -top-8 left-1/2 -translate-x-1/2 px-2 py-1 rounded text-xs bg-gray-900 text-white opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
+                                    Search
+                                </span>
+                            </button>
+                        </SearchModal>
                     </div>
                 </div>
-            </section>
+            </div>
+            {/* Hero Section - Full Viewport */}
+            <section className="relative h-screen flex items-center justify-center bg-white overflow-hidden snap-start snap-always">
+                {/* Subtle grid background */}
+                <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
 
-            {/* Two Core Features */}
-            <section className="py-24 bg-muted/30">
-                <div className="container mx-auto px-4">
-                    <div className="text-center mb-16">
-                        <h2 className="text-4xl md:text-5xl font-bold mb-4">Two Ways to Learn</h2>
-                        <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-                            Choose your path: Follow a structured roadmap or explore concepts freely
-                        </p>
-                    </div>
-
-                    <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-                        {/* Feature 1: Learning Path */}
-                        <Card className="group hover:shadow-xl transition-all duration-300 border-2 hover:border-primary/50">
-                            <CardContent className="p-8">
-                                <div className="w-16 h-16 bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                                    <Map className="w-8 h-8 text-blue-600" />
-                                </div>
-                                <h3 className="text-2xl font-bold mb-3">Guided Learning Path</h3>
-                                <p className="text-muted-foreground mb-6 leading-relaxed">
-                                    Follow a carefully designed 6-level roadmap from basics to advanced.
-                                    Each level builds on the last—never feel lost.
-                                </p>
-                                <ul className="space-y-2 mb-6">
-                                    <li className="flex items-center gap-2 text-sm">
-                                        <div className="w-1.5 h-1.5 rounded-full bg-primary"></div>
-                                        23 core concepts in logical order
-                                    </li>
-                                    <li className="flex items-center gap-2 text-sm">
-                                        <div className="w-1.5 h-1.5 rounded-full bg-primary"></div>
-                                        Real-world progression (like building Instagram)
-                                    </li>
-                                    <li className="flex items-center gap-2 text-sm">
-                                        <div className="w-1.5 h-1.5 rounded-full bg-primary"></div>
-                                        Clear outcomes for each level
-                                    </li>
-                                </ul>
-                                <Link href="/learn">
-                                    <Button className="w-full group-hover:bg-primary group-hover:text-primary-foreground">
-                                        Start the Path
-                                        <ArrowRight className="w-4 h-4 ml-2" />
-                                    </Button>
-                                </Link>
-                            </CardContent>
-                        </Card>
-
-                        {/* Feature 2: All Concepts */}
-                        <Card className="group hover:shadow-xl transition-all duration-300 border-2 hover:border-purple/50">
-                            <CardContent className="p-8">
-                                <div className="w-16 h-16 bg-gradient-to-br from-purple-500/20 to-pink-500/20 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                                    <Eye className="w-8 h-8 text-purple-600" />
-                                </div>
-                                <h3 className="text-2xl font-bold mb-3">Explore All Concepts</h3>
-                                <p className="text-muted-foreground mb-6 leading-relaxed">
-                                    Browse {webDevConcepts.length} system design concepts freely.
-                                    Jump to what interests you—perfect for quick reference.
-                                </p>
-                                <ul className="space-y-2 mb-6">
-                                    <li className="flex items-center gap-2 text-sm">
-                                        <div className="w-1.5 h-1.5 rounded-full bg-purple-600"></div>
-                                        Filter by category & difficulty
-                                    </li>
-                                    <li className="flex items-center gap-2 text-sm">
-                                        <div className="w-1.5 h-1.5 rounded-full bg-purple-600"></div>
-                                        Each concept: 5-10 min read
-                                    </li>
-                                    <li className="flex items-center gap-2 text-sm">
-                                        <div className="w-1.5 h-1.5 rounded-full bg-purple-600"></div>
-                                        Visual diagrams + real examples
-                                    </li>
-                                </ul>
-                                <Link href="/concepts">
-                                    <Button variant="outline" className="w-full group-hover:bg-purple-600 group-hover:text-white group-hover:border-purple-600">
-                                        Browse Concepts
-                                        <ArrowRight className="w-4 h-4 ml-2" />
-                                    </Button>
-                                </Link>
-                            </CardContent>
-                        </Card>
-                    </div>
+                {/* Animated gradient blobs */}
+                <div className="absolute inset-0 -z-10 opacity-40">
+                    <motion.div
+                        animate={{
+                            x: [0, 100, 0],
+                            y: [0, -100, 0],
+                        }}
+                        transition={{
+                            duration: 20,
+                            repeat: Infinity,
+                            ease: "easeInOut"
+                        }}
+                        className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-200 rounded-full mix-blend-multiply filter blur-3xl"
+                    ></motion.div>
+                    <motion.div
+                        animate={{
+                            x: [0, -100, 0],
+                            y: [0, 100, 0],
+                        }}
+                        transition={{
+                            duration: 25,
+                            repeat: Infinity,
+                            ease: "easeInOut"
+                        }}
+                        className="absolute top-1/3 right-1/4 w-96 h-96 bg-pink-200 rounded-full mix-blend-multiply filter blur-3xl"
+                    ></motion.div>
+                    <motion.div
+                        animate={{
+                            x: [0, 50, 0],
+                            y: [0, 50, 0],
+                        }}
+                        transition={{
+                            duration: 15,
+                            repeat: Infinity,
+                            ease: "easeInOut"
+                        }}
+                        className="absolute bottom-1/4 left-1/3 w-96 h-96 bg-orange-200 rounded-full mix-blend-multiply filter blur-3xl"
+                    ></motion.div>
                 </div>
-            </section>
 
-            {/* Featured Concepts */}
-            <section className="py-24">
-                <div className="container mx-auto px-4">
-                    <div className="text-center mb-16">
-                        <h2 className="text-4xl md:text-5xl font-bold mb-4">Popular Concepts</h2>
-                        <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-                            Start with these beginner-friendly concepts
-                        </p>
-                    </div>
+                {/* Content */}
+                <div className="relative z-10 text-center px-6 max-w-6xl mx-auto">
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6 }}
+                        className="inline-flex items-center gap-2 mb-6 px-4 py-2 bg-gradient-to-r from-gray-100 to-gray-50 rounded-full text-gray-600 text-sm font-medium uppercase tracking-wider shadow-sm"
+                    >
+                        <BookOpen className="w-4 h-4 text-[#ff5941]" />
+                        <span className="font-bold text-[#ff5941]">Serksa</span>
+                        <span className="text-gray-400">·</span>
+                        <span>Visual Learning</span>
+                    </motion.div>
 
-                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-                        {featuredConcepts.map((concept) => (
-                            <ConceptCard
-                                key={concept.slug}
-                                title={concept.title}
-                                description={concept.description}
-                                category={concept.category}
-                                difficulty={concept.difficulty}
-                                readTime={concept.readTime}
-                                slug={concept.slug}
+                    <LayoutGroup>
+                        <motion.div className="text-5xl md:text-7xl lg:text-8xl font-bold text-gray-900 mb-6 leading-tight flex flex-col items-center justify-center" layout>
+                            <motion.span layout transition={{ type: "spring", damping: 30, stiffness: 400 }}>
+                                Learn it{" "}
+                            </motion.span>
+                            <TextRotate
+                                texts={[
+                                    "fast ⚡",
+                                    "in minutes ⏱️",
+                                    "visually 👁️",
+                                    "fun 🎉",
+                                    "simple ✨",
+                                ]}
+                                mainClassName="text-white px-3 bg-[#ff5941] overflow-hidden py-2 justify-center rounded-lg"
+                                staggerFrom={"last"}
+                                initial={{ y: "100%" }}
+                                animate={{ y: 0 }}
+                                exit={{ y: "-120%" }}
+                                staggerDuration={0.025}
+                                splitLevelClassName="overflow-hidden pb-1"
+                                transition={{ type: "spring", damping: 30, stiffness: 400 }}
+                                rotationInterval={2000}
                             />
+                        </motion.div>
+                    </LayoutGroup>
+
+                    <motion.p
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6, delay: 0.3 }}
+                        className="text-xl md:text-2xl text-gray-600 mb-10 max-w-3xl mx-auto"
+                    >
+                        Understand system design concepts through visual diagrams and real-world examples from apps you use every day
+                    </motion.p>
+                </div>
+
+                {/* Scroll Indicator */}
+                <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
+                    <div className="w-6 h-10 border-2 border-gray-300 rounded-full flex items-start justify-center p-2">
+                        <div className="w-1.5 h-1.5 bg-gray-400 rounded-full"></div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Stacking Cards Section - Full Viewport with its own scroll container */}
+            <section className="relative h-screen snap-start snap-always">
+                <div
+                    className="h-full bg-white overflow-auto"
+                    ref={container}
+                >
+                    {/* Scroll Down Header */}
+                    <div className="relative h-screen w-full z-10 text-2xl md:text-7xl font-bold uppercase flex justify-center items-center text-[#ff5941] whitespace-pre bg-white">
+                        Scroll down ↓
+                    </div>
+
+                    <StackingCards
+                        totalCards={cards.length}
+                        scrollOptions={{ container: container }}
+                    >
+                        {cards.map(({ bgColor, description, image, title }, index) => {
+                            return (
+                                <StackingCardItem key={index} index={index} className="h-screen">
+                                    <div
+                                        className={cn(
+                                            bgColor,
+                                            "h-[80%] sm:h-[70%] flex-col sm:flex-row aspect-video px-8 py-10 flex w-11/12 rounded-3xl mx-auto relative"
+                                        )}
+                                    >
+                                        <div className="flex-1 flex flex-col justify-center">
+                                            <h3 className="font-bold text-2xl mb-5 text-white">{title}</h3>
+                                            <p className="text-white">{description}</p>
+                                        </div>
+
+                                        <div className="w-full sm:w-1/2 rounded-xl aspect-video relative overflow-hidden">
+                                            <Image
+                                                src={image}
+                                                alt={title}
+                                                className="object-cover"
+                                                fill
+                                            />
+                                        </div>
+                                    </div>
+                                </StackingCardItem>
+                            );
+                        })}
+                    </StackingCards>
+                </div>
+            </section>
+
+            {/* Popular Concepts Section */}
+            <section className="relative min-h-screen bg-white snap-start snap-always flex items-center justify-center py-20">
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6 }}
+                    viewport={{ once: true }}
+                    className="w-full max-w-7xl mx-auto px-6"
+                >
+                    <div className="text-center mb-16">
+                        <h2 className="text-4xl md:text-6xl font-bold text-gray-900 mb-4">
+                            Popular Concepts
+                        </h2>
+                        <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto">
+                            High-level concepts and terminology explained with real software examples
+                        </p>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {webDevConcepts.slice(0, 6).map((concept, index) => (
+                            <motion.div
+                                key={concept.slug}
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.5, delay: index * 0.1 }}
+                                viewport={{ once: true }}
+                            >
+                                <Link href={`/concepts/${concept.slug}`}>
+                                    <div className="group relative h-full p-6 bg-white border-2 border-gray-200 rounded-2xl hover:border-[#ff5941] transition-all duration-300 hover:shadow-lg cursor-pointer">
+                                        <div className="flex items-start justify-between mb-4">
+                                            <span className="text-xs font-semibold text-[#ff5941] uppercase tracking-wider">
+                                                {concept.category}
+                                            </span>
+                                            <span className={cn(
+                                                "text-xs px-2 py-1 rounded-full",
+                                                concept.difficulty === "Beginner" && "bg-green-100 text-green-700",
+                                                concept.difficulty === "Intermediate" && "bg-yellow-100 text-yellow-700",
+                                                concept.difficulty === "Advanced" && "bg-red-100 text-red-700"
+                                            )}>
+                                                {concept.difficulty}
+                                            </span>
+                                        </div>
+                                        <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-[#ff5941] transition-colors">
+                                            {concept.title}
+                                        </h3>
+                                        <p className="text-gray-600 text-sm line-clamp-3">
+                                            {concept.description}
+                                        </p>
+                                    </div>
+                                </Link>
+                            </motion.div>
                         ))}
                     </div>
 
                     <div className="text-center mt-12">
                         <Link href="/concepts">
-                            <Button size="lg" variant="outline">
+                            <button className="px-8 py-4 bg-gray-900 text-white rounded-full text-lg font-semibold hover:bg-gray-800 transition-colors cursor-pointer">
                                 View All {webDevConcepts.length} Concepts
-                                <ArrowRight className="w-4 h-4 ml-2" />
-                            </Button>
+                            </button>
                         </Link>
                     </div>
-                </div>
+                </motion.div>
             </section>
 
-            {/* Final CTA */}
-            <section className="py-24 bg-gradient-to-br from-blue-500/10 via-purple-500/10 to-pink-500/10">
-                <div className="container mx-auto px-4">
-                    <div className="max-w-3xl mx-auto text-center space-y-8">
-                        <h2 className="text-4xl md:text-5xl font-bold leading-tight">
-                            Ready to Master
-                            <br />
-                            System Design?
-                        </h2>
-                        <p className="text-xl text-muted-foreground">
-                            Join thousands learning how real apps work—no jargon, just clear explanations
-                        </p>
-                        <div className="flex flex-wrap justify-center gap-4">
-                            <Link href="/learn">
-                                <Button size="lg" className="h-14 px-8 text-lg">
-                                    Start Learning Now
-                                    <ArrowRight className="w-5 h-5 ml-2" />
-                                </Button>
-                            </Link>
-                            <Link href="/about">
-                                <Button size="lg" variant="outline" className="h-14 px-8 text-lg">
-                                    Learn More
-                                </Button>
-                            </Link>
+            {/* CTA + Footer Section */}
+            <section className="relative min-h-screen bg-gradient-to-br from-gray-50 to-white snap-start snap-always">
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6 }}
+                    viewport={{ once: true }}
+                    className="flex flex-col min-h-screen"
+                >
+                    {/* CTA Content */}
+                    <div className="flex-1 flex items-center justify-center px-4 py-16">
+                        <div className="text-center max-w-4xl mx-auto">
+                            <h2 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
+                                Ready to Learn<br />System Design Concepts?
+                            </h2>
+                            <p className="text-lg md:text-lg text-gray-600 mb-10 max-w-2xl mx-auto">
+                                Start understanding high-level concepts and terminology used in real software systems
+                            </p>
+                            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                                <Link href="/learn">
+                                    <button className="px-8 py-4 bg-[#ff5941] text-white rounded-full text-md font-semibold hover:bg-[#ff6951] cursor-pointer transition-colors">
+                                        Start Learning Path
+                                    </button>
+                                </Link>
+                                <Link href="/concepts">
+                                    <button className="px-8 py-4 bg-white border-2 border-gray-300 text-gray-900 rounded-full text-md font-semibold cursor-pointer hover:border-gray-400 transition-colors">
+                                        Browse All Concepts
+                                    </button>
+                                </Link>
+                            </div>
                         </div>
-                        <p className="text-sm text-muted-foreground">
-                            100% Free · No Signup · No Ads
-                        </p>
                     </div>
-                </div>
-            </section>
 
-            <Footer />
+                    {/* Footer Content */}
+                    <div className="relative overflow-hidden w-full h-96 flex justify-end px-12 text-right items-start py-16 text-[#ff5941]">
+                        <div className="flex flex-row space-x-12 sm:space-x-16 md:space-x-24 text-sm sm:text-lg md:text-xl">
+                            <ul>
+                                <li className="hover:underline cursor-pointer">
+                                    <Link href="/learn">Walkthrough</Link>
+                                </li>
+                                <li className="hover:underline cursor-pointer">
+                                    <Link href="/concepts">All Concepts</Link>
+                                </li>
+                                <li className="hover:underline cursor-pointer">
+                                    <Link href="/about">About</Link>
+                                </li>
+                            </ul>
+                            <ul>
+                                <li className="hover:underline cursor-pointer">
+                                    <a href="https://github.com" target="_blank" rel="noopener noreferrer">Github</a>
+                                </li>
+                                <li className="hover:underline cursor-pointer">
+                                    <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">Instagram</a>
+                                </li>
+                                <li className="hover:underline cursor-pointer">
+                                    <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">X (Twitter)</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <VariableFontHoverByRandomLetter
+                            label="Serksa"
+                            fromFontVariationSettings="'wght' 400"
+                            toFontVariationSettings="'wght' 900"
+                            staggerDuration={0.03}
+                            className="absolute bottom-0 left-0 sm:text-[240px] text-[100px] text-[#ff5941] font-bold leading-none cursor-pointer"
+                        />
+                    </div>
+                </motion.div>
+            </section>
         </div>
     );
 }

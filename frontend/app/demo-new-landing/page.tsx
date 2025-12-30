@@ -15,43 +15,19 @@ import { webDevConcepts } from "@/lib/concepts-data";
 const cards = [
     {
         bgColor: "bg-[#f97316]",
-        title: "The Guiding Light",
+        title: "Structured Learning Path",
         description:
-            "Lighthouses have stood as beacons of hope for centuries, guiding sailors safely through treacherous waters. Their glowing light and towering presence serve as a reminder of humanity's connection to the sea.",
+            "Follow our carefully designed curriculum that takes you from basics to advanced concepts. Each step builds on the previous one, ensuring you understand fundamentals before moving forward.",
         image:
             "https://plus.unsplash.com/premium_vector-1739262161806-d954eb02427c?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxjb2xsZWN0aW9uLXBhZ2V8MXxxdGU5Smx2R3d0b3x8ZW58MHx8fHx8",
     },
     {
         bgColor: "bg-[#0015ff]",
-        title: "Life Beneath the Waves",
+        title: "Interactive Concept Explorer",
         description:
-            "From shimmering schools of fish to solitary hunters, the ocean is home to an incredible variety of marine life. Each species plays a vital role in maintaining the balance of underwater ecosystems.",
+            "Dive deep into any concept that interests you. Visual diagrams, real-world examples from apps like Instagram and WhatsApp, and practical analogies make complex topics easy to grasp.",
         image:
             "https://plus.unsplash.com/premium_vector-1739200616200-69a138d91627?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxjb2xsZWN0aW9uLXBhZ2V8MnxxdGU5Smx2R3d0b3x8ZW58MHx8fHx8",
-    },
-    {
-        bgColor: "bg-[#ff5941]",
-        title: "Alone on the Open Sea",
-        description:
-            "Drifting across the endless horizon, traveling alone on the sea is a test of courage and resilience. With nothing but the waves and the sky, solitude becomes both a challenge and a source of deep reflection.",
-        image:
-            "https://plus.unsplash.com/premium_vector-1738597190290-a3b571590b9e?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxjb2xsZWN0aW9uLXBhZ2V8OHxxdGU5Smx2R3d0b3x8ZW58MHx8fHx8",
-    },
-    {
-        bgColor: "bg-[#1f464d]",
-        title: "The Art of Sailing",
-        description:
-            "Harnessing the power of the wind, sailing is both a skill and an adventure. Whether racing across the waves or leisurely cruising, it's a timeless way to explore the vast blue expanse.",
-        image:
-            "https://plus.unsplash.com/premium_vector-1738935247245-97940c74cced?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxjb2xsZWN0aW9uLXBhZ2V8MTZ8cXRlOUpsdkd3dG98fGVufDB8fHx8fA%3D%3D",
-    },
-    {
-        bgColor: "bg-[#0015ff]",
-        title: "The Era of Whaling",
-        description:
-            "Once a thriving industry, whale hunting shaped economies and cultures across the world. Today, efforts to protect these majestic creatures highlight the shift toward conservation and respect for marine life.",
-        image:
-            "https://plus.unsplash.com/premium_vector-1738935247692-1c2f2c924fd8?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxjb2xsZWN0aW9uLXBhZ2V8MjJ8cXRlOUpsdkd3dG98fGVufDB8fHx8fA%3D%3D",
     },
 ];
 
@@ -74,7 +50,7 @@ export default function NewLandingDemo() {
     ];
 
     return (
-        <div className="relative w-full bg-white">
+        <div className="relative w-full h-screen overflow-y-scroll snap-y snap-mandatory bg-white">
             {/* Logo at top left */}
             <div className="fixed top-6 left-6 z-50">
                 <Link href="/" className="flex items-center gap-2 px-4 py-2 bg-white/95 backdrop-blur-lg border border-gray-200 rounded-full hover:border-gray-300 transition-colors">
@@ -115,7 +91,7 @@ export default function NewLandingDemo() {
                 </div>
             </div>
             {/* Hero Section - Full Viewport */}
-            <section className="relative h-screen flex items-center justify-center bg-white overflow-hidden">
+            <section className="relative h-screen flex items-center justify-center bg-white overflow-hidden snap-start snap-always">
                 {/* Subtle grid background */}
                 <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
 
@@ -128,17 +104,15 @@ export default function NewLandingDemo() {
                     <LayoutGroup>
                         <motion.div className="text-5xl md:text-7xl lg:text-8xl font-bold text-gray-900 mb-6 leading-tight flex flex-col items-center justify-center" layout>
                             <motion.span layout transition={{ type: "spring", damping: 30, stiffness: 400 }}>
-                                Make it{" "}
+                                Learn it{" "}
                             </motion.span>
                             <TextRotate
                                 texts={[
-                                    "work!",
-                                    "fancy ✽",
-                                    "right",
-                                    "fast",
-                                    "fun",
-                                    "rock",
-                                    "🕶️🕶️🕶️",
+                                    "fast ⚡",
+                                    "in minutes ⏱️",
+                                    "visually 👁️",
+                                    "fun 🎉",
+                                    "simple ✨",
                                 ]}
                                 mainClassName="text-white px-3 bg-[#ff5941] overflow-hidden py-2 justify-center rounded-lg"
                                 staggerFrom={"last"}
@@ -154,7 +128,7 @@ export default function NewLandingDemo() {
                     </LayoutGroup>
 
                     <p className="text-xl md:text-2xl text-gray-600 mb-10 max-w-3xl mx-auto">
-                        Master how apps like Instagram and WhatsApp work—through interactive diagrams and real-world analogies
+                        Understand system design concepts through visual diagrams and real-world examples from apps you use every day
                     </p>
                 </div>
 
@@ -167,7 +141,7 @@ export default function NewLandingDemo() {
             </section>
 
             {/* Stacking Cards Section - Full Viewport with its own scroll container */}
-            <section className="relative h-screen">
+            <section className="relative h-screen snap-start snap-always">
                 <div
                     className="h-full bg-white overflow-auto"
                     ref={container}
@@ -211,8 +185,72 @@ export default function NewLandingDemo() {
                 </div>
             </section>
 
+            {/* Popular Concepts Section */}
+            <section className="relative min-h-screen bg-white snap-start snap-always flex items-center justify-center py-20">
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6 }}
+                    viewport={{ once: true }}
+                    className="w-full max-w-7xl mx-auto px-6"
+                >
+                    <div className="text-center mb-16">
+                        <h2 className="text-4xl md:text-6xl font-bold text-gray-900 mb-4">
+                            Popular Concepts
+                        </h2>
+                        <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto">
+                            High-level concepts and terminology explained with real software examples
+                        </p>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {webDevConcepts.slice(0, 6).map((concept, index) => (
+                            <motion.div
+                                key={concept.slug}
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.5, delay: index * 0.1 }}
+                                viewport={{ once: true }}
+                            >
+                                <Link href={`/concepts/${concept.slug}`}>
+                                    <div className="group relative h-full p-6 bg-white border-2 border-gray-200 rounded-2xl hover:border-[#ff5941] transition-all duration-300 hover:shadow-lg cursor-pointer">
+                                        <div className="flex items-start justify-between mb-4">
+                                            <span className="text-xs font-semibold text-[#ff5941] uppercase tracking-wider">
+                                                {concept.category}
+                                            </span>
+                                            <span className={cn(
+                                                "text-xs px-2 py-1 rounded-full",
+                                                concept.difficulty === "Beginner" && "bg-green-100 text-green-700",
+                                                concept.difficulty === "Intermediate" && "bg-yellow-100 text-yellow-700",
+                                                concept.difficulty === "Advanced" && "bg-red-100 text-red-700"
+                                            )}>
+                                                {concept.difficulty}
+                                            </span>
+                                        </div>
+                                        <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-[#ff5941] transition-colors">
+                                            {concept.title}
+                                        </h3>
+                                        <p className="text-gray-600 text-sm line-clamp-3">
+                                            {concept.description}
+                                        </p>
+                                    </div>
+                                </Link>
+                            </motion.div>
+                        ))}
+                    </div>
+
+                    <div className="text-center mt-12">
+                        <Link href="/concepts">
+                            <button className="px-8 py-4 bg-gray-900 text-white rounded-full text-lg font-semibold hover:bg-gray-800 transition-colors cursor-pointer">
+                                View All {webDevConcepts.length} Concepts
+                            </button>
+                        </Link>
+                    </div>
+                </motion.div>
+            </section>
+
             {/* CTA + Footer Section */}
-            <section className="relative min-h-screen bg-gradient-to-br from-gray-50 to-white">
+            <section className="relative min-h-screen bg-gradient-to-br from-gray-50 to-white snap-start snap-always">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -224,19 +262,19 @@ export default function NewLandingDemo() {
                     <div className="flex-1 flex items-center justify-center px-4 py-16">
                         <div className="text-center max-w-4xl mx-auto">
                             <h2 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
-                                Ready to Master<br />System Design?
+                                Ready to Learn<br />System Design Concepts?
                             </h2>
                             <p className="text-lg md:text-lg text-gray-600 mb-10 max-w-2xl mx-auto">
-                                Start your journey with our structured learning path or explore concepts at your own pace
+                                Start understanding high-level concepts and terminology used in real software systems
                             </p>
                             <div className="flex flex-col sm:flex-row gap-4 justify-center">
                                 <Link href="/learn">
-                                    <button className="px-8 py-4 bg-[#ff5941] text-white rounded-full text-md font-semibold hover:bg-[#ff6951] hover:cursor-pointer transition-colors">
+                                    <button className="px-8 py-4 bg-[#ff5941] text-white rounded-full text-md font-semibold hover:bg-[#ff6951] cursor-pointer transition-colors">
                                         Start Learning Path
                                     </button>
                                 </Link>
                                 <Link href="/concepts">
-                                    <button className="px-8 py-4 bg-white border-2 border-gray-300 text-gray-900 rounded-full text-md font-semibold hover:cursor-pointer hover:border-gray-400 transition-colors">
+                                    <button className="px-8 py-4 bg-white border-2 border-gray-300 text-gray-900 rounded-full text-md font-semibold cursor-pointer hover:border-gray-400 transition-colors">
                                         Browse All Concepts
                                     </button>
                                 </Link>
