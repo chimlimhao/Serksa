@@ -75,46 +75,6 @@ export default function HomePage() {
                 {/* Subtle grid background */}
                 <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
 
-                {/* Animated gradient blobs */}
-                <div className="absolute inset-0 -z-10 opacity-40">
-                    <motion.div
-                        animate={{
-                            x: [0, 100, 0],
-                            y: [0, -100, 0],
-                        }}
-                        transition={{
-                            duration: 20,
-                            repeat: Infinity,
-                            ease: "easeInOut"
-                        }}
-                        className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-200 rounded-full mix-blend-multiply filter blur-3xl"
-                    ></motion.div>
-                    <motion.div
-                        animate={{
-                            x: [0, -100, 0],
-                            y: [0, 100, 0],
-                        }}
-                        transition={{
-                            duration: 25,
-                            repeat: Infinity,
-                            ease: "easeInOut"
-                        }}
-                        className="absolute top-1/3 right-1/4 w-96 h-96 bg-pink-200 rounded-full mix-blend-multiply filter blur-3xl"
-                    ></motion.div>
-                    <motion.div
-                        animate={{
-                            x: [0, 50, 0],
-                            y: [0, 50, 0],
-                        }}
-                        transition={{
-                            duration: 15,
-                            repeat: Infinity,
-                            ease: "easeInOut"
-                        }}
-                        className="absolute bottom-1/4 left-1/3 w-96 h-96 bg-orange-200 rounded-full mix-blend-multiply filter blur-3xl"
-                    ></motion.div>
-                </div>
-
                 {/* Content */}
                 <div className="relative z-10 text-center px-6 max-w-6xl mx-auto">
                     <div className="inline-flex items-center gap-2 mb-6 px-4 py-2 bg-gradient-to-r from-gray-100 to-gray-50 rounded-full text-gray-600 text-sm font-medium uppercase tracking-wider shadow-sm">

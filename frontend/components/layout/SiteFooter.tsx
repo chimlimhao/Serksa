@@ -18,6 +18,9 @@ export function SiteFooter() {
                 </ul>
                 <ul>
                     <li className="hover:underline cursor-pointer">
+                        <a href="https://limhao.site" target="_blank" rel="noopener noreferrer">Portfolio</a>
+                    </li>
+                    <li className="hover:underline cursor-pointer">
                         <a href="https://github.com/chimlimhao/Serksa" target="_blank" rel="noopener noreferrer">Github</a>
                     </li>
                     <li className="hover:underline cursor-pointer">

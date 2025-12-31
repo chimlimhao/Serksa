@@ -91,11 +91,23 @@ export default function AboutPage() {
                     <h2 className="text-3xl font-bold text-gray-900 mb-6">Who Made This?</h2>
                     <div className="space-y-4 text-lg text-gray-700">
                         <p>
-                            Hi! I'm a developer who believes that system design should be accessible to everyone.
-                            I've spent years building scalable systems and explaining these concepts to engineers, and this site is a collection of those explanations.
+                            Hi! I'm <span className="font-bold text-gray-900">Lim Hao</span>, a developer who believes that system design should be accessible to everyone.
+                        </p>
+                        <p>
+                            I created Serksa because I wished someone would explain these concepts simply, with real-world analogies and clear diagrams. This site is a collection of those explanations.
                         </p>
                         <p>
                             This is a side project built with love, maintained in my free time, and shared freely with the community.
+                        </p>
+                        <p>
+                            <a
+                                href="https://limhao.site"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-[#ff5941] hover:underline font-medium"
+                            >
+                                Check out my portfolio →
+                            </a>
                         </p>
                     </div>
                 </div>
