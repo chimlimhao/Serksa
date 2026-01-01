@@ -13,6 +13,10 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "Serksa - System Design Concepts Explained Simply",
   description: "Learn core system design concepts through simple analogies, clear diagrams, and mental models that actually stick.",
+  icons: {
+    icon: '/icon.png',
+    apple: '/apple-icon.png',
+  },
 };
 
 export default function RootLayout({
