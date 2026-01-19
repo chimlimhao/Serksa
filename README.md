@@ -266,6 +266,32 @@ netlify deploy
 - **shadcn/ui** - Components
 - **Lucide Icons** - Icons
 
+## 🧩 CMS (Sanity) Setup
+
+This repo includes a Sanity Studio in `frontend/serksa/` (created via `sanity init`) and the Next.js app reads content from Sanity with a **safe fallback** to local TypeScript content while you migrate.
+
+### Environment variables (Next.js)
+
+Set these in your environment (e.g. `frontend/.env.local`):
+
+- `NEXT_PUBLIC_SANITY_PROJECT_ID` (default used in code: `dwh5a0ih`)
+- `NEXT_PUBLIC_SANITY_DATASET` (default: `production`)
+- `NEXT_PUBLIC_SANITY_API_VERSION` (default: `2025-01-01`)
+
+### Run the Studio
+
+```bash
+cd frontend/serksa
+npm run dev
+```
+
+### Run the Next.js frontend
+
+```bash
+cd frontend
+npm run dev
+```
+
 ### Hosting
 - **Vercel** - Free tier
 - **Custom Domain** - Optional

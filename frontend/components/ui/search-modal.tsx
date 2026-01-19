@@ -15,6 +15,7 @@ import {
     CommandList,
 } from '@/components/ui/command';
 
+import { useRouter } from 'next/navigation';
 import { LucideIcon, SearchIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -34,6 +35,7 @@ type SearchModalProps = {
 
 
 export function SearchModal({ children, data }: SearchModalProps) {
+    const router = useRouter();
     const [open, setOpen] = React.useState(false);
     const [query, setQuery] = React.useState('');
 
@@ -81,7 +83,7 @@ export function SearchModal({ children, data }: SearchModalProps) {
                                         value={item.title}
                                         onSelect={() => {
                                             setOpen(false);
-                                            window.location.href = `/concepts/${item.id}`;
+                                            router.push(item.id);
                                         }}
                                     >
                                         {item.icon && <item.icon className="size-5" />}

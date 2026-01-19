@@ -1,25 +1,50 @@
 'use client';
 
 import Link from "next/link";
-import { ArrowLeft, BookOpen, Home, Map, User, Heart, Coffee } from "lucide-react";
-import { SearchModal } from "@/components/ui/search-modal";
-import { webDevConcepts } from '@/lib/concepts-data';
+import { ArrowLeft, BookOpen, Heart, Coffee, Loader2 } from "lucide-react";
+import { SiteFooter } from "@/components/layout";
+import { Skeleton } from "@/components/ui/skeleton";
+import { fetchPageBySlug } from "@/lib/sanity/api";
+import { SanityPage } from "@/lib/sanity/types";
+import { useEffect, useState } from "react";
 import VariableFontHoverByRandomLetter from "@/components/fancy/text/variable-font-hover-by-random-letter";
 
 export default function SupportPage() {
-    const searchData = webDevConcepts.map(c => ({
-        id: c.slug,
-        title: c.title,
-        description: c.description,
-        category: c.category,
-    }));
+    const [page, setPage] = useState<SanityPage | null>(null);
+    const [loading, setLoading] = useState(true);
 
-    const dockItems = [
-        { icon: Home, label: "Home", onClick: () => window.location.href = "/" },
-        { icon: Map, label: "Learning Path", onClick: () => window.location.href = "/learn" },
-        { icon: BookOpen, label: "All Concepts", onClick: () => window.location.href = "/concepts" },
-        { icon: User, label: "About", onClick: () => window.location.href = "/about" },
-    ];
+    useEffect(() => {
+        (async () => {
+            const data = await fetchPageBySlug('support');
+            if (data) setPage(data);
+            setLoading(false);
+        })();
+    }, []);
+
+    if (loading) {
+        return (
+            <div className="min-h-screen bg-white">
+                <main className="pt-32 pb-32 px-6 max-w-4xl mx-auto space-y-12">
+                    <div className="space-y-6 flex flex-col items-center">
+                        <Skeleton className="h-16 w-16 rounded-full" />
+                        <Skeleton className="h-16 w-3/4 rounded-2xl" />
+                        <Skeleton className="h-6 w-1/2 rounded-md" />
+                    </div>
+                    <div className="space-y-12 pt-12">
+                        {[1, 2].map(i => (
+                            <div key={i} className="space-y-4">
+                                <Skeleton className="h-8 w-48 rounded-lg" />
+                                <div className="space-y-4">
+                                    <Skeleton className="h-20 w-full rounded-2xl" />
+                                    <Skeleton className="h-20 w-full rounded-2xl" />
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </main>
+            </div>
+        );
+    }
 
     return (
         <div className="min-h-screen bg-white">
@@ -37,31 +62,6 @@ export default function SupportPage() {
                     <ArrowLeft className="w-4 h-4 text-gray-700" />
                     <span className="text-sm font-medium text-gray-700">Home</span>
                 </Link>
-            </div>
-
-            {/* Dock */}
-            <div className="fixed bottom-2 left-0 right-0 z-50 flex justify-center px-4 pointer-events-none">
-                <div className="pointer-events-auto">
-                    <div className="flex items-center gap-1 p-2 rounded-2xl backdrop-blur-lg border bg-white/95 border-gray-200">
-                        {dockItems.map((item) => {
-                            const Icon = item.icon;
-                            return (
-                                <button key={item.label} onClick={item.onClick} className="relative group p-3 rounded-lg hover:bg-gray-100 transition-colors">
-                                    <Icon className="w-5 h-5 text-gray-700 group-hover:text-gray-900" />
-                                    <span className="absolute -top-8 left-1/2 -translate-x-1/2 px-2 py-1 rounded text-xs bg-gray-900 text-white opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
-                                        {item.label}
-                                    </span>
-                                </button>
-                            );
-                        })}
-                        <SearchModal data={searchData}>
-                            <button className="relative group p-3 rounded-lg hover:bg-gray-100 transition-colors">
-                                <BookOpen className="w-5 h-5 text-gray-700 group-hover:text-gray-900" />
-                                <span className="absolute -top-8 left-1/2 -translate-x-1/2 px-2 py-1 rounded text-xs bg-gray-900 text-white opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">Search</span>
-                            </button>
-                        </SearchModal>
-                    </div>
-                </div>
             </div>
 
             {/* Main Content */}
@@ -167,40 +167,7 @@ export default function SupportPage() {
                 </div>
             </div>
 
-            {/* Footer */}
-            <div className="relative overflow-hidden w-full h-96 flex justify-end px-12 text-right items-start py-16 text-[#ff5941]">
-                <div className="flex flex-row space-x-12 sm:space-x-16 md:space-x-24 text-sm sm:text-lg md:text-xl">
-                    <ul>
-                        <li className="hover:underline cursor-pointer">
-                            <Link href="/learn">Walkthrough</Link>
-                        </li>
-                        <li className="hover:underline cursor-pointer">
-                            <Link href="/concepts">All Concepts</Link>
-                        </li>
-                        <li className="hover:underline cursor-pointer">
-                            <Link href="/about">About</Link>
-                        </li>
-                    </ul>
-                    <ul>
-                        <li className="hover:underline cursor-pointer">
-                            <a href="https://github.com" target="_blank" rel="noopener noreferrer">Github</a>
-                        </li>
-                        <li className="hover:underline cursor-pointer">
-                            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">Instagram</a>
-                        </li>
-                        <li className="hover:underline cursor-pointer">
-                            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">X (Twitter)</a>
-                        </li>
-                    </ul>
-                </div>
-                <VariableFontHoverByRandomLetter
-                    label="Serksa"
-                    fromFontVariationSettings="'wght' 400"
-                    toFontVariationSettings="'wght' 900"
-                    staggerDuration={0.03}
-                    className="absolute bottom-0 left-0 sm:text-[240px] text-[100px] text-[#ff5941] font-bold leading-none cursor-pointer"
-                />
-            </div>
+            <SiteFooter />
         </div>
     );
 }

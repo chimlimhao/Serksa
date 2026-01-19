@@ -19,7 +19,7 @@ export function HowItWorksSection({ steps }: HowItWorksSectionProps) {
                 <span className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center text-primary text-sm font-bold">
                     4
                 </span>
-                How It Works
+                Where You See It
             </h2>
             <div className="space-y-4">
                 {steps.map((item, i) => (

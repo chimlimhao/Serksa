@@ -2,15 +2,28 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { BookOpen, MenuIcon, SearchIcon } from 'lucide-react';
+import { BookOpen, MenuIcon, SearchIcon, Zap } from 'lucide-react';
 import { Sheet, SheetContent, SheetFooter } from '@/components/ui/sheet';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { CommandItem, SearchModal } from '@/components/ui/search-modal';
-import { webDevConcepts } from '@/lib/concepts-data';
+import { fetchConceptsFromSanity, fetchAppsFromSanity } from '@/lib/sanity/api';
 
 export function SerksaHeader() {
     const [open, setOpen] = React.useState(false);
+    const [concepts, setConcepts] = React.useState<any[]>([]);
+    const [apps, setApps] = React.useState<any[]>([]);
+
+    React.useEffect(() => {
+        (async () => {
+            const [cData, aData] = await Promise.all([
+                fetchConceptsFromSanity(),
+                fetchAppsFromSanity()
+            ]);
+            if (cData) setConcepts(cData);
+            if (aData) setApps(aData);
+        })();
+    }, []);
 
     const links = [
         {
@@ -27,13 +40,23 @@ export function SerksaHeader() {
         },
     ];
 
-    // Convert concepts to search data
-    const searchData: CommandItem[] = webDevConcepts.map((concept) => ({
-        id: concept.slug,
-        title: concept.title,
-        description: concept.description,
-        category: concept.category,
-    }));
+    // Convert concepts and apps to search data
+    const searchData: CommandItem[] = [
+        ...concepts.map((concept) => ({
+            id: `/concepts/${concept.slug}`,
+            title: concept.title,
+            description: concept.description,
+            category: concept.category || 'Concept',
+            icon: BookOpen
+        })),
+        ...apps.map((app) => ({
+            id: `/learn`,
+            title: `Walkthrough: ${app.name}`,
+            description: app.shortDescription,
+            category: 'Walkthrough',
+            icon: Zap
+        }))
+    ];
 
     return (
         <header

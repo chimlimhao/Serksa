@@ -26,8 +26,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={inter.variable}>
-      <body className={`${inter.className} antialiased pb-20`}>
-        <SiteLogo />
+      <body className={`${inter.className} antialiased`}>
         <DockNavigation />
         {children}
       </body>
