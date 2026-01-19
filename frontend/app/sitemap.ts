@@ -5,13 +5,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const baseUrl = 'https://serksa.org'
 
     // Fetch all concepts for dynamic paths
-    const concepts = await fetchConceptsFromSanity()
-    const conceptPages = (concepts || []).map((concept) => ({
-        url: `${baseUrl}/concepts/${concept.slug}`,
-        lastModified: new Date(),
-        changeFrequency: 'weekly' as const,
-        priority: 0.8,
-    }))
+    let conceptPages: any[] = []
+    try {
+        const concepts = await fetchConceptsFromSanity()
+        conceptPages = (concepts || []).map((concept) => ({
+            url: `${baseUrl}/concepts/${concept.slug}`,
+            lastModified: new Date(),
+            changeFrequency: 'weekly' as const,
+            priority: 0.8,
+        }))
+    } catch (error) {
+        console.error('Failed to fetch concepts for sitemap:', error)
+    }
 
     return [
         {
